@@ -123,10 +123,10 @@
 				<label for="docente_tutor_reg" class="">Tutor</label>
 				<div class="row" id="itemDate">
 					<div class="col-12 col-md-10">
-						<input type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{3,150}" class="form-control" name="date[]" id="0" idpadre="id" maxlength="150" disabled>
+						<input type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{3,150}" class="form-control" name="date[]" id="0" username="" maxlength="150" disabled>
 					</div>
 					<div class="col-12 col-md-1 text-right">
-						<button class="item-update btn btn-raised btn-info" data-toggle="modal" name="date[]" data-target="#ModalPadre" id="0"><i class="fas fa-search-plus"></i></button>
+						<button class="item-update btn btn-raised btn-info" data-toggle="modal" data-target="#ModalPadre" id="0"><i class="fas fa-search-plus"></i></button>
 					</div>
 				</div>
 				

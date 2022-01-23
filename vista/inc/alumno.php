@@ -60,7 +60,7 @@
                 .then(respuesta => {
                     var valor = document.getElementById(fila);
 	                valor.value = respuesta.Nombre+' '+respuesta.ApellidoP+' '+respuesta.ApellidoM;
-                    valor.name = respuesta.ID;
+                    valor.username = respuesta.ID;
                 });
             }else{
                 $('#ModalPadre').modal('show');

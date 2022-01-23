@@ -195,39 +195,6 @@
                 $ua=$_SESSION['ua_id'];
             }
 
-            if(empty($_SESSION['datos_educativo'])){
-                $alerta=[
-                    "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un erro inesperado",
-                    "Texto"=>"No has seleecionado ningun establecimiento",
-                    "Tipo"=>"error"
-                ];
-                echo json_encode($alerta);
-                exit();
-            }
-
-            if(empty($_SESSION['datos_grado'])){
-                $alerta=[
-                    "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un erro inesperado",
-                    "Texto"=>"No has seleecionado ningun grado",
-                    "Tipo"=>"error"
-                ];
-                echo json_encode($alerta);
-                exit();
-            }
-
-            if(empty($_SESSION['datos_seccion'])){
-                $alerta=[
-                    "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un erro inesperado",
-                    "Texto"=>"No has seleecionado ninguna sección",
-                    "Tipo"=>"error"
-                ];
-                echo json_encode($alerta);
-                exit();
-            }
-
             $datos_alumno_reg=[
                 "CI"=>$ci,
                 "Nombre"=>$nombre,
@@ -241,16 +208,11 @@
                 "Telefono"=>$telefono,
                 "Contra"=>$clave,
                 "Estado"=>1,
-                "CodUE"=>$_SESSION['datos_educativo']['ID'],
-                "CodGra"=>$_SESSION['datos_grado']['ID'],
-                "CodSec"=>$_SESSION['datos_seccion']['ID']
+                "CodUE"=>$ua
             ];
             $agregar_alumno=modelo_alumno::agregar_alumno_modelo($datos_alumno_reg);
             
             if($agregar_alumno->rowCount()==1){
-                unset($_SESSION['datos_educativo']);
-                unset($_SESSION['datos_grado']);
-                unset($_SESSION['datos_seccion']);
                 $alerta=[
                     "Alerta"=>"recargar",
                     "Titulo"=>"Usuario registrado",

@@ -4,11 +4,9 @@
     class modelo_alumno extends main_model{
            /**Modelo agregar alumno */
         protected static function agregar_alumno_modelo($datos){
-            $sql=main_model::conectar()->prepare("INSERT INTO alumno(COD_GRA,COD_SEC,UA_ID,CI_A,NOMBRE_A,APELLIDOP_A,APELLIDOM_A,FECHANAC_A,SEXO_A,LUGARNAC_A,CORREO_A,CONTRA_A,TELEFONO_A,DIRECCION_A,ESTADO_A) 
-            VALUES(:CodGra,:CodSec,:CodUE,:CI,:Nombre,:ApellidoP,:ApellidoM,:FechaNac,:Sexo,:LugarNac,:Correo,:Contra,:Telefono,:Direccion,:Estado)");
+            $sql=main_model::conectar()->prepare("INSERT INTO alumno(UA_ID,CI_A,NOMBRE_A,APELLIDOP_A,APELLIDOM_A,FECHANAC_A,SEXO_A,LUGARNAC_A,CORREO_A,CONTRA_A,TELEFONO_A,DIRECCION_A,ESTADO_A) 
+            VALUES(:CodUE,:CI,:Nombre,:ApellidoP,:ApellidoM,:FechaNac,:Sexo,:LugarNac,:Correo,:Contra,:Telefono,:Direccion,:Estado)");
 
-            $sql->bindParam(":CodGra",$datos['CodGra']);
-            $sql->bindParam(":CodSec",$datos['CodSec']);
             $sql->bindParam(":CodUE",$datos['CodUE']);
             $sql->bindParam(":CI",$datos['CI']);
             $sql->bindParam(":Nombre",$datos['Nombre']);
@@ -73,6 +71,9 @@
             
             return $sql;
         }
+
+
+
 
         /**Modelo eliminar educativo de alumno */
         protected static function eliminar_educativo_alumno_up_modelo($id){
