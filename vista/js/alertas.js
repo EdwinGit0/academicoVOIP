@@ -27,7 +27,7 @@ function enviar_formulario_ajax(e){
     }else if(tipo==="update"){
         texto_alerta="Los datos del sistema seran actualizados";
     }else if(tipo==="search"){
-        texto_alerta="se eliminara el termino de busqueda y tendra que escribir uno nuevo";
+        texto_alerta="Se eliminara el termino de busqueda y tendra que escribir uno nuevo";
     }else if(tipo==="load"){
         texto_alerta="¿Desea remover los datos seleccionados?";
     }else{

@@ -44,7 +44,7 @@ body,html{
 	height: 100vh;
 	background-color: var(--color-one);
 	color: #333;
-	font-size: 16px;
+	font-size: 15px;
 }
 
 .full-box{
@@ -63,7 +63,7 @@ body,html{
 
 /*----------  Page headers styles  ----------*/
 .page-header{
-	padding: 30px 20px 60px 20px;
+	padding: 30px 20px 30px 20px;
 }
 .page-header > :nth-child(1){
 	padding-bottom: 7px;
@@ -113,6 +113,15 @@ body,html{
 .form-control[readonly]{
 	background-color: transparent;
 }
+
+.form-block{
+	cursor:not-allowed;
+}
+
+.form-espace{
+	margin-bottom: 20px;
+}
+
 .form-control:focus,
 .form-control:active{
 	outline: none;
@@ -123,6 +132,7 @@ body,html{
 .form-control-file:focus{
 	outline: none;
 }
+
 .table .btn{
 	margin-bottom: 0;
 }
@@ -187,17 +197,22 @@ table form{
 .login-container{
 	width: 100vw;
 	height: 100vh;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 	background: #0575E6;
 	background: -webkit-linear-gradient(to right, #021B79, #0575E6);
 	background: linear-gradient(to right, #021B79, #0575E6);
-
 }
+
+.position{
+	position: absolute;
+	width: 100vw;
+	height: 100vh;
+	display: grid;
+	place-items: center;
+}
+
 .login-content{
 	width: 95%;
-	max-width: 320px;
+	max-width: 500px;
 	height: auto;
 	border: 1px solid var(--border-color);
 	background-color: #FFF;
@@ -305,7 +320,7 @@ table form{
 	line-height: 45px;
 	text-decoration: none;
 	color: #FFF;
-	font-size: 17px;
+	font-size: 16px;
 	box-sizing: border-box;
 	padding-left: 20px;
 	transition: all .2s ease-in-out;
@@ -504,5 +519,111 @@ table form{
 @media (min-width: 1200px){
 
 }
+
+#svgBlob{
+	height: 100vh;
+	width: 100vw;
+	position: absolute;
+	top: 0;
+	left: 40;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transform: translate(-40%, 0%);
+	background: #303136;
+	transition: 1s;
+  }
+
+.mCSB_inside > .mCSB_container{
+	margin-right: 20px;
+}
+
+.mCSB_scrollTools{
+	width: 15px;
+}
+
+.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+	width: 10px;
+}
+
+.nav-lateral .mCSB_inside > .mCSB_container{
+	margin-right: 13px;
+}
+
+.nav-lateral .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+	width: 5px;
+}
+
+.size-img{
+	max-width: 130px;
+}
+
+/** tree*/
+/*.tree {
+    min-height:10px;
+    padding:5px;
+    margin-bottom:20px;
+    background-color:#fbfbfb;
+    border:1px solid rgb(221, 218, 218);
+}*/
+.tree li {
+    list-style-type:none;
+    margin:0;
+    padding:10px 5px 0 5px;
+    position:relative
+}
+.tree li::before, .tree li::after {
+    content:'';
+    left:-20px;
+    position:absolute;
+    right:auto
+}
+.tree li::before {
+    border-left:1px solid #999;
+    bottom:50px;
+    height:100%;
+    top:0;
+    width:1px
+}
+.tree li::after {
+    border-top:1px solid #999;
+    height:20px;
+    top:25px;
+    width:25px
+}
+.tree li span {
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border:1px solid #999;
+    border-radius:5px;
+    display:inline-block;
+    padding:3px 8px;
+    text-decoration:none
+}
+.tree li.parent_li>span {
+    cursor:pointer
+}
+.tree>ul>li::before, .tree>ul>li::after {
+    border:0
+}
+.tree li:last-child::before {
+    height:30px
+}
+.tree li.parent_li>span:hover, .tree li.parent_li>span:hover+ul li span {
+    background:rgb(255, 210, 210);
+    border:1px solid #b49494;
+    color:#000
+}
+
+/** button circle*/
+.btn-circle.btn-sm {
+	width: 30px;
+	height: 30px;
+	padding: 6px 0px;
+	border-radius: 15px;
+	font-size: 10px;
+	text-align: center;
+}
+
 
 /*----------  Keyframes  ----------*/

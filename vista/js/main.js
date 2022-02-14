@@ -35,16 +35,11 @@ $(document).ready(function(){
 (function($){
     $(window).on("load",function(){
         $(".nav-lateral-content").mCustomScrollbar({
-        	theme:"light-thin",
-        	scrollbarPosition: "inside",
-        	autoHideScrollbar: true,
-        	scrollButtons: {enable: true}
+			autoHideScrollbar: true,
         });
-        $(".page-content").mCustomScrollbar({
-        	theme:"dark-thin",
-        	scrollbarPosition: "inside",
+        $(".modal, .page-content").mCustomScrollbar({
+			theme:"dark",
         	autoHideScrollbar: true,
-        	scrollButtons: {enable: true}
         });
     });
 })(jQuery);
@@ -53,46 +48,59 @@ $(function(){
   $('[data-toggle="popover"]').popover()
 });
 
+
+
 // funcion para clonar
-var i = 1;
 function add(){
     let nuevo = $('#itemDate').clone();
     nuevo.attr('id', '');
     nuevo.addClass('itemDate');
-    nuevo.find('input').each(function() {
+    nuevo.find('input[type=text]').each(function() {
         this.value = '';
-		this.id = i;
     });
-	nuevo.find('button').each(function() {
-		this.id = i;
+	nuevo.find('input[type=hidden]').each(function() {
+        this.value = '';
     });
 
-    $(nuevo).append('<div class="col-12 col-md-1"><button class="item-delete btn btn-raised btn-danger"><i class="fas fa-times"></i></button></div>');
+    $(nuevo).append('&nbsp;<button class="item-delete btn btn-raised btn-danger"><i class="fas fa-times"></i></button>');
     $(nuevo).insertBefore('#item-add');
-	i++;
 }
+$('#item-add .button').on('click', add);
 
+// funcion para eliminar una fila
 function removeThisFile(ele) {
     $(this).closest('.itemDate').remove();
 }
-
-$('#item-add .button').on('click', add);
-
 $(document.body).on('click', '.item-delete', removeThisFile);
 
-// Solo para probar
-$('#item-check button').on('click', function() {
-    // Recorrer todos los campos
-    // Todos tienen el mismo nombre, pero cada uno tiene índice
-    $('[name="date[]"]').each(function(index) {
-        console.log(index, $(this)[0]);
-		alert(index);
-    });
-});
-
+// Obtener el id de la fila
 var fila;
 function buscarTutor(ele) {
-    fila = $(this).attr('id');
+   fila = $(this).closest('.itemDate');
+   if(fila.length==0){
+		fila = $(this).closest('#itemDate');
+   }
+}
+$(document.body).on('click', '.item-update', buscarTutor);
+
+/** Clonar campos para ver datos completo */
+function add_alumno(){
+    let nuevo = $('#itemDate').clone();
+    nuevo.attr('id', '');
+    nuevo.addClass('itemDate');
+    nuevo.find('input[type=text]').each(function() {
+        this.value = '';
+    });
+
+    $(nuevo).insertBefore('#item-add');
 }
 
-$(document.body).on('click', '.item-update', buscarTutor);
+ /** Ver datos completo */
+function ver_Datos() {
+	fila = $(this).closest('td');
+	verDatos();
+}
+$(document.body).on('click', '.btnVerDatos', ver_Datos);
+
+
+
