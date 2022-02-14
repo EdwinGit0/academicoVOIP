@@ -4,10 +4,16 @@
     class modelo_alumno extends main_model{
         /**Modelo agregar alumno */
         protected static function agregar_alumno_modelo($datos){
+<<<<<<< HEAD:modelo/admin/modelo_alumno.php
             $sql=main_model::conectar()->prepare("INSERT INTO alumno(RUDE_A,UA_ID,CI_A,NOMBRE_A,APELLIDOP_A,APELLIDOM_A,FECHANAC_A,SEXO_A,LUGARNAC_A,CORREO_A,CONTRA_A,TELEFONO_A,DIRECCION_A,ESTADO_A) 
             VALUES(:Rude,:CodUE,:CI,:Nombre,:ApellidoP,:ApellidoM,:FechaNac,:Sexo,:LugarNac,:Correo,:Contra,:Telefono,:Direccion,:Estado)");
             
             $sql->bindParam(":Rude",$datos['Rude']);
+=======
+            $sql=main_model::conectar()->prepare("INSERT INTO alumno(UA_ID,CI_A,NOMBRE_A,APELLIDOP_A,APELLIDOM_A,FECHANAC_A,SEXO_A,LUGARNAC_A,CORREO_A,CONTRA_A,TELEFONO_A,DIRECCION_A,ESTADO_A) 
+            VALUES(:CodUE,:CI,:Nombre,:ApellidoP,:ApellidoM,:FechaNac,:Sexo,:LugarNac,:Correo,:Contra,:Telefono,:Direccion,:Estado)");
+
+>>>>>>> origin:modelo/modelo_alumno.php
             $sql->bindParam(":CodUE",$datos['CodUE']);
             $sql->bindParam(":CI",$datos['CI']);
             $sql->bindParam(":Nombre",$datos['Nombre']);
@@ -101,7 +107,76 @@
             $sql->bindParam(":Direccion",$datos['Direccion']);
             $sql->bindParam(":Estado",$datos['Estado']);
             $sql->bindParam(":ID",$datos['ID']);
+<<<<<<< HEAD:modelo/admin/modelo_alumno.php
             $sql->bindParam(":IdE",$datos['IdE']);
+=======
+            $sql->execute();
+            
+            return $sql;
+        }
+
+
+
+
+        /**Modelo eliminar educativo de alumno */
+        protected static function eliminar_educativo_alumno_up_modelo($id){
+            $sql=main_model::conectar()->prepare("UPDATE alumno SET UA_ID=null WHERE ALUMNO_ID=:ID");
+            
+            $sql->bindParam(":ID",$id);
+            $sql->execute();
+            
+            return $sql;
+        }
+
+        /**Modelo eliminar grado de alumno */
+        protected static function eliminar_grado_alumno_up_modelo($id){
+            $sql=main_model::conectar()->prepare("UPDATE alumno SET COD_GRA=null WHERE ALUMNO_ID=:ID");
+            
+            $sql->bindParam(":ID",$id);
+            $sql->execute();
+            
+            return $sql;
+        }
+
+        /**Modelo eliminar seccion de alumno */
+        protected static function eliminar_seccion_alumno_up_modelo($id){
+            $sql=main_model::conectar()->prepare("UPDATE alumno SET COD_SEC=null WHERE ALUMNO_ID=:ID");
+            
+            $sql->bindParam(":ID",$id);
+            $sql->execute();
+            
+            return $sql;
+        }
+
+        /**Modelo agregar educativo alumno */
+        protected static function agregar_educativo_alumno_up_modelo($datos,$id){
+            $sql=main_model::conectar()->prepare("UPDATE alumno SET UA_ID=:CodUA WHERE ALUMNO_ID=:ID");
+            
+            $sql->bindParam(":CodUA",$datos['CodUA']);
+            $sql->bindParam(":ID",$id);
+            $sql->execute();
+            
+            return $sql;
+        }
+
+        /**Modelo agregar grado alumno */
+        protected static function agregar_grado_alumno_up_modelo($datos,$id){
+            $sql=main_model::conectar()->prepare("UPDATE alumno SET COD_GRA=:CodGra WHERE ALUMNO_ID=:ID");
+            
+            $sql->bindParam(":CodGra",$datos['CodGra']);
+            $sql->bindParam(":ID",$id);
+            $sql->execute();
+            
+            return $sql;
+        }
+
+        /**Modelo agregar seccion alumno */
+        protected static function agregar_seccion_alumno_up_modelo($datos,$id){
+            $sql=main_model::conectar()->prepare("UPDATE alumno SET COD_SEC=:CodSec WHERE ALUMNO_ID=:ID");
+            
+            $sql->bindParam(":CodSec",$datos['CodSec']);
+            $sql->bindParam(":ID",$id);
+>>>>>>> origin:modelo/modelo_alumno.php
             $sql->execute();
             
             return $sql;

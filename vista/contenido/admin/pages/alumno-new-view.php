@@ -120,6 +120,7 @@
 			<legend><i class="fas fa-user-plus"></i> &nbsp; Información adicional</legend>
 			<div class="container-fluid">
 				<label for="docente_tutor_reg" class="">Tutor</label>
+<<<<<<< HEAD:vista/contenido/admin/pages/alumno-new-view.php
 				<div id="docente_tutor_reg">
 					<div class="input-group" id="itemDate">
 							<input type="text" class="form-control form-block" name="field_name[]" placeholder="Sin designar" disabled>
@@ -135,6 +136,14 @@
 								<i class="mi-add"></i>AGREGAR +
 							</button>
 						</p>
+=======
+				<div class="row" id="itemDate">
+					<div class="col-12 col-md-10">
+						<input type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{3,150}" class="form-control" name="date[]" id="0" username="" maxlength="150" disabled>
+					</div>
+					<div class="col-12 col-md-1 text-right">
+						<button class="item-update btn btn-raised btn-info" data-toggle="modal" data-target="#ModalPadre" id="0"><i class="fas fa-search-plus"></i></button>
+>>>>>>> origin:vista/contenido/alumno-new-view.php
 					</div>
 				</div>
 			</div>
