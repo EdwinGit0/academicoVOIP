@@ -196,7 +196,6 @@
                 $ua=$_SESSION['ua_id'];
             }
 
-<<<<<<< HEAD:controlador/admin/controlador_alumno.php
             /** Validad tutores existentes */
             foreach($tutores as $key => $value){
                 if(isset($value) && $value!=""){
@@ -216,8 +215,6 @@
                 }
             }
 
-=======
->>>>>>> origin:controlador/controlador_alumno.php
             $datos_alumno_reg=[
                 "CI"=>$ci,
                 "Rude"=>main_model::codigo_aleatorio(),
@@ -238,7 +235,6 @@
             $agregar_alumno=modelo_alumno::agregar_alumno_modelo($datos_alumno_reg);
 
             if($agregar_alumno->rowCount()==1){
-<<<<<<< HEAD:controlador/admin/controlador_alumno.php
 
                 $valor = main_model::ejecutar_consulta_simple("SELECT MAX(ALUMNO_ID) AS id FROM alumno")->fetch();
                 $id_alumno = $valor['id'];
@@ -251,8 +247,6 @@
                 }
             
 
-=======
->>>>>>> origin:controlador/controlador_alumno.php
                 $alerta=[
                     "Alerta"=>"recargar",
                     "Titulo"=>"Usuario registrado",
