@@ -26,29 +26,12 @@
 <div class="container-fluid">
         <?php
             require_once "./controlador/admin/controlador_educativo.php";
-            require_once "./controlador/admin/controlador_anio.php";
             $ins_educativo = new controlador_educativo();
-            $ins_anio = new controlador_anio();
             $datos_educativo = $ins_educativo->datos_educativo_alumno_controlador(main_model::encryption($_SESSION['ua_id']));
-            $datos_anio = $ins_anio->datos_anio_controlador("Todo","");
             if($datos_educativo->rowCount()==1){
                 $campos_educativo = $datos_educativo->fetch();
-                $campos_anio = $datos_anio->fetchAll();
         ?>
 
-        <div class="card-header text-white bg-dark">
-            <div class="col-12 col-md-12">
-                <div class="input-group justify-content-md-center">
-                    <span><?php echo $campos_educativo['NOMBRE_UA'];?></span>
-                    <div class="input-group-addon">&nbsp; - &nbsp;</div>
-                    <select class="" name="gestion_academico_see" id="gestion_academico">
-                        <?php foreach($campos_anio as $rows){ ?>
-                            <option class="btnAnioAcademico" value="<?php echo $rows['NOMBRE_ANIO'];?>"><?php echo $rows['NOMBRE_ANIO'];?></option>
-                        <?php } ?>
-                    </select>
-                </div>
-            </div>
-        </div>
         <div class="card" style="padding-top: 0.1rem">
             <div class="row">
                 <div class="col-md-4">

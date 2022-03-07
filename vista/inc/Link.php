@@ -24,3 +24,5 @@
 
 <!-- Favicon icon -->
 <link rel="shortcut icon" type="image/x-icon" href="<?php echo SERVERURL;?>vista/assets/img/favicon.ico">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>

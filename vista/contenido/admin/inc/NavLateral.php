@@ -7,6 +7,26 @@
                 <figcaption class="roboto-medium text-center">
                     <?php echo $_SESSION['nombre_sa']." ".$_SESSION['apellidoP_sa']." ".$_SESSION['apellidoM_sa']; ?> <br><small class="roboto-condensed-light"><?php echo $_SESSION['correo_sa'];?></small>
                 </figcaption>
+                <figcaption class="roboto-medium text-center">
+                    <?php
+                        require_once "./controlador/admin/controlador_educativo.php";
+                        $ins_educativo = new controlador_educativo();
+                        $datos_educativo = $ins_educativo->datos_educativo_alumno_controlador(main_model::encryption($_SESSION['ua_id']));
+                        if($datos_educativo->rowCount()==1){
+                            $campos_educativo = $datos_educativo->fetch();
+                        ?>
+                        
+                        <small class="roboto-condensed-light"><?php echo $campos_educativo['NOMBRE_UA'];?> - <?php echo $_SESSION['anio_academico']; ?></small>
+
+                        <?php }else{ ?>
+
+                            <div class="alert alert-warning text-center" role="alert">
+                                <p><i class="fas fa-exclamation-triangle fa-5x"></i></p>
+                                <h4 class="alert-heading">¡Usted no pertenece a un Establecimiento educativo!</h4>
+                            </div>
+
+                        <?php } ?>
+                    </figcaption>
             </figure>
             <div class="full-box nav-lateral-bar"></div>
             <nav class="full-box nav-lateral-menu">

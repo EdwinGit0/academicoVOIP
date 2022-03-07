@@ -74,6 +74,7 @@
                 $_SESSION['correo_sa']=$row['CORREO_AD'];
                 $_SESSION['privilegio_sa']=$row['PRIVILEGIO'];
                 $_SESSION['usuario']="admin";
+                $_SESSION['anio_academico']=date("Y");
                 $_SESSION['token_sa']=md5(uniqid(mt_rand(),true));
 
                 return header("Location: ".SERVERURL."admin/home/");

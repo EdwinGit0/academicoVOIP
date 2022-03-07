@@ -93,9 +93,9 @@
             if(isset($busqueda) && $busqueda!=""){
                 $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM anio_academico WHERE NOMBRE_ANIO LIKE '%$busqueda%' 
                 OR CREADO LIKE '%$busqueda%'
-                ORDER BY NOMBRE_ANIO ASC LIMIT $inicio,$registros";
+                ORDER BY NOMBRE_ANIO DESC LIMIT $inicio,$registros";
             }else{
-                $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM anio_academico ORDER BY NOMBRE_ANIO ASC LIMIT $inicio,$registros";
+                $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM anio_academico ORDER BY NOMBRE_ANIO DESC LIMIT $inicio,$registros";
             }
             $conexion = main_model::conectar();
 
@@ -111,7 +111,8 @@
                             <tr class="text-center roboto-medium">
                                 <th>#</th>
                                 <th>NOMBRE</th>
-                                <th>CREADO</th>';
+                                <th>CREADO</th>
+                                <th>SELECCIONAR</th>';
                                 if($privilegio==1 || $privilegio ==2){
                                     $tabla.='<th>ACTUALIZAR</th>';
                                 }
@@ -129,7 +130,21 @@
                     $tabla.='<tr class="text-center" >
                         <td>'.$contador.'</td>
                         <td>'.$rows['NOMBRE_ANIO'].'</td>
-                        <td>'.$rows['CREADO'].'</td>';
+                        <td>'.$rows['CREADO'].'</td>
+                        <td>
+                            <form class="FormularioAjax" action="'.SERVERURL.'ajax/docente/anioAjax.php" method="POST" data-form="actualizar" autocomplete="off">
+                                <input type="hidden" name="anio_id_asig" value="'.main_model::encryption($rows['COD_ANIO']).'">';
+                                if($rows['NOMBRE_ANIO']==$_SESSION['anio_academico']){
+                                    $tabla.='<button type="submit" class="btn btn-success">
+                                                <i class="fas fa-check-circle"></i>
+                                            </button>';
+                                }else{
+                                    $tabla.='<button type="submit" class="btn btn-warning">
+                                                <i class="fas fa-times-circle"></i>
+                                            </button>';
+                                }
+                                $tabla.='</form>
+                        </td>';
 
                         if($privilegio==1 || $privilegio ==2){
                             $tabla.='<td>

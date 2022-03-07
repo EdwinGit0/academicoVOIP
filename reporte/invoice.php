@@ -6,7 +6,7 @@
 	$pdf = new FPDF('P','mm','Letter');
 	$pdf->SetMargins(17,17,17);
 	$pdf->AddPage();
-	$pdf->Image('../vistas/assets/img/logo.png',10,10,30,30,'PNG');
+	$pdf->Image('../vista/assets/img/logo.png',10,10,30,30,'PNG');
 
 	$pdf->SetFont('Arial','B',18);
 	$pdf->SetTextColor(0,107,181);
@@ -95,7 +95,7 @@
 
 	$pdf->Ln(15);
 
-	$pdf->MultiCell(0,9,utf8_decode("OBSERVACIÓN: ".$datos_prestamo['prestamo_observacion']),0,'J',false);
+	$pdf->MultiCell(0,9,utf8_decode("OBSERVACIÓN: "),0,'J',false);
 
 	$pdf->SetFont('Arial','',12);
 	if(true){

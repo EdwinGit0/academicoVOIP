@@ -23,3 +23,5 @@
 <script src="<?php echo SERVERURL;?>vista/js/alertas.js" ></script>
 
 <script src="<?php echo SERVERURL;?>vista/js/bootstrap-tree.js"></script>
+
+<script src="<?php echo SERVERURL;?>vista/js/html2pdf.bundle.min.js"></script>

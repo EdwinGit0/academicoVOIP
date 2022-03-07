@@ -21,7 +21,7 @@
         }
 
         protected static function obtener_vistas_docente_modelo($vista){
-            $listaBlanca=["home","alumno-list","pedagogico-cuaderno","pedagogico-registro","user-update",
+            $listaBlanca=["home","pedagogico-cuaderno","alumno-libreta","pedagogico-registro","user-update",
             "gestion-academico"];
             if(in_array($vista, $listaBlanca)){
                 if(is_file("./vista/contenido/docente/pages/".$vista."-view.php")){
