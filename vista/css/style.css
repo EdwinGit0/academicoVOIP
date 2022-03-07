@@ -133,11 +133,23 @@ body,html{
 	outline: none;
 }
 
+
+.table.table-libreta th {
+	color:black;
+	border: 1px solid !important;
+	vertical-align: middle;
+}
+
+.table.table-libreta td {
+	border: 1px solid !important;
+	vertical-align: middle;
+}
 .table .btn{
 	margin-bottom: 0;
 }
 .table thead th{
 	color: #FFF;
+	vertical-align: middle;
 }
 .table tbody tr{
 	color: #333;
@@ -297,6 +309,20 @@ table form{
 	border: 4px solid #FFF;
 	border-radius: 100%;
 }
+
+.libreta img {
+	width: 60%;
+}
+
+table.table-libreta {
+	background: linear-gradient(rgba(255, 255, 255, 0.911), rgba(255, 255, 255, 0.911)), url('https://upload.wikimedia.org/wikipedia/commons/b/b6/Escudo_de_Bolivia.svg') no-repeat center center;
+	background-size:80% 90%;
+}
+
+table tr.titulo-libreta {
+	font-size: 20px;
+}
+
 .nav-lateral-avatar figcaption{
 	margin-top: 20px;
 	color: #FFF;
@@ -566,11 +592,18 @@ table form{
     background-color:#fbfbfb;
     border:1px solid rgb(221, 218, 218);
 }*/
+.tree li.primer-ul::before {
+    border-left:0;
+}
+.tree li.primer-ul::after {
+    border-top:0;
+}
+
 .tree li {
     list-style-type:none;
     margin:0;
     padding:10px 5px 0 5px;
-    position:relative
+    position:relative;
 }
 .tree li::before, .tree li::after {
     content:'';
@@ -588,7 +621,7 @@ table form{
 .tree li::after {
     border-top:1px solid #999;
     height:20px;
-    top:25px;
+    top:30px;
     width:25px
 }
 .tree li span {
@@ -625,5 +658,87 @@ table form{
 	text-align: center;
 }
 
+/* Texto vertical en celdas*/
+.verticalText {
+	writing-mode: tb-rl;
+	transform: rotate(-180deg);
+}
+[contenteditable] { 
+	outline: 0px solid transparent; 
+}
+[contenteditable]:focus { 
+	border: 2px solid #008035;  
+}
+
+.tabla-promedio {
+	background-color: #1d066d;
+	color:white  ;
+}
+
+.valor-promedio {
+	background-color: #e0d7ff;
+	font-weight: bold;
+}
+
+th.tabla-parcial {
+	background-color: #04AA6D;
+}
+
+.tabla-evaluacion {
+	background-color: #054709;
+}
+
+.campo_total, .prom_estado {
+	font-weight: bold;
+}
+
+/* nav var*/
+li a.cuadernoCp:hover {
+	background-color: rgb(221, 221, 221);
+	border-radius: 5px;
+}
+.nav .cuadernoCp.active {
+	border-bottom: 3px solid rgb(170, 0, 0);
+}
+	
+.nav > li > a.cuadernoCp:hover {
+	border-bottom: 3px solid rgb(170, 0, 0);
+}
+
+/* Grafica aprobado/reprobados*/
+canvas.grafico-pastel{
+	width:300px !important;
+	height:150px !important;
+	padding: 0 !important;
+    margin: auto !important;
+    display: block !important;
+}	
+
+/* Grafica aprobado/reprobados anual*/
+canvas.grafico-pastel-anual{
+	width:475px !important;
+	height:237px !important;
+	padding: 0 !important;
+    margin: auto !important;
+    display: block !important;
+}	
+
+.full_screen {
+	width: 100vw;
+	position: fixed;
+	height: 100vh;
+	top: 0;
+	left: 0;
+	z-index: 100;
+}
+
+.cardExpanded {
+    border: none !important;
+	box-shadow: none !important;
+}
+
+.cardContent {
+	height: 80vh !important;
+}
 
 /*----------  Keyframes  ----------*/

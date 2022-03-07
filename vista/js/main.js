@@ -102,5 +102,47 @@ function ver_Datos() {
 }
 $(document.body).on('click', '.btnVerDatos', ver_Datos);
 
+/** calcular promedio parciales */
+$(document).on('blur', '.campo_par', function () {
+	var input = $(this);
+	var columns = input.closest("tr").children();
+	promedio_val(columns,'campo_par','prom_par');
+});
 
+/** calcular promedio actividades*/
+$(document).on('blur', '.campo_act', function () {
+	var input = $(this);
+	var columns = input.closest("tr").children();
+	promedio_val(columns,'campo_act','prom_act');
+});
+
+/** calcular promedio S-D*/
+$(document).on('blur', '.campo_sd', function () {
+	var input = $(this);
+	var columns = input.closest("tr").children();
+	promedio_valSD(columns,'campo_sd','prom_SD');
+});
+
+/** guardar cuaderno pedagogico */
+$(document.body).on('click', '.btn_cp', function () {
+	var table = $(this).closest(".desplazar_body");
+	guardar_cuadernoP(table);
+});
+
+/** Exportar pdf documento */
+$(document.body).on('click', '.btnCrearLibretaPdf', function () {
+	const $documentoPdf = this.closest(".container-fluid").querySelector(".desgPDFDoc");
+	descargarDocPdf($documentoPdf,'Libreta-Escolar-Electrónica.pdf');
+});
+
+/** Exportar pdf documento */
+$(document.body).on('click', '.btnCrearPdf', function () {
+	const $documentoPdf = this.closest(".card-body").querySelector(".table-responsive");
+	descargarDocPdf($documentoPdf,'Documento.pdf');
+});
+
+/** Exportar excel documento */
+$(document.body).on('click', '.btnCrearLibretaExcel', function () {
+	tableToExcel('tableLibreta','LibretaEscolar');
+});
 

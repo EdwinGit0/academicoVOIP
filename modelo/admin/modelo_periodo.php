@@ -30,7 +30,10 @@
                 $sql->bindParam(":ID",$id);
             }elseif($tipo=="Conteo"){
                 $sql=main_model::conectar()->prepare("SELECT COD_PER FROM periodo");
+            }elseif($tipo=="Todo"){
+                $sql=main_model::conectar()->prepare("SELECT * FROM periodo");
             }
+
             $sql->execute();
 
             return $sql;

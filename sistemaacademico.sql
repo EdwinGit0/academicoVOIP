@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-02-2022 a las 16:24:34
+-- Tiempo de generación: 07-03-2022 a las 05:45:43
 -- Versión del servidor: 10.1.36-MariaDB
 -- Versión de PHP: 7.2.11
 
@@ -125,6 +125,7 @@ INSERT INTO `anio_academico` (`COD_ANIO`, `NOMBRE_ANIO`, `CREADO`) VALUES
 CREATE TABLE `area` (
   `COD_AREA` int(11) NOT NULL,
   `NOMBRE_AREA` char(50) COLLATE utf8_spanish_ci NOT NULL,
+  `CAMPO_AREA` char(255) COLLATE utf8_spanish_ci NOT NULL,
   `INFO` char(255) COLLATE utf8_spanish_ci DEFAULT NULL,
   `CREADO_AREA` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -133,17 +134,20 @@ CREATE TABLE `area` (
 -- Volcado de datos para la tabla `area`
 --
 
-INSERT INTO `area` (`COD_AREA`, `NOMBRE_AREA`, `INFO`, `CREADO_AREA`) VALUES
-(1, 'Matemática', 'Área de matemáticas de la unidad educativa', '2021-11-23'),
-(2, 'Artes Plásticas y Visuales', 'No hay', '2021-11-23'),
-(3, 'Literatura', NULL, '2021-11-21'),
-(4, 'Química', NULL, '2021-11-21'),
-(5, 'Física', NULL, '2021-11-21'),
-(6, 'Ingles', 'Área de conocimiento', '2021-11-21'),
-(7, 'Educación Física', NULL, '2021-11-21'),
-(8, 'Biología', NULL, '2021-11-21'),
-(9, 'Música', NULL, '2021-11-21'),
-(10, 'Tecnología', NULL, '2021-11-21');
+INSERT INTO `area` (`COD_AREA`, `NOMBRE_AREA`, `CAMPO_AREA`, `INFO`, `CREADO_AREA`) VALUES
+(1, 'Matemática', 'Ciencia, Tecnología y Producción', 'Área de matemáticas de la unidad educativa', '2021-11-23'),
+(2, 'Artes Plásticas y Visuales', 'Comunidad y Sociedad', 'No hay', '2021-11-23'),
+(3, 'Comunicación y Lenguajes Castellana y Originaria', 'Comunidad y Sociedad', NULL, '2021-11-21'),
+(4, 'Ciencias Naturales: Química', 'Vida Tierra Territorio', NULL, '2021-11-21'),
+(5, 'Ciencias Naturales: Física', 'Vida Tierra Territorio', NULL, '2021-11-21'),
+(6, 'Lengua Extranjera', 'Comunidad y Sociedad', 'Área de conocimiento', '2021-11-21'),
+(7, 'Educación Física y Deportes', 'Comunidad y Sociedad', NULL, '2021-11-21'),
+(8, 'Educación Musical', 'Comunidad y Sociedad', NULL, '2021-11-21'),
+(9, 'Valores, Espiritualidad y Religiones', 'Cosmos y Pensamiento', NULL, '2022-02-01'),
+(10, 'Técnica Tecnología General', 'Ciencia, Tecnología y Producción', NULL, '2021-11-21'),
+(11, 'Ciencias Sociales', 'Comunidad y Sociedad', NULL, '2022-02-01'),
+(12, 'Ciencias Naturales Biología - Geografía', 'Vida Tierra Territorio', NULL, '2022-02-01'),
+(13, 'Cosmovisiones, Filosofía y Psicología', 'Cosmos y Pensamiento', NULL, '2022-02-01');
 
 -- --------------------------------------------------------
 
@@ -161,6 +165,144 @@ CREATE TABLE `calificacion` (
   `VAL_ID` int(11) NOT NULL,
   `NOTA` decimal(10,0) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `calificacion`
+--
+
+INSERT INTO `calificacion` (`COD_CALI`, `ALUMNO_ID`, `COD_PER`, `PROFESOR_ID`, `COD_CUR`, `COD_ANIO`, `VAL_ID`, `NOTA`) VALUES
+(1, 2, 1, 1, 1, 1, 1, '100'),
+(2, 2, 1, 1, 1, 1, 2, '100'),
+(3, 2, 1, 1, 1, 1, 3, '100'),
+(4, 2, 1, 1, 1, 1, 4, '100'),
+(5, 2, 1, 1, 1, 1, 5, '100'),
+(6, 2, 1, 1, 1, 1, 6, '100'),
+(7, 2, 1, 1, 1, 1, 7, '10'),
+(8, 2, 1, 1, 1, 1, 8, '10'),
+(9, 2, 1, 1, 1, 1, 9, '5'),
+(10, 2, 1, 1, 1, 1, 10, '5'),
+(11, 2, 1, 1, 1, 1, 11, '100'),
+(12, 4, 1, 1, 1, 1, 1, '78'),
+(13, 4, 1, 1, 1, 1, 2, '8'),
+(14, 4, 1, 1, 1, 1, 3, '78'),
+(15, 4, 1, 1, 1, 1, 4, '80'),
+(16, 4, 1, 1, 1, 1, 5, '87'),
+(17, 4, 1, 1, 1, 1, 6, '68'),
+(18, 4, 1, 1, 1, 1, 7, '8'),
+(19, 4, 1, 1, 1, 1, 8, '7'),
+(20, 4, 1, 1, 1, 1, 9, '5'),
+(21, 4, 1, 1, 1, 1, 10, '2'),
+(22, 4, 1, 1, 1, 1, 11, '69'),
+(23, 5, 1, 1, 1, 1, 1, '83'),
+(24, 5, 1, 1, 1, 1, 2, '100'),
+(25, 5, 1, 1, 1, 1, 3, '0'),
+(26, 5, 1, 1, 1, 1, 4, '0'),
+(27, 5, 1, 1, 1, 1, 5, '0'),
+(28, 5, 1, 1, 1, 1, 6, '0'),
+(29, 5, 1, 1, 1, 1, 7, '8'),
+(30, 5, 1, 1, 1, 1, 8, '8'),
+(31, 5, 1, 1, 1, 1, 9, '5'),
+(32, 5, 1, 1, 1, 1, 10, '5'),
+(33, 5, 1, 1, 1, 1, 11, '47'),
+(34, 2, 2, 1, 1, 1, 1, '70'),
+(35, 2, 2, 1, 1, 1, 2, '10'),
+(36, 2, 2, 1, 1, 1, 3, '10'),
+(37, 2, 2, 1, 1, 1, 4, '10'),
+(38, 2, 2, 1, 1, 1, 5, '10'),
+(39, 2, 2, 1, 1, 1, 6, '10'),
+(40, 2, 2, 1, 1, 1, 7, '10'),
+(41, 2, 2, 1, 1, 1, 8, '1'),
+(42, 2, 2, 1, 1, 1, 9, '1'),
+(43, 2, 2, 1, 1, 1, 10, '1'),
+(44, 2, 2, 1, 1, 1, 11, '27'),
+(45, 4, 2, 1, 1, 1, 1, '100'),
+(46, 4, 2, 1, 1, 1, 2, '100'),
+(47, 4, 2, 1, 1, 1, 3, '100'),
+(48, 4, 2, 1, 1, 1, 4, '100'),
+(49, 4, 2, 1, 1, 1, 5, '100'),
+(50, 4, 2, 1, 1, 1, 6, '100'),
+(51, 4, 2, 1, 1, 1, 7, '5'),
+(52, 4, 2, 1, 1, 1, 8, '5'),
+(53, 4, 2, 1, 1, 1, 9, '5'),
+(54, 4, 2, 1, 1, 1, 10, '5'),
+(55, 4, 2, 1, 1, 1, 11, '90'),
+(56, 5, 2, 1, 1, 1, 1, '100'),
+(57, 5, 2, 1, 1, 1, 2, '100'),
+(58, 5, 2, 1, 1, 1, 3, '50'),
+(59, 5, 2, 1, 1, 1, 4, '100'),
+(60, 5, 2, 1, 1, 1, 5, '50'),
+(61, 5, 2, 1, 1, 1, 6, '54'),
+(62, 5, 2, 1, 1, 1, 7, '5'),
+(63, 5, 2, 1, 1, 1, 8, '5'),
+(64, 5, 2, 1, 1, 1, 9, '1'),
+(65, 5, 2, 1, 1, 1, 10, '2'),
+(66, 5, 2, 1, 1, 1, 11, '66'),
+(67, 2, 2, 1, 2, 1, 1, '100'),
+(68, 2, 2, 1, 2, 1, 2, '100'),
+(69, 2, 2, 1, 2, 1, 3, '100'),
+(70, 2, 2, 1, 2, 1, 4, '100'),
+(71, 2, 2, 1, 2, 1, 5, '100'),
+(72, 2, 2, 1, 2, 1, 6, '100'),
+(73, 2, 2, 1, 2, 1, 7, '10'),
+(74, 2, 2, 1, 2, 1, 8, '5'),
+(75, 2, 2, 1, 2, 1, 9, '5'),
+(76, 2, 2, 1, 2, 1, 10, '5'),
+(77, 2, 2, 1, 2, 1, 11, '95'),
+(78, 3, 2, 1, 2, 1, 1, '0'),
+(79, 3, 2, 1, 2, 1, 2, '0'),
+(80, 3, 2, 1, 2, 1, 3, '0'),
+(81, 3, 2, 1, 2, 1, 4, '0'),
+(82, 3, 2, 1, 2, 1, 5, '0'),
+(83, 3, 2, 1, 2, 1, 6, '0'),
+(84, 3, 2, 1, 2, 1, 7, '0'),
+(85, 3, 2, 1, 2, 1, 8, '0'),
+(86, 3, 2, 1, 2, 1, 9, '0'),
+(87, 3, 2, 1, 2, 1, 10, '0'),
+(88, 3, 2, 1, 2, 1, 11, '0'),
+(89, 5, 2, 1, 2, 1, 1, '0'),
+(90, 5, 2, 1, 2, 1, 2, '0'),
+(91, 5, 2, 1, 2, 1, 3, '0'),
+(92, 5, 2, 1, 2, 1, 4, '0'),
+(93, 5, 2, 1, 2, 1, 5, '0'),
+(94, 5, 2, 1, 2, 1, 6, '0'),
+(95, 5, 2, 1, 2, 1, 7, '0'),
+(96, 5, 2, 1, 2, 1, 8, '0'),
+(97, 5, 2, 1, 2, 1, 9, '0'),
+(98, 5, 2, 1, 2, 1, 10, '0'),
+(99, 5, 2, 1, 2, 1, 11, '0'),
+(100, 2, 3, 2, 1, 1, 1, '100'),
+(101, 2, 3, 2, 1, 1, 2, '100'),
+(102, 2, 3, 2, 1, 1, 3, '100'),
+(103, 2, 3, 2, 1, 1, 4, '100'),
+(104, 2, 3, 2, 1, 1, 5, '100'),
+(105, 2, 3, 2, 1, 1, 6, '100'),
+(106, 2, 3, 2, 1, 1, 7, '5'),
+(107, 2, 3, 2, 1, 1, 8, '5'),
+(108, 2, 3, 2, 1, 1, 9, '5'),
+(109, 2, 3, 2, 1, 1, 10, '5'),
+(110, 2, 3, 2, 1, 1, 11, '90'),
+(111, 4, 3, 2, 1, 1, 1, '0'),
+(112, 4, 3, 2, 1, 1, 2, '0'),
+(113, 4, 3, 2, 1, 1, 3, '0'),
+(114, 4, 3, 2, 1, 1, 4, '0'),
+(115, 4, 3, 2, 1, 1, 5, '0'),
+(116, 4, 3, 2, 1, 1, 6, '0'),
+(117, 4, 3, 2, 1, 1, 7, '0'),
+(118, 4, 3, 2, 1, 1, 8, '0'),
+(119, 4, 3, 2, 1, 1, 9, '0'),
+(120, 4, 3, 2, 1, 1, 10, '0'),
+(121, 4, 3, 2, 1, 1, 11, '0'),
+(122, 5, 3, 2, 1, 1, 1, '0'),
+(123, 5, 3, 2, 1, 1, 2, '0'),
+(124, 5, 3, 2, 1, 1, 3, '0'),
+(125, 5, 3, 2, 1, 1, 4, '0'),
+(126, 5, 3, 2, 1, 1, 5, '0'),
+(127, 5, 3, 2, 1, 1, 6, '0'),
+(128, 5, 3, 2, 1, 1, 7, '0'),
+(129, 5, 3, 2, 1, 1, 8, '0'),
+(130, 5, 3, 2, 1, 1, 9, '0'),
+(131, 5, 3, 2, 1, 1, 10, '0'),
+(132, 5, 3, 2, 1, 1, 11, '0');
 
 -- --------------------------------------------------------
 
@@ -215,6 +357,7 @@ INSERT INTO `cur_alum` (`COD_CUR`, `ALUMNO_ID`, `FECHA_INI_CA`, `FECHA_FIN_CA`) 
 (1, 4, '2022-01-01', '2022-11-28'),
 (1, 5, '2021-01-01', '2021-12-31'),
 (1, 5, '2022-01-01', '2022-12-31'),
+(2, 2, '2022-01-01', '2022-12-31'),
 (2, 3, '2022-01-01', '2022-12-31'),
 (2, 5, '2022-01-01', '2022-12-31'),
 (3, 2, '2022-01-01', '2022-12-31'),
@@ -241,9 +384,9 @@ CREATE TABLE `cur_prof` (
 INSERT INTO `cur_prof` (`COD_CUR`, `PROFESOR_ID`, `RESPONSABLE_CP`, `FECHA_INI_CP`, `FECHA_FIN_CP`) VALUES
 (1, 1, 1, '2022-02-05', '2022-02-28'),
 (1, 2, 0, '2022-02-05', '2022-02-28'),
-(1, 3, 1, '2021-02-02', '2021-02-28'),
-(2, 1, 1, '2022-02-06', '2022-02-28'),
-(2, 2, 0, '2022-02-09', '2022-02-28'),
+(1, 3, 0, '2021-02-02', '2021-02-28'),
+(2, 1, 0, '2022-02-06', '2022-02-28'),
+(2, 2, 1, '2022-02-09', '2022-02-28'),
 (2, 3, 0, '2020-02-10', '2020-02-28'),
 (2, 3, 0, '2022-02-10', '2022-02-28');
 
@@ -378,7 +521,7 @@ CREATE TABLE `unidad_academico` (
 --
 
 INSERT INTO `unidad_academico` (`UA_ID`, `COD_UA`, `NOMBRE_UA`, `DIRECCION_UA`, `DESCRIPCION_UA`, `DISTRITO_UA`, `LOCALIDAD_UA`, `DPTO_UA`, `DEPENDENCIA_UA`, `ESTADO_UA`) VALUES
-(1, 'UE0001', 'Unidad Educativa 6 de Agosto', 'Av. Panamericana', NULL, NULL, NULL, 'Cochabamba', 'Fiscal', 1),
+(1, 'UE0001', '6 de Agosto', 'Av. Panamericana', NULL, 'Quillacollo', 'Quillacollo - Ciudad Quillacollo', 'Cochabamba', 'Fiscal', 1),
 (2, 'EU0002', 'Heroinas', 'Ayacucho', NULL, NULL, NULL, 'Cochabamba', 'Fiscal', 1),
 (3, 'UE0003', 'San Martín de Porres', 'Quillacollo, 1ro de mayo', NULL, NULL, NULL, 'Cochabamba', 'Fiscal', 1);
 
@@ -408,7 +551,8 @@ INSERT INTO `valoracion` (`VAL_ID`, `CRITERIO_VAL`, `USUARIO_VAL`) VALUES
 (7, 'Ser', 'Docente'),
 (8, 'Decir', 'Docente'),
 (9, 'Ser', 'Alumno'),
-(10, 'Decir', 'Alumno');
+(10, 'Decir', 'Alumno'),
+(11, 'Promedio', 'Alumno');
 
 --
 -- Índices para tablas volcadas
@@ -537,13 +681,13 @@ ALTER TABLE `anio_academico`
 -- AUTO_INCREMENT de la tabla `area`
 --
 ALTER TABLE `area`
-  MODIFY `COD_AREA` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `COD_AREA` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `calificacion`
 --
 ALTER TABLE `calificacion`
-  MODIFY `COD_CALI` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `COD_CALI` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
 
 --
 -- AUTO_INCREMENT de la tabla `curso`
@@ -579,7 +723,7 @@ ALTER TABLE `unidad_academico`
 -- AUTO_INCREMENT de la tabla `valoracion`
 --
 ALTER TABLE `valoracion`
-  MODIFY `VAL_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `VAL_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Restricciones para tablas volcadas

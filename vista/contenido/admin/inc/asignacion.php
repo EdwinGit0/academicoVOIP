@@ -4,10 +4,8 @@
         if(tipo!=""){
             let alumno_id=document.querySelector('#alumno_id_curso').value;
             let url=document.querySelector('#alumno_url_cursop').value;
-            let anio_academico=document.querySelector('#gestion_academico').value;
             alumno_id=alumno_id.trim();
             url=url.trim();
-            anio_academico=anio_academico.trim();
 
             fila.find('input[type=hidden]').each(function() {
                 id_curso = this.value;
@@ -23,7 +21,6 @@
                 }
                 datos.append("alumno_id", alumno_id);
                 datos.append("url", url);
-                datos.append("anio_academico", anio_academico);
 
                 fetch("<?php echo SERVERURL?>ajax/admin/asignacionAjax.php",{
                     method: 'POST',

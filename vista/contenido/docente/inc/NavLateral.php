@@ -44,9 +44,6 @@
                         <a href="#" class="nav-btn-submenu"><i class="fas fa-user-graduate fa-fw"></i> &nbsp; Calificación <i class="fas fa-chevron-down"></i></a>
                         <ul>
                             <li>
-                                <a href="<?php echo SERVERURL; ?>docente/alumno-list/"><i class="fas fa-user-graduate fa-fw"></i> &nbsp; Lista de alumnos</a>
-                            </li>
-                            <li>
                                 <a href="<?php echo SERVERURL; ?>docente/pedagogico-cuaderno/"><i class="fas fa-users fa-fw"></i> &nbsp; Cuaderno pedagógico</a>
                             </li>
                             <li>

@@ -51,7 +51,6 @@
                 })
                 .then(respuesta => respuesta.json())
                 .then(respuesta => {
-<<<<<<< HEAD:vista/contenido/admin/inc/alumno.php
                     var tutor_repetido=false;
                     $('#docente_tutor_reg').find('input[type=hidden]').each(function() {
                         if(this.value==respuesta.ID){
@@ -77,11 +76,6 @@
                         });
                         $('#ModalPadre').modal('show');
                     }
-=======
-                    var valor = document.getElementById(fila);
-	                valor.value = respuesta.Nombre+' '+respuesta.ApellidoP+' '+respuesta.ApellidoM;
-                    valor.username = respuesta.ID;
->>>>>>> origin:vista/inc/alumno.php
                 });
             }else{
                 $('#ModalPadre').modal('show');

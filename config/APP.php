@@ -1,5 +1,5 @@
 <?php
-    const SERVERURL="http://localhost:8888/academicoVOIP/";
+    const SERVERURL="http://localhost/academicoVOIP/";
 
     const COMPANY="SISTEMA ACADEMICO";
 

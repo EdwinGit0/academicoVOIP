@@ -14,11 +14,12 @@ $(function () {
   });
 });
 
+/** esconder contenido de card */
 $(function () {
    $('.card-body').addClass('desplazar_body');
    $('.btn-tool').attr('title', 'Collapse body');
    $('.btn-tool').on('click', function (e) {
-         var cuerpo = $(this).closest('.card').find('.desplazar_body');;
+         var cuerpo = $(this).closest('.card').find('.desplazar_body');
          if (cuerpo.is(":visible")) {
             cuerpo.hide('fast');
             $(this).attr('title', 'Expand body').find(' > i').addClass('fa-plus').removeClass('fa-minus');
@@ -26,6 +27,40 @@ $(function () {
             cuerpo.show('fast');
             $(this).attr('title', 'Collapse body').find(' > i').addClass('fa-minus').removeClass('fa-plus');
          }
+         e.stopPropagation();
+   });
+ });
+
+ /** MAx/Min card */
+$(function () {
+   let clicked = true;
+   $('.btn-expand').attr('title', 'Collapse card');
+   $('.btn-expand').on('click', function (e) {
+         //let media_card = $(this).closest('.cardCuaderno');
+         if (clicked) {
+            $('.cardCuaderno').addClass("full_screen");
+            $('.card').addClass("cardExpanded");
+            $('.card-body').addClass("cardContent");
+            $('.btn-expand').attr('title', 'Expand card').find(' > i').addClass('fa-compress').removeClass('fa-expand');
+            $(".cardContent").mCustomScrollbar({
+               theme:"dark",
+               autoHideScrollbar: true,
+            });
+         } else {
+            $('.cardCuaderno').removeClass("full_screen");
+            $('.card').removeClass("cardExpanded");
+            $('.card-body').removeClass("cardContent");
+            $('.btn-expand').attr('title', 'Collapse card').find(' > i').addClass('fa-expand').removeClass('fa-compress');
+            $(".cardContent").mCustomScrollbar('destroy');
+            $(".nav-lateral-content").mCustomScrollbar({
+               autoHideScrollbar: true,
+            });
+            $(".modal, .page-content").mCustomScrollbar({
+               theme:"dark",
+               autoHideScrollbar: true,
+            });
+         }
+         clicked = !clicked;
          e.stopPropagation();
    });
  });
@@ -52,20 +87,20 @@ function asignacionAlum(ele) {
   function bookPedagogico(ele) {
    fila = $(this).closest('li');
    datosReferenciales();
-}
-$(document.body).on('click', '.bookPedago', bookPedagogico);
+   }
+   $(document.body).on('click', '.bookPedago', bookPedagogico);
 
-/**modales para asignar docentes y alumnos a curso */
- $(document.body).on('click', '.alumno', function(){
-    $('#ModalAlumno').modal('show');
- });
- $(document.body).on('click', '.docente', function(){        
-    $('#ModalDocente').modal('show');
- });
+   /**modales para asignar docentes y alumnos a curso */
+   $(document.body).on('click', '.alumno', function(){
+      $('#ModalAlumno').modal('show');
+   });
+   $(document.body).on('click', '.docente', function(){        
+      $('#ModalDocente').modal('show');
+   });
 
- /***Selector para seleccionar anio academico */
- function anioAcademico(e) {
-    asignacion(tipo_user);
- }
- $(document.body).on('click', '.btnAnioAcademico', anioAcademico)
-
+   /**Arbol para registro pedagogico */
+  function registerPedagogico(ele) {
+      fila = $(this).closest('li');
+      datosReferenciales();
+   }
+   $(document.body).on('click', '.registerPedago', registerPedagogico);

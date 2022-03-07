@@ -85,7 +85,6 @@
             $id_curso = main_model::limpiar_cadena($id_curso);
             $pagina = main_model::limpiar_cadena($_POST['alumno_id']);
             $url = main_model::limpiar_cadena($_POST['url']);
-            $anio_academico = main_model::limpiar_cadena($_POST['anio_academico']);
 
             $check_curso=main_model::ejecutar_consulta_simple("SELECT * FROM curso WHERE COD_CUR='$id_curso'");
             if($check_curso->rowCount()>=1){
@@ -101,9 +100,9 @@
                             </div> 
                         </div>';
                         if($tipo=="alumno"){
-                            $tabla.=controlador_asignacion::paginador_alumno_controlador($pagina,15,$_SESSION['privilegio_sa'],$url,$_SESSION['ua_id'],$id_curso,$anio_academico);
+                            $tabla.=controlador_asignacion::paginador_alumno_controlador($pagina,15,$_SESSION['privilegio_sa'],$url,$_SESSION['ua_id'],$id_curso,$_SESSION['anio_academico']);
                         }elseif($tipo=="docente"){
-                            $tabla.=controlador_asignacion::paginador_docente_controlador($pagina,15,$_SESSION['privilegio_sa'],$url,$_SESSION['ua_id'],$id_curso,$anio_academico);
+                            $tabla.=controlador_asignacion::paginador_docente_controlador($pagina,15,$_SESSION['privilegio_sa'],$url,$_SESSION['ua_id'],$id_curso,$_SESSION['anio_academico']);
                         }
                 return $tabla;
                 exit();
