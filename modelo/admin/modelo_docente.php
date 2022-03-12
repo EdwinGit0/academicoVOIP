@@ -43,7 +43,6 @@
                 $sql->bindParam(":ID",$id);
             }elseif($tipo=="Conteo"){
                 $sql=main_model::conectar()->prepare("SELECT PROFESOR_ID FROM profesor WHERE UA_ID='$ue'");
-                $sql->bindParam(":ID",$id);
             }
             $sql->execute();
             return $sql;

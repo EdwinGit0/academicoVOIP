@@ -1,5 +1,5 @@
 <?php
-    const SERVERURL="http://localhost/academicoVOIP/";
+    const SERVERURL="http://app-873282b0-236c-480e-add3-7d08817fc520.cleverapps.io/";
 
     const COMPANY="SISTEMA ACADEMICO";
 

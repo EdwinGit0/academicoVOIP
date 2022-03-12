@@ -37,7 +37,6 @@
                 $sql->bindParam(":ID",$id);
             }elseif($tipo=="Conteo"){
                 $sql=main_model::conectar()->prepare("SELECT ADMIN_ID FROM admin WHERE ADMIN_ID!='1'");
-                $sql->bindParam(":ID",$id);
             }
             $sql->execute();
             return $sql;
