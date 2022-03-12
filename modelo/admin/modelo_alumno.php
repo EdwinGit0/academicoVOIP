@@ -73,7 +73,6 @@
                 $sql->bindParam(":ID",$id);
             }elseif($tipo=="Conteo"){
                 $sql=main_model::conectar()->prepare("SELECT ALUMNO_ID FROM alumno WHERE UA_ID='$ue'");
-                $sql->bindParam(":ID",$id);
             }elseif($tipo=="Padre"){
                 $sql=main_model::conectar()->prepare("SELECT F.* FROM fa_alumno AS FA, familiar AS F WHERE FA.FAMILAR_ID=F.FAMILAR_ID AND FA.ALUMNO_ID=:ID ");
                 $sql->bindParam(":ID",$id);

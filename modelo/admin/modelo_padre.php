@@ -63,7 +63,6 @@
             }elseif($tipo=="Conteo"){
                 $sql=main_model::conectar()->prepare("SELECT F.FAMILAR_ID FROM familiar AS F, alumno AS A, fa_alumno AS FA WHERE 
                 FA.ALUMNO_ID=A.ALUMNO_ID AND FA.FAMILAR_ID=F.FAMILAR_ID AND A.UA_ID='$ue' GROUP BY F.FAMILAR_ID");
-                $sql->bindParam(":ID",$id);
             }elseif($tipo=="Alumno"){
                 $sql=main_model::conectar()->prepare("SELECT A.* FROM fa_alumno AS FA, alumno AS A WHERE FA.ALUMNO_ID=A.ALUMNO_ID AND FA.FAMILAR_ID=:ID ");
                 $sql->bindParam(":ID",$id);
