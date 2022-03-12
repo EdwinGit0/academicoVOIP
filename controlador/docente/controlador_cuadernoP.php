@@ -182,7 +182,7 @@
 
             $consulta="SELECT SQL_CALC_FOUND_ROWS A.* FROM cur_alum AS CA, alumno AS A WHERE 
             A.UA_ID='$ue' AND CA.ALUMNO_ID=A.ALUMNO_ID AND CA.COD_CUR='$id_curso' AND YEAR(FECHA_INI_CA)='$anio_academico' 
-            GROUP BY A.ALUMNO_ID ASC LIMIT $inicio,$registros";
+            GROUP BY A.ALUMNO_ID ORDER BY A.ALUMNO_ID ASC LIMIT $inicio,$registros";
 
             $val_tutor=main_model::ejecutar_consulta_simple("SELECT F.FAMILAR_ID, F.NOMBRE_FA, F.APELLIDOP_FA, F.APELLIDOM_FA, A.ALUMNO_ID, F.ROL_FA FROM cur_alum AS CA, familiar AS F, fa_alumno AS FA, alumno AS A WHERE  
             CA.ALUMNO_ID=A.ALUMNO_ID AND A.UA_ID='$ue' AND A.ALUMNO_ID=FA.ALUMNO_ID AND CA.COD_CUR='$id_curso' AND F.FAMILAR_ID=FA.FAMILAR_ID");
@@ -398,7 +398,7 @@
 
             $consulta="SELECT SQL_CALC_FOUND_ROWS A.* FROM cur_alum AS CA, alumno AS A WHERE 
             A.UA_ID='$ue' AND CA.ALUMNO_ID=A.ALUMNO_ID AND CA.COD_CUR='$id_curso' AND YEAR(FECHA_INI_CA)='$anio_academico' 
-            GROUP BY A.ALUMNO_ID ASC LIMIT $inicio,$registros";
+            GROUP BY A.ALUMNO_ID ORDER BY A.ALUMNO_ID ASC LIMIT $inicio,$registros";
             
             $conexion = main_model::conectar();
             $datos = $conexion->query($consulta);
@@ -568,7 +568,7 @@
 
             $consulta="SELECT SQL_CALC_FOUND_ROWS A.* FROM cur_alum AS CA, alumno AS A WHERE 
             A.UA_ID='$ue' AND CA.ALUMNO_ID=A.ALUMNO_ID AND CA.COD_CUR='$id_curso' AND YEAR(FECHA_INI_CA)='$anio_academico' 
-            GROUP BY A.ALUMNO_ID ASC LIMIT $inicio,$registros";
+            GROUP BY A.ALUMNO_ID ORDER BY A.ALUMNO_ID ASC LIMIT $inicio,$registros";
             
             $conexion = main_model::conectar();
             $datos = $conexion->query($consulta);
@@ -796,7 +796,7 @@
 
             $consulta="SELECT SQL_CALC_FOUND_ROWS A.* FROM cur_alum AS CA, alumno AS A WHERE 
             A.UA_ID='$ue' AND CA.ALUMNO_ID=A.ALUMNO_ID AND CA.COD_CUR='$id_curso' AND YEAR(FECHA_INI_CA)='$anio_academico' 
-            GROUP BY A.ALUMNO_ID ASC LIMIT $inicio,$registros";
+            GROUP BY A.ALUMNO_ID ORDER BY A.ALUMNO_ID ASC LIMIT $inicio,$registros";
 
             $conexion = main_model::conectar();
             $datos = $conexion->query($consulta);
