@@ -18,7 +18,7 @@
         }
 
         /* encriptar cadenas */
-        public function encryption($string){
+        public static function encryption($string){
 			$output=FALSE;
 			$key=hash('sha256', SECRET_KEY);
 			$iv=substr(hash('sha256', SECRET_IV), 0, 16);

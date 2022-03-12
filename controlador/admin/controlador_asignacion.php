@@ -330,7 +330,7 @@
 
             $consulta="SELECT SQL_CALC_FOUND_ROWS P.* FROM cur_prof AS CP, profesor AS P WHERE 
             P.UA_ID='$ue' AND CP.PROFESOR_ID=P.PROFESOR_ID AND CP.COD_CUR='$id_curso' AND YEAR(FECHA_INI_CP)='$anio_academico'
-            GROUP BY P.PROFESOR_ID ASC LIMIT $inicio,$registros";
+            GROUP BY P.PROFESOR_ID ORDER BY P.PROFESOR_ID ASC LIMIT $inicio,$registros";
             
             $conexion = main_model::conectar();
             $datos = $conexion->query($consulta);
