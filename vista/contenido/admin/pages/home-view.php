@@ -49,7 +49,7 @@
         <div class="tile-tittle">Alumnos</div>
         <div class="tile-icon">
             <i class="fas fa-user-graduate fa-fw"></i>
-            <p><?php echo $total_alumno->rowCount(); ?> Registrados</p>
+            <p><?php echo $total_alumno->rowCount(); unset($total_alumno);?> Registrados</p>
         </div>
     </a>
 
@@ -62,7 +62,7 @@
         <div class="tile-tittle">Tutores</div>
         <div class="tile-icon">
             <i class="fas fa-users fa-fw"></i>
-            <p><?php echo $total_padre->rowCount(); ?> Registrados</p>
+            <p><?php echo $total_padre->rowCount(); unset($total_padre);?> Registrados</p>
         </div>
     </a>
 
@@ -75,7 +75,7 @@
         <div class="tile-tittle">Docentes</div>
         <div class="tile-icon">
             <i class="fas fa-user-tie"></i>
-            <p><?php echo $total_docente->rowCount(); ?> Registrados</p>
+            <p><?php echo $total_docente->rowCount(); unset($total_docente);?> Registrados</p>
         </div>
     </a>
 
@@ -88,7 +88,7 @@
         <div class="tile-tittle">Cursos</div>
         <div class="tile-icon">
             <i class="fas fa-spell-check"></i>
-            <p><?php echo $total_curso->rowCount(); ?> Registradas</p>
+            <p><?php echo $total_curso->rowCount(); unset($total_curso);?> Registradas</p>
         </div>
     </a>
 
@@ -101,7 +101,7 @@
         <div class="tile-tittle">Periodos</div>
         <div class="tile-icon">
             <i class="fas fa-layer-group"></i>
-            <p><?php echo $total_periodo->rowCount(); ?> Registradas</p>
+            <p><?php echo $total_periodo->rowCount(); unset($total_periodo);?> Registradas</p>
         </div>
     </a>
 
@@ -114,7 +114,7 @@
         <div class="tile-tittle">Áreas</div>
         <div class="tile-icon">
             <i class="fas fa-book"></i>
-            <p><?php echo $total_area->rowCount(); ?> Registradas</p>
+            <p><?php echo $total_area->rowCount(); unset($total_area);?> Registradas</p>
         </div>
     </a>
 
@@ -127,7 +127,7 @@
         <div class="tile-tittle">Año académico</div>
         <div class="tile-icon">
             <i class="fas fa-tasks"></i>
-            <p><?php echo $total_anio->rowCount(); ?>  Registradas</p>
+            <p><?php echo $total_anio->rowCount(); unset($total_anio);?>  Registradas</p>
         </div>
     </a>
 
@@ -141,7 +141,7 @@
         <div class="tile-tittle">Administradores</div>
         <div class="tile-icon">
             <i class="fas fa-user-secret fa-fw"></i>
-            <p><?php echo $total_usuario->rowCount(); ?> Registrados</p>
+            <p><?php echo $total_usuario->rowCount(); unset($total_usuario);?> Registrados</p>
         </div>
     </a>
     <?php } ?>
