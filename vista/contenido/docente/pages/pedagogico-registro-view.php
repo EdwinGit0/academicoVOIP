@@ -4,7 +4,7 @@
   </h3>
 </div>
 
-<div class="container-fluid">
+<div class="container-fluid contenedorEstatico">
     <ul class="full-box list-unstyled page-nav-tabs">
         <li>
           <a href="<?php echo SERVERURL; ?>docente/pedagogico-cuaderno/"><i class="fas fa-book"></i> &nbsp; CUADERNO PEDAGÓGICO</a>
@@ -54,7 +54,7 @@
 
 <div class="card cardCuaderno">
   <div class="container-fluid">
-    <ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
+    <ul class="nav nav-pills mb-3 justify-content-center cuadernoCp" id="pills-tab" role="tablist">
       <li class="nav-item">
         <a class="cuadernoCp nav-link active" id="pills-afiliacion-tab" data-toggle="pill" href="#pills-afiliacion" role="tab" aria-selected="true"><i class="fas fa-clipboard-list"></i>&nbsp; CUADRO DE AFILIACIÓN</a>
       </li>

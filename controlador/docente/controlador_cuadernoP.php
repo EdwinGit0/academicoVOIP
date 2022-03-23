@@ -305,22 +305,17 @@
 
             $tabla="";
 
-            $val_docente=main_model::ejecutar_consulta_simple("SELECT * FROM valoracion WHERE USUARIO_VAL='Docente'");
-            $val_parcial=main_model::ejecutar_consulta_simple("SELECT * FROM valoracion WHERE CRITERIO_VAL LIKE '%Parcial%'");
-            $val_actividad=main_model::ejecutar_consulta_simple("SELECT * FROM valoracion WHERE CRITERIO_VAL LIKE '%Actividad%'");
-            $val_SD=main_model::ejecutar_consulta_simple("SELECT * FROM valoracion WHERE CRITERIO_VAL LIKE '%Ser%' OR CRITERIO_VAL LIKE '%Decir%' ");
-            $val_prom_total=main_model::ejecutar_consulta_simple("SELECT * FROM valoracion WHERE CRITERIO_VAL='Promedio'");
             $val_anio=main_model::ejecutar_consulta_simple("SELECT COD_ANIO FROM anio_academico WHERE NOMBRE_ANIO='$anio_academico'");
-            $id_anio = $val_anio->fetch();
+            $id_anio = $val_anio->fetch(); unset($val_anio);
             $id_anio_a=$id_anio['COD_ANIO'];
             $val_calificacion=main_model::ejecutar_consulta_simple("SELECT * FROM calificacion WHERE COD_PER='$periodo_id' AND PROFESOR_ID='$id_docente' 
             AND COD_CUR='$id_curso' AND COD_ANIO='$id_anio_a'");
+            $val_num_calificacion = $val_calificacion->rowCount(); unset($val_calificacion);
 
-            if($val_calificacion->rowCount()>0){
-                $dato_calificacion = $val_calificacion->fetchAll();
-                $tabla.=controlador_cuadernoP::tabla_periodo_llenar($dato_calificacion,$periodo_id,$val_docente,$val_parcial,$val_SD,$val_actividad,$val_prom_total,$id_curso,$anio_academico,$id_anio_a);
+            if($val_num_calificacion > 0){
+                $tabla.=controlador_cuadernoP::tabla_periodo_llenar($periodo_id,$id_curso,$anio_academico,$id_anio_a);
             }else{
-                $tabla.=controlador_cuadernoP::tabla_periodo_vacio($periodo_id,$val_docente,$val_parcial,$val_SD,$val_actividad,$val_prom_total,$id_curso,$anio_academico);
+                $tabla.=controlador_cuadernoP::tabla_periodo_vacio($periodo_id,$id_curso,$anio_academico);
             }
 
             return $tabla;
@@ -384,17 +379,31 @@
         }
 
         /* tabla cuadernoP vacio*/
-        public function tabla_periodo_vacio($periodo_id,$val_docente,$val_parcial,$val_SD,$val_actividad,$val_prom_total,$id_curso,$anio_academico){
+        public function tabla_periodo_vacio($periodo_id,$id_curso,$anio_academico){
             $pagina = main_model::limpiar_cadena($_POST['docente_id']);
             $url = main_model::limpiar_cadena($_POST['url']);
             $ue = main_model::limpiar_cadena($_SESSION['ua_id']);
             $url=SERVERURL.$url."/";
+
+            $val_docente=main_model::ejecutar_consulta_simple("SELECT * FROM valoracion WHERE USUARIO_VAL='Docente'");
+            $val_docente_n=$val_docente->rowCount()+2; unset($val_docente);
+
+            $val_prom_total=main_model::ejecutar_consulta_simple("SELECT * FROM valoracion WHERE CRITERIO_VAL='Promedio'");
+            $dato_prom_total = $val_prom_total->fetch(); unset($val_prom_total);
+
+            $val_SD=main_model::ejecutar_consulta_simple("SELECT * FROM valoracion WHERE CRITERIO_VAL LIKE '%Ser%' OR CRITERIO_VAL LIKE '%Decir%' ");
+            $dato_SD = $val_SD->fetchAll();
+            $val_SD_num = $val_SD->rowCount(); unset($val_SD);
+            
+            $val_parcial=main_model::ejecutar_consulta_simple("SELECT * FROM valoracion WHERE CRITERIO_VAL LIKE '%Parcial%'");
+            $val_actividad=main_model::ejecutar_consulta_simple("SELECT * FROM valoracion WHERE CRITERIO_VAL LIKE '%Actividad%'");
 
             $tabla="";
 
             $registros=15;
             $pagina= (isset($pagina) && $pagina>0) ? (int) $pagina : 1 ;
             $inicio= ($pagina>0) ? (($pagina*$registros)-$registros) : 0 ;
+
 
             $consulta="SELECT SQL_CALC_FOUND_ROWS A.* FROM cur_alum AS CA, alumno AS A WHERE 
             A.UA_ID='$ue' AND CA.ALUMNO_ID=A.ALUMNO_ID AND CA.COD_CUR='$id_curso' AND YEAR(FECHA_INI_CA)='$anio_academico' 
@@ -403,20 +412,16 @@
             $conexion = main_model::conectar();
             $datos = $conexion->query($consulta);
             $datos = $datos->fetchAll();
-            $total = $conexion->query("SELECT FOUND_ROWS()");
+            $total = $conexion->query("SELECT FOUND_ROWS()"); unset($conexion);
             $total = (int) $total->fetchColumn();
             $Npaginas=ceil($total/$registros);
 
-            $val_docente_n=$val_docente->rowCount()+2;
-
+            
             $val_parcial_n=$val_parcial->rowCount()+1;
             $dato_parcial = $val_parcial->fetchAll();
 
             $val_actividad_n=$val_actividad->rowCount()+1;
             $dato_actividad = $val_actividad->fetchAll();
-
-            $dato_SD = $val_SD->fetchAll();
-            $dato_prom_total = $val_prom_total->fetch();
 
             $tabla.='<div class="table-responsive">
             <input type="hidden" id="cuaderno_reg" value="save">
@@ -515,7 +520,7 @@
                     }
                     $tabla.='<td class="valor-promedio" id="prom_act">0.00</td>';
 
-                    if($val_SD->rowCount()>0){
+                    if($val_SD_num>0){
                         foreach($dato_SD as $rows){
                             $tabla.='<td class="campo_sd" id="'.main_model::encryption($rows['VAL_ID']).'" contenteditable="true"></td>';
                         }
@@ -553,18 +558,50 @@
         }
 
         /* tabla cuadernoP lleno*/
-        public function tabla_periodo_llenar($dato_calificacion,$periodo_id,$val_docente,$val_parcial,$val_SD,$val_actividad,$val_prom_total,$id_curso,$anio_academico,$id_anio_a){
+        public function tabla_periodo_llenar($periodo_id,$id_curso,$anio_academico,$id_anio_a){
             $pagina = main_model::limpiar_cadena($_POST['docente_id']);
             $url = main_model::limpiar_cadena($_POST['url']);
             $ue = main_model::limpiar_cadena($_SESSION['ua_id']);
             $id_docente = main_model::limpiar_cadena($_SESSION['id_sa']);
             $url=SERVERURL.$url."/";
 
+            $val_docente=main_model::ejecutar_consulta_simple("SELECT * FROM valoracion WHERE USUARIO_VAL='Docente'");
+            $val_docente_n=$val_docente->rowCount()+2; unset($val_docente);
+
+            $val_prom_total=main_model::ejecutar_consulta_simple("SELECT * FROM valoracion WHERE CRITERIO_VAL='Promedio'");
+            $dato_prom_total = $val_prom_total->fetch(); unset($val_prom_total);
+
+            $val_SD=main_model::ejecutar_consulta_simple("SELECT * FROM valoracion WHERE CRITERIO_VAL LIKE '%Ser%' OR CRITERIO_VAL LIKE '%Decir%' ");
+            $dato_SD = $val_SD->fetchAll(); unset($val_SD);
+            
+            $val_parcial=main_model::ejecutar_consulta_simple("SELECT * FROM valoracion WHERE CRITERIO_VAL LIKE '%Parcial%'");
+            $val_actividad=main_model::ejecutar_consulta_simple("SELECT * FROM valoracion WHERE CRITERIO_VAL LIKE '%Actividad%'");
+
             $tabla="";
 
             $registros=15;
             $pagina= (isset($pagina) && $pagina>0) ? (int) $pagina : 1 ;
             $inicio= ($pagina>0) ? (($pagina*$registros)-$registros) : 0 ;
+
+            $cal_parcial=main_model::ejecutar_consulta_simple("SELECT V.VAL_ID,C.ALUMNO_ID,C.NOTA FROM valoracion AS V, calificacion AS C 
+            WHERE V.CRITERIO_VAL LIKE '%Parcial%' AND C.VAL_ID=V.VAL_ID AND COD_PER='$periodo_id' AND PROFESOR_ID='$id_docente' 
+            AND COD_CUR='$id_curso' AND COD_ANIO='$id_anio_a'");
+            $dato_parcial_cal = $cal_parcial->fetchAll(); unset($cal_parcial);
+
+            $cal_actividad=main_model::ejecutar_consulta_simple("SELECT V.VAL_ID,C.ALUMNO_ID,C.NOTA FROM valoracion AS V, calificacion AS C 
+            WHERE V.CRITERIO_VAL LIKE '%Actividad%' AND C.VAL_ID=V.VAL_ID AND COD_PER='$periodo_id' AND PROFESOR_ID='$id_docente' 
+            AND COD_CUR='$id_curso' AND COD_ANIO='$id_anio_a'");
+            $dato_actividad_cal = $cal_actividad->fetchAll(); unset($cal_actividad);
+
+            $cal_SD=main_model::ejecutar_consulta_simple("SELECT V.VAL_ID,C.ALUMNO_ID,C.NOTA FROM valoracion AS V, calificacion AS C 
+            WHERE (CRITERIO_VAL LIKE '%Ser%' OR CRITERIO_VAL LIKE '%Decir%') AND C.VAL_ID=V.VAL_ID AND COD_PER='$periodo_id' AND PROFESOR_ID='$id_docente' 
+            AND COD_CUR='$id_curso' AND COD_ANIO='$id_anio_a'");
+            $dato_SD_cal = $cal_SD->fetchAll(); unset($cal_SD);
+
+            $cal_promedio=main_model::ejecutar_consulta_simple("SELECT C.NOTA FROM valoracion AS V, calificacion AS C 
+            WHERE  CRITERIO_VAL='Promedio' AND C.VAL_ID=V.VAL_ID AND COD_PER='$periodo_id' AND PROFESOR_ID='$id_docente' 
+            AND COD_CUR='$id_curso' AND COD_ANIO='$id_anio_a'");
+            $dato_prom_cal = $cal_promedio->fetchAll(); unset($cal_promedio);
 
             $consulta="SELECT SQL_CALC_FOUND_ROWS A.* FROM cur_alum AS CA, alumno AS A WHERE 
             A.UA_ID='$ue' AND CA.ALUMNO_ID=A.ALUMNO_ID AND CA.COD_CUR='$id_curso' AND YEAR(FECHA_INI_CA)='$anio_academico' 
@@ -577,36 +614,11 @@
             $total = (int) $total->fetchColumn();
             $Npaginas=ceil($total/$registros);
 
-            $cal_parcial=main_model::ejecutar_consulta_simple("SELECT V.VAL_ID,C.ALUMNO_ID,C.NOTA FROM valoracion AS V, calificacion AS C 
-            WHERE V.CRITERIO_VAL LIKE '%Parcial%' AND C.VAL_ID=V.VAL_ID AND COD_PER='$periodo_id' AND PROFESOR_ID='$id_docente' 
-            AND COD_CUR='$id_curso' AND COD_ANIO='$id_anio_a'");
-            $cal_actividad=main_model::ejecutar_consulta_simple("SELECT V.VAL_ID,C.ALUMNO_ID,C.NOTA FROM valoracion AS V, calificacion AS C 
-            WHERE V.CRITERIO_VAL LIKE '%Actividad%' AND C.VAL_ID=V.VAL_ID AND COD_PER='$periodo_id' AND PROFESOR_ID='$id_docente' 
-            AND COD_CUR='$id_curso' AND COD_ANIO='$id_anio_a'");
-            $cal_SD=main_model::ejecutar_consulta_simple("SELECT V.VAL_ID,C.ALUMNO_ID,C.NOTA FROM valoracion AS V, calificacion AS C 
-            WHERE (CRITERIO_VAL LIKE '%Ser%' OR CRITERIO_VAL LIKE '%Decir%') AND C.VAL_ID=V.VAL_ID AND COD_PER='$periodo_id' AND PROFESOR_ID='$id_docente' 
-            AND COD_CUR='$id_curso' AND COD_ANIO='$id_anio_a'");
-
-            $cal_promedio=main_model::ejecutar_consulta_simple("SELECT C.NOTA FROM valoracion AS V, calificacion AS C 
-            WHERE  CRITERIO_VAL='Promedio' AND C.VAL_ID=V.VAL_ID AND COD_PER='$periodo_id' AND PROFESOR_ID='$id_docente' 
-            AND COD_CUR='$id_curso' AND COD_ANIO='$id_anio_a'");
-
-            $val_docente_n=$val_docente->rowCount()+2;
-
             $val_parcial_n=$val_parcial->rowCount()+1;
             $dato_parcial = $val_parcial->fetchAll();
 
             $val_actividad_n=$val_actividad->rowCount()+1;
             $dato_actividad = $val_actividad->fetchAll();
-
-            $dato_SD = $val_SD->fetchAll();
-
-            $dato_parcial_cal = $cal_parcial->fetchAll();
-            $dato_actividad_cal = $cal_actividad->fetchAll();
-            $dato_SD_cal = $cal_SD->fetchAll();
-            $dato_prom_total = $val_prom_total->fetch();
-            $dato_prom_cal = $cal_promedio->fetchAll();
-            
 
             $num_aprobados = controlador_cuadernoP::aprobado("ArrayBD",$dato_prom_cal);
             $num_reprobados = $total-$num_aprobados;
@@ -783,7 +795,7 @@
             session_start(['name'=>'SA']);
             $anio_academico = main_model::limpiar_cadena($_SESSION['anio_academico']);
             $val_anio=main_model::ejecutar_consulta_simple("SELECT COD_ANIO FROM anio_academico WHERE NOMBRE_ANIO='$anio_academico'");
-            $id_anio = $val_anio->fetch();
+            $id_anio = $val_anio->fetch(); unset($val_anio);
             $id_anio_a=$id_anio['COD_ANIO'];
             $ue = main_model::limpiar_cadena($_SESSION['ua_id']);
             $id_docente = main_model::limpiar_cadena($_SESSION['id_sa']);

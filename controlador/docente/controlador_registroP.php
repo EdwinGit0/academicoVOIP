@@ -189,17 +189,17 @@
             $Npaginas=ceil($total/$registros);
 
             $val_anio=main_model::ejecutar_consulta_simple("SELECT COD_ANIO FROM anio_academico WHERE NOMBRE_ANIO='$anio_academico'");
-            $id_anio = $val_anio->fetch();
+            $id_anio = $val_anio->fetch(); unset($val_anio);
             $id_anio_a=$id_anio['COD_ANIO'];
         
             $val_area=main_model::ejecutar_consulta_simple("SELECT COD_AREA, NOMBRE_AREA FROM area ORDER BY NOMBRE_AREA ASC");
+            $num_area = $val_area->rowCount(); 
+            $dato_area = $val_area->fetchAll(); unset($val_area);
+
             $cal_promedio=main_model::ejecutar_consulta_simple("SELECT C.ALUMNO_ID, C.NOTA, P.COD_AREA FROM valoracion AS V, calificacion AS C, profesor AS P
             WHERE  V.CRITERIO_VAL='Promedio' AND C.VAL_ID=V.VAL_ID AND P.PROFESOR_ID=C.PROFESOR_ID AND C.COD_PER='$periodo_id'
             AND C.COD_CUR='$id_curso' AND C.COD_ANIO='$id_anio_a'");
-
-            $num_area = $val_area->rowCount();
-            $dato_area = $val_area->fetchAll();
-            $dato_prom_cal = $cal_promedio->fetchAll();
+            $dato_prom_cal = $cal_promedio->fetchAll(); unset($cal_promedio);
             
 
             $num_aprobados = controlador_registroP::aprobado("ArrayBD",$dato_prom_cal);
@@ -299,7 +299,7 @@
             session_start(['name'=>'SA']);
             $anio_academico = main_model::limpiar_cadena($_SESSION['anio_academico']);
             $val_anio=main_model::ejecutar_consulta_simple("SELECT COD_ANIO FROM anio_academico WHERE NOMBRE_ANIO='$anio_academico'");
-            $id_anio = $val_anio->fetch();
+            $id_anio = $val_anio->fetch(); unset($val_anio);
             $id_anio_a=$id_anio['COD_ANIO'];
             $ue = main_model::limpiar_cadena($_SESSION['ua_id']);
             $id_docente = main_model::limpiar_cadena($_SESSION['id_sa']);
@@ -439,7 +439,7 @@
             
             $anio_academico = main_model::limpiar_cadena($_SESSION['anio_academico']);
             $val_anio=main_model::ejecutar_consulta_simple("SELECT COD_ANIO FROM anio_academico WHERE NOMBRE_ANIO='$anio_academico'");
-            $id_anio = $val_anio->fetch();
+            $id_anio = $val_anio->fetch(); unset($val_anio);
             $id_anio_a=$id_anio['COD_ANIO'];
             $ue = main_model::limpiar_cadena($_SESSION['ua_id']);
             $id_docente = main_model::limpiar_cadena($_SESSION['id_sa']);
@@ -450,19 +450,22 @@
             A.UA_ID='$ue' AND CA.ALUMNO_ID=A.ALUMNO_ID AND A.ALUMNO_ID='$id_alumno' AND CA.COD_CUR='$id_curso' AND YEAR(FECHA_INI_CA)='$anio_academico'");
 
             if($val_alumno->rowCount()==1){
-                
+
+                $dato_alumno = $val_alumno->fetch(); unset($val_alumno);
+
                 $val_referencial=main_model::ejecutar_consulta_simple("SELECT C.TURNO_CUR, C.GRADO_CUR, C.SECCION_CUR, UA.*
                 FROM curso AS C, unidad_academico AS UA WHERE C.COD_CUR='$id_curso' AND UA.UA_ID='$ue'");
-                $val_periodo=main_model::ejecutar_consulta_simple("SELECT * FROM periodo");
-                $val_area=main_model::ejecutar_consulta_simple("SELECT * FROM area ORDER BY CAMPO_AREA ASC");
+                $dato_referencial = $val_referencial->fetch(); unset($val_referencial);
+
                 $cal_promedio=main_model::ejecutar_consulta_simple("SELECT C.ALUMNO_ID, C.NOTA, P.COD_AREA, C.COD_PER FROM valoracion AS V, calificacion AS C, profesor AS P
                 WHERE  V.CRITERIO_VAL='Promedio' AND C.VAL_ID=V.VAL_ID AND P.PROFESOR_ID=C.PROFESOR_ID AND C.ALUMNO_ID='$id_alumno' AND C.COD_CUR='$id_curso' AND C.COD_ANIO='$id_anio_a'");
-                
-                $dato_alumno = $val_alumno->fetch();
-                $dato_referencial = $val_referencial->fetch();
-                $dato_periodo = $val_periodo->fetchAll();
+                $dato_prom_cal = $cal_promedio->fetchAll(); unset($cal_promedio);
+
+                $val_area=main_model::ejecutar_consulta_simple("SELECT * FROM area ORDER BY CAMPO_AREA ASC");
                 $dato_area = $val_area->fetchAll();
-                $dato_prom_cal = $cal_promedio->fetchAll();
+
+                $val_periodo=main_model::ejecutar_consulta_simple("SELECT * FROM periodo");
+                $dato_periodo = $val_periodo->fetchAll();
             
                 $tabla.='<div id="tableLibreta" class="desgPDFDoc libreta table-responsive">
                             <table class="table table-sm"> 
