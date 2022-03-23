@@ -133,7 +133,6 @@ body,html{
 	outline: none;
 }
 
-
 .table.table-libreta th {
 	color:black;
 	border: 1px solid !important;
@@ -693,16 +692,32 @@ th.tabla-parcial {
 }
 
 /* nav var*/
-li a.cuadernoCp:hover {
-	background-color: rgb(221, 221, 221);
+/*li a.cuadernoCp:hover {
+	background-color: rgb(255, 255, 255);
+	color: #000 !important;
 	border-radius: 5px;
-}
+}*/
+
 .nav .cuadernoCp.active {
-	border-bottom: 3px solid rgb(170, 0, 0);
+	border-bottom: 3px solid rgb(255, 255, 255);
+	opacity: initial;
 }
 	
 .nav > li > a.cuadernoCp:hover {
-	border-bottom: 3px solid rgb(170, 0, 0);
+	border-bottom: 3px solid rgb(204, 204, 204);
+	opacity: initial;
+}
+
+ul.cuadernoCp {
+	background-color: #424242;
+	margin-bottom: 0 !important;
+}
+
+li a.cuadernoCp {
+	padding-top: 5px !important;
+	padding-bottom: 5px !important;
+	color: #ffff !important;
+	opacity: 0.8;
 }
 
 /* Grafica aprobado/reprobados*/
@@ -740,5 +755,7 @@ canvas.grafico-pastel-anual{
 .cardContent {
 	height: 80vh !important;
 }
+
+
 
 /*----------  Keyframes  ----------*/

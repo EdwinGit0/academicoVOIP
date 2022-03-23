@@ -18,7 +18,7 @@
 
             $val_alumno=main_model::ejecutar_consulta_simple("SELECT SQL_CALC_FOUND_ROWS A.* FROM cur_alum AS CA, alumno AS A WHERE 
             A.UA_ID='$ue' AND CA.ALUMNO_ID=A.ALUMNO_ID AND CA.COD_CUR='$id_curso' AND YEAR(FECHA_INI_CA)='$anio_academico' 
-            GROUP BY A.ALUMNO_ID ASC");
+            GROUP BY A.ALUMNO_ID ORDER BY A.APELLIDOP_A ASC");
 
             $val_tutor=main_model::ejecutar_consulta_simple("SELECT F.FAMILAR_ID, F.NOMBRE_FA, F.APELLIDOP_FA, F.APELLIDOM_FA, A.ALUMNO_ID, F.ROL_FA FROM cur_alum AS CA, familiar AS F, fa_alumno AS FA, alumno AS A WHERE  
             CA.ALUMNO_ID=A.ALUMNO_ID AND A.UA_ID='$ue' AND A.ALUMNO_ID=FA.ALUMNO_ID AND CA.COD_CUR='$id_curso' AND F.FAMILAR_ID=FA.FAMILAR_ID");
@@ -186,7 +186,7 @@
 
             $val_alumno=main_model::ejecutar_consulta_simple("SELECT SQL_CALC_FOUND_ROWS A.* FROM cur_alum AS CA, alumno AS A WHERE 
             A.UA_ID='$ue' AND CA.ALUMNO_ID=A.ALUMNO_ID AND CA.COD_CUR='$id_curso' AND YEAR(FECHA_INI_CA)='$anio_academico' 
-            GROUP BY A.ALUMNO_ID ASC");
+            GROUP BY A.ALUMNO_ID ORDER BY A.APELLIDOP_A ASC");
 
             $datos = $val_alumno->fetchAll();
 
@@ -282,7 +282,7 @@
             
             $anio_academico = main_model::limpiar_cadena($_SESSION['anio_academico']);
             $val_anio=main_model::ejecutar_consulta_simple("SELECT COD_ANIO FROM anio_academico WHERE NOMBRE_ANIO='$anio_academico'");
-            $id_anio = $val_anio->fetch();
+            $id_anio = $val_anio->fetch(); unset($val_anio);
             $id_anio_a=$id_anio['COD_ANIO'];
             $ue = main_model::limpiar_cadena($_SESSION['ua_id']);
             $id_docente = main_model::limpiar_cadena($_SESSION['id_sa']);
@@ -291,17 +291,18 @@
 
             $val_alumno=main_model::ejecutar_consulta_simple("SELECT SQL_CALC_FOUND_ROWS A.* FROM cur_alum AS CA, alumno AS A WHERE 
             A.UA_ID='$ue' AND CA.ALUMNO_ID=A.ALUMNO_ID AND CA.COD_CUR='$id_curso' AND YEAR(FECHA_INI_CA)='$anio_academico' 
-            GROUP BY A.ALUMNO_ID ASC");
+            GROUP BY A.ALUMNO_ID ORDER BY A.APELLIDOP_A ASC");
+            $datos = $val_alumno->fetchAll(); unset($val_alumno);
 
-            $datos = $val_alumno->fetchAll();
+            $cal_promedio=main_model::ejecutar_consulta_simple("SELECT C.NOTA, C.ALUMNO_ID, C.COD_PER, P.COD_AREA FROM valoracion AS V, calificacion AS C, profesor AS P
+            WHERE  CRITERIO_VAL='Promedio' AND C.VAL_ID=V.VAL_ID AND P.PROFESOR_ID=C.PROFESOR_ID AND C.COD_CUR='$id_curso' AND C.COD_ANIO='$id_anio_a'");
+            $dato_prom_cal = $cal_promedio->fetchAll(); unset($cal_promedio);
 
             $val_area=main_model::ejecutar_consulta_simple("SELECT * FROM area");
             $val_periodo=main_model::ejecutar_consulta_simple("SELECT * FROM periodo");
-            $cal_promedio=main_model::ejecutar_consulta_simple("SELECT C.NOTA, C.ALUMNO_ID, C.COD_PER, P.COD_AREA FROM valoracion AS V, calificacion AS C, profesor AS P
-            WHERE  CRITERIO_VAL='Promedio' AND C.VAL_ID=V.VAL_ID AND P.PROFESOR_ID=C.PROFESOR_ID AND C.COD_CUR='$id_curso' AND C.COD_ANIO='$id_anio_a'");
+           
             $dato_area = $val_area->fetchAll();
             $dato_periodo = $val_periodo->fetchAll();
-            $dato_prom_cal = $cal_promedio->fetchAll();
           
             $tabla.='
                     <table class="table table-bordered table-secondary table-sm" id="tabla_asignar_curso">

@@ -44,8 +44,8 @@
             return $letra."-".$numero;
         }
 
-         /* funcion para limpiar cadenas */
-         protected static function limpiar_cadena($cadena){
+        /* funcion para limpiar cadenas */
+        protected static function limpiar_cadena($cadena){
             $cadena=trim($cadena);
             $cadena=stripslashes($cadena);
             $cadena=str_ireplace("<script>", "", $cadena);
@@ -74,29 +74,29 @@
             $cadena=stripslashes($cadena);
             $cadena=trim($cadena);
             return $cadena;
-         }
+        }
 
-         /* funcion verificar campos del formulario */
-         protected static function verificar_datos($filtro,$cadena){
+        /* funcion verificar campos del formulario */
+        protected static function verificar_datos($filtro,$cadena){
             if(preg_match("/^".$filtro."$/", $cadena)){
                 return false;
             }else{
                 return true;
             }
-         }
+        }
 
-         /* funcion verificar fecha */
-         protected static function verificar_fecha($fecha){
+        /* funcion verificar fecha */
+        protected static function verificar_fecha($fecha){
             $valores=explode('-', $fecha);
             if(count($valores)==3 && checkdate($valores[1],$valores[2],$valores[0])){
                 return false;
             }else{
                 return true;
             }
-         }
+        }
 
-         /* funcion paginador de tablas */
-         protected static function paginador_tablas($pagina, $Npaginas, $url, $botones){
+        /* funcion paginador de tablas */
+        protected static function paginador_tablas($pagina, $Npaginas, $url, $botones){
             $tabla='  <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">';
 
@@ -137,7 +137,7 @@
             $tabla.='</ul></nav>';
 
             return $tabla;
-         }
+        }
 
          /* encriptar cadenas */
         public function codigo_aleatorio(){
