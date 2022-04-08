@@ -2,9 +2,7 @@
     <h3 class="text-left">
         <i class="fas fa-building fa-fw"></i> &nbsp; INFORMACÓN DEL ESTABLECIMIENTO EDUCATIVO
     </h3>
-    <p class="text-justify">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero nam eaque nostrum, voluptates, rerum quo. Consequuntur ut, maxime? Quibusdam ipsum maxime non veritatis dignissimos qui reiciendis, amet eum nihil! Et!
-    </p>
+    <hr align="center" width="95%"/>
 </div>
 
 <?php

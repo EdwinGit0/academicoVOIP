@@ -184,16 +184,7 @@ body,html{
 table form{
 	margin-bottom: 0;
 }
-/*----------  Text Styles  ----------*/
-.roboto-medium{
-	font-family: 'roboto_medium_regular';
-}
-.roboto-condensed-light{
-	font-family: 'roboto_condensed_light';
-}
-.roboto-condensed-regular{
-	font-family: 'roboto_condensed_regular';
-}
+
 /*----------  Page 404 styles  ----------*/
 .container-404{
 	background: #000428;
@@ -208,9 +199,9 @@ table form{
 .login-container{
 	width: 100vw;
 	height: 100vh;
-	background: #0575E6;
-	background: -webkit-linear-gradient(to right, #021B79, #0575E6);
-	background: linear-gradient(to right, #021B79, #0575E6);
+	background: #ddd;
+	background: -webkit-linear-gradient(to right, #ddd, #ddd);
+	background: linear-gradient(to right, #ddd, #ddd);
 }
 
 .position{
@@ -281,7 +272,7 @@ table form{
 	left: 0;
 	z-index: 1;
 	transition: all .2s ease-in-out;
-	background-image: url('../assets/img/nav-font.jpg');
+	/*background-image: url('../assets/img/nav-font.jpg');*/
 	background-position: center center;
 	background-size: cover;
 }
@@ -289,7 +280,7 @@ table form{
 .nav-lateral-content{
 	max-width: 300px;
 	height: 100%;
-	background-color: rgba(36, 41, 46, .8);
+	background-color: #19222a;
 }
 .nav-lateral-bar{
 	height: 3px;

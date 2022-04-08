@@ -1,12 +1,11 @@
 <!-- Page header -->
-<div class="full-box page-header">
+<div class="full-box page-header mb-0 y pb-0">
     <h3 class="text-left">
         <i class="fas fa-user-graduate fa-fw"></i> &nbsp; ALUMNO
     </h3>
-    <p class="text-justify">
-		Bienvenido a la sección alumno, donde podrás ver una lista de todos los alumnos registrados, registrar, actualizar, y eliminar alumnos.
-    </p>
 </div>
+<hr align="center" width="95%"/>
+
 
 <div class="container-fluid">
     <ul class="full-box list-unstyled page-nav-tabs">

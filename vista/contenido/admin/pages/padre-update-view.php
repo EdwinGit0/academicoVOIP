@@ -8,9 +8,7 @@
 	<h3 class="text-left">
 		<i class="fas fa-sync-alt fa-fw"></i> &nbsp; ACTUALIZAR TUTOR
 	</h3>
-	<p class="text-justify">
-		Bienvenido a la sección para editar un tutor, debes de llenar los campos obligatorios del siguiente formulario para poder actualizar los datos.
-	</p>
+	<hr align="center" width="95%"/>
 </div>
 
 <div class="container-fluid">

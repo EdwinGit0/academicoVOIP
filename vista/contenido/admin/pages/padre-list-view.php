@@ -3,9 +3,7 @@
     <h3 class="text-left">
         <i class="fas fa-user-graduate fa-fw"></i> &nbsp; TUTOR
     </h3>
-    <p class="text-justify">
-		Bienvenido a la sección tutores, donde podrás ver una lista de todos los tutores registrados, registrar, actualizar, y eliminar tutores.
-    </p>
+	<hr align="center" width="95%"/>
 </div>
 
 <div class="container-fluid">

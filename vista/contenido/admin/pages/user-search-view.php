@@ -8,9 +8,7 @@
 	<h3 class="text-left">
 		<i class="fas fa-search fa-fw"></i> &nbsp; BUSCAR ADMINISTRADOR
 	</h3>
-	<p class="text-justify">
-		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit nostrum rerum animi natus beatae ex. Culpa blanditiis tempore amet alias placeat, obcaecati quaerat ullam, sunt est, odio aut veniam ratione.
-	</p>
+	<hr align="center" width="95%"/>
 </div>
 
 <div class="container-fluid">

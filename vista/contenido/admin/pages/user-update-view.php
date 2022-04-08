@@ -10,9 +10,7 @@
 	<h3 class="text-left">
 		<i class="fas fa-sync-alt fa-fw"></i> &nbsp; ACTUALIZAR ADMINISTRADOR
 	</h3>
-	<p class="text-justify">
-		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit nostrum rerum animi natus beatae ex. Culpa blanditiis tempore amet alias placeat, obcaecati quaerat ullam, sunt est, odio aut veniam ratione.
-	</p>
+	<hr align="center" width="95%"/>
 </div>
 
 <?php if($_SESSION['privilegio_sa']==1){ ?>

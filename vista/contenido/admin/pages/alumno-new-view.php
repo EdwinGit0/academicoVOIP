@@ -2,9 +2,7 @@
 	<h3 class="text-left">
 		<i class="fas fa-plus fa-fw"></i> &nbsp; AGREGAR ALUMNO
 	</h3>
-	<p class="text-justify">
-		Bienvenido a la sección para registrar un nuevo alumno, debes de llenar todos los campos obligatorios del siguiente formulario para poder registrarlo.
-	</p>
+	<hr align="center" width="95%"/>
 </div>
 
 <div class="container-fluid">
