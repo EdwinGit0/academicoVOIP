@@ -8,9 +8,7 @@
     <h3 class="text-left">
         <i class="fas fa-plus fa-fw"></i> &nbsp; ACTUALIZAR CURSO
     </h3>
-    <p class="text-justify">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque laudantium necessitatibus eius iure adipisci modi distinctio. Earum repellat iste et aut, ullam, animi similique sed soluta tempore cum quis corporis!
-    </p>
+	<hr align="center" width="95%"/>
 </div>
 <div class="container-fluid">
     <ul class="full-box list-unstyled page-nav-tabs">

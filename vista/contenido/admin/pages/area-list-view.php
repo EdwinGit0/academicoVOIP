@@ -2,9 +2,7 @@
     <h3 class="text-left">
 		<i class="fas fa-book"></i> &nbsp; ÁREA
     </h3>
-    <p class="text-justify">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia fugiat est ducimus inventore, repellendus deserunt cum aliquam dignissimos, consequuntur molestiae perferendis quae, impedit doloribus harum necessitatibus magnam voluptatem voluptatum alias!
-    </p>
+	<hr align="center" width="95%"/>
 </div>
 
 <div class="container-fluid">

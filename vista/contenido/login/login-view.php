@@ -17,7 +17,7 @@
                     <label for="UserPassword" class="bmd-label-floating"><i class="fas fa-key"></i> &nbsp; Contraseña</label>
                     <input type="password" class="form-control" id="UserPassword" name="usuario_clave_lo" pattern="[a-zA-Z0-9$@.-]{7,100}" maxlength="100" required="" >
                 </div>
-                <button type="submit" class="btn-login text-center">LOG IN</button>
+                <button type="submit" class="btn-login text-center">Iniciar sesión</button>
             </form>
         </div>
     </div>
