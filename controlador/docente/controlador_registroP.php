@@ -414,7 +414,7 @@
                         <input type="hidden" id="reprob_anual" value="'.$num_reprobados.'">
                         <canvas id="grafico-anual" class="grafico-pastel-anual""></canvas>
                     </div>
-                    </div>';
+                </div>';
 
 
             $tabla.='<br><div class="input-group">
