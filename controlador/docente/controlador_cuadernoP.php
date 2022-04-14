@@ -336,10 +336,12 @@
             $val_anio=main_model::ejecutar_consulta_simple("SELECT COD_ANIO FROM anio_academico WHERE NOMBRE_ANIO='$anio_academico'");
             $id_anio = $val_anio->fetch();
             
+            $array_data = [];
             foreach($tabla as $value){
                 foreach($value['parciales'] as $value_par){
                     $id_val=main_model::decryption($value_par['parcial']);
-                    $nota_cal=$value_par['nota'];
+                    if($value_par['nota'] == "") $nota_cal = 0;
+                    else $nota_cal=$value_par['nota'];
 
                     $datos_cp_reg=[
                         "Alumno_id"=>main_model::decryption($value['id_alumno']),
@@ -350,23 +352,23 @@
                         "Val_id"=>$id_val,
                         "Nota_id"=>$nota_cal
                     ];
-
-                    if($id_cuaderno=="save"){
-                        $agregar_cp=modelo_cuadernoP::agregar_cuadernoP_modelo($datos_cp_reg);
-                        if($agregar_cp->rowCount()<1){
-                            $alerta=[
-                                "Alerta"=>"simple",
-                                "Titulo"=>"Ocurrio un error inesperado",
-                                "Texto"=>"No hemos podido registrar los datos",
-                                "Tipo"=>"error"
-                            ];
-                            echo json_encode($alerta);
-                            exit();
-                        }
-                    }elseif($id_cuaderno=="update"){
-                        $agregar_cp=modelo_cuadernoP::update_cuadernoP_modelo($datos_cp_reg);
-                    }
+                    array_push($array_data,$datos_cp_reg);
                 }
+            }
+            if($id_cuaderno=="save"){
+                $agregar_cp=modelo_cuadernoP::agregar_cuadernoP_modelo($array_data);
+                if($agregar_cp->rowCount()<1){
+                    $alerta=[
+                        "Alerta"=>"simple",
+                        "Titulo"=>"Ocurrio un error inesperado",
+                        "Texto"=>"No hemos podido registrar los datos",
+                        "Tipo"=>"error"
+                    ];
+                    echo json_encode($alerta);
+                    exit();
+                }
+            }elseif($id_cuaderno=="update"){
+                $agregar_cp=modelo_cuadernoP::update_cuadernoP_modelo($array_data);
             }
 
             $alerta=[
