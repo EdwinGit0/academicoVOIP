@@ -199,9 +199,9 @@ table form{
 .login-container{
 	width: 100vw;
 	height: 100vh;
-	background: #ddd;
-	background: -webkit-linear-gradient(to right, #ddd, #ddd);
-	background: linear-gradient(to right, #ddd, #ddd);
+	background: #0575E6;
+	background: -webkit-linear-gradient(to right, #021B79, #0575E6);
+	background: linear-gradient(to right, #021B79, #0575E6);
 }
 
 .position{
@@ -217,11 +217,29 @@ table form{
 	max-width: 500px;
 	height: auto;
 	border: 1px solid var(--border-color);
-	background-color: #FFF;
+	background-color: #212529;
 	border-radius: 4px;
 	padding: 15px;
-	color: var(--accent-color);
+	color: white;
 }
+
+.login-content input{
+	border: 1px solid #017bab;
+	background-color: #000;
+	font-size: 14px;
+	font-weight: bold;
+	color: white;
+}
+
+.login-content input:focus {
+	color: white;
+}
+
+.login-content .bmd-label-floating {
+	color: white;
+	padding-left: 10px;
+}
+
 .btn-login{
 	width: 90%;
 	padding: 10px 0;
@@ -235,10 +253,18 @@ table form{
 	transition: all .2s ease-out;
 }
 .btn-login:hover{
-	background-color: var(--color-three);
-	border: 1px solid var(--color-three);
+	background-color: #0159ab;
+	border: 1px solid #0159ab;
 	text-decoration: none;
-	color: #fff;
+	color: white;
+}
+.btn-login{
+	width: 100%;
+	height: 40px;
+	background: #017bab;
+	border: none;
+	color: white;
+	margin-bottom: 16px;
 }
 .btn-login:active,
 .btn-login:focus{
@@ -536,7 +562,7 @@ table tr.titulo-libreta {
 
 }
 
-#svgBlob{
+/* #svgBlob{
 	height: 100vh;
 	width: 100vw;
 	position: absolute;
@@ -548,7 +574,7 @@ table tr.titulo-libreta {
 	transform: translate(-40%, 0%);
 	background: #303136;
 	transition: 1s;
-  }
+  } */
 
 .mCSB_inside > .mCSB_container{
 	margin-right: 20px;

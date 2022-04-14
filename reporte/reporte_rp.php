@@ -118,8 +118,12 @@
 require_once "../libreria/dompdf/autoload.inc.php";
 use Dompdf\Dompdf;
 $dompdf = new Dompdf();
-$html .= '<link type="text/css" href="http://localhost/academicoVOIP/vista/css/bootstrap.min.css" rel="stylesheet">';
-$html .= '<link type="text/css" href="http://localhost/academicoVOIP/vista/css/style.css" rel="stylesheet">';
+
+$html .= '<link type="text/css" href="http://app-873282b0-236c-480e-add3-7d08817fc520.cleverapps.io/vista/css/bootstrap.min.css" rel="stylesheet">';
+$html .= '<link type="text/css" href="http://app-873282b0-236c-480e-add3-7d08817fc520.cleverapps.io/vista/css/style.css" rel="stylesheet">';
+
+/* $html .= '<link type="text/css" href="http://localhost/academicoVOIP/vista/css/bootstrap.min.css" rel="stylesheet">';
+$html .= '<link type="text/css" href="http://localhost/academicoVOIP/vista/css/style.css" rel="stylesheet">'; */
 
 
 $options = $dompdf->getOptions();

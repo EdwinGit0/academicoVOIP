@@ -1,4 +1,3 @@
-<canvas id="svgBlob"></canvas>
 <div class="login-container">
     <div class="position">
         <div class="login-content">
