@@ -907,9 +907,16 @@
                         <canvas id="grafico-anual" class="grafico-pastel-anual""></canvas>
                     </div>
                 </div><br>';
+
+                $tabla.='<br><div class="input-group">
+                    <p class="mr-auto">
+                        <a type="button" href="'.SERVERURL.'reporte/reporte_cp.php?id='.main_model::encryption($id_curso).'" class=" btn btn-raised btn-warning">
+                            <i class="fas fa-file-excel"></i> &nbsp; EXPORTAR A PDF
+                        </a>
+                    </p>';
             
             if($total>=1 && $pagina<=$Npaginas){
-                $tabla.='<p class="text-right">Mostrando alumno '.$reg_inicio.' al '.$reg_final.' de un total de '.$total.'</p>';
+                $tabla.='<p class="text-right">Mostrando alumno '.$reg_inicio.' al '.$reg_final.' de un total de '.$total.'</p></div>';
                 $tabla.=main_model::paginador_tablas($pagina, $Npaginas, $url, 7);
             }
             return $tabla;

@@ -5,7 +5,7 @@
    const user="ugumlb9hyc7p5g84";
    const pass="Ht4RVilQFtx94Vll1axI";
 
-  /*  const server="localhost";
+   /* const server="localhost";
    const db="sistemaacademico";
    const user="root";
    const pass=""; */

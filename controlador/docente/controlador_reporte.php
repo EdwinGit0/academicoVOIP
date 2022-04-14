@@ -5,7 +5,7 @@
     
     class controlador_reporte extends modelo_reporte{
 
-        /**-------------------------------- ASIGNACION CURSO ALUMNO -------------------------------------- */
+        /**-------------------------------- REPORTE REGSITRO PEDAGOGICO -------------------------------------- */
         /* controlador paginar alumno*/
         public function paginador_alumno_controlador($id_curso){
             $id_curso = main_model::decryption($id_curso);
@@ -402,5 +402,436 @@
         /* controlador datos periodo */
         public function datos_periodo_controlador(){
             return modelo_reporte::datos_periodo_modelo();
+        }
+
+        /**-------------------------------- REPORTE REGSITRO PEDAGOGICO -------------------------------------- */
+
+        /* controlador datos del periodo*/
+        public function tabla_periodo_cuaderno_controlador($id_curso,$periodo_id){
+            $id_curso = main_model::decryption($id_curso);
+            $id_curso = main_model::limpiar_cadena($id_curso);
+            $periodo_id = main_model::limpiar_cadena($periodo_id);
+
+            $anio_academico = main_model::limpiar_cadena($_SESSION['anio_academico']);
+            $id_docente = main_model::limpiar_cadena($_SESSION['id_sa']);
+
+            $tabla="";
+
+            $val_anio=main_model::ejecutar_consulta_simple("SELECT COD_ANIO FROM anio_academico WHERE NOMBRE_ANIO='$anio_academico'");
+            $id_anio = $val_anio->fetch(); unset($val_anio);
+            $id_anio_a=$id_anio['COD_ANIO'];
+            $val_calificacion=main_model::ejecutar_consulta_simple("SELECT * FROM calificacion WHERE COD_PER='$periodo_id' AND PROFESOR_ID='$id_docente' 
+            AND COD_CUR='$id_curso' AND COD_ANIO='$id_anio_a'");
+            $val_num_calificacion = $val_calificacion->rowCount(); unset($val_calificacion);
+
+            if($val_num_calificacion > 0){
+                $tabla.=$this::tabla_periodo_llenar($periodo_id,$id_curso,$anio_academico,$id_anio_a);
+            }else{
+                $tabla.=$this::tabla_periodo_vacio($periodo_id,$id_curso,$anio_academico);
+            }
+
+            return $tabla;
+        }
+
+        /* tabla cuadernoP vacio*/
+        public function tabla_periodo_vacio($periodo_id,$id_curso,$anio_academico){
+            $ue = main_model::limpiar_cadena($_SESSION['ua_id']);
+
+            $val_docente=main_model::ejecutar_consulta_simple("SELECT * FROM valoracion WHERE USUARIO_VAL='Docente'");
+            $val_docente_n=$val_docente->rowCount()+2; unset($val_docente);
+
+            $val_prom_total=main_model::ejecutar_consulta_simple("SELECT * FROM valoracion WHERE CRITERIO_VAL='Promedio'");
+            $dato_prom_total = $val_prom_total->fetch(); unset($val_prom_total);
+
+            $val_SD=main_model::ejecutar_consulta_simple("SELECT * FROM valoracion WHERE CRITERIO_VAL LIKE '%Ser%' OR CRITERIO_VAL LIKE '%Decir%' ");
+            $dato_SD = $val_SD->fetchAll();
+            $val_SD_num = $val_SD->rowCount(); unset($val_SD);
+            
+            $val_parcial=main_model::ejecutar_consulta_simple("SELECT * FROM valoracion WHERE CRITERIO_VAL LIKE '%Parcial%'");
+            $val_actividad=main_model::ejecutar_consulta_simple("SELECT * FROM valoracion WHERE CRITERIO_VAL LIKE '%Actividad%'");
+
+            $tabla="";
+
+            $val_alumno=main_model::ejecutar_consulta_simple("SELECT SQL_CALC_FOUND_ROWS A.* FROM cur_alum AS CA, alumno AS A WHERE 
+            A.UA_ID='$ue' AND CA.ALUMNO_ID=A.ALUMNO_ID AND CA.COD_CUR='$id_curso' AND YEAR(FECHA_INI_CA)='$anio_academico' 
+            GROUP BY A.ALUMNO_ID ORDER BY A.APELLIDOP_A ASC");
+
+            $datos = $val_alumno->fetchAll();
+            
+            $val_parcial_n=$val_parcial->rowCount()+1;
+            $dato_parcial = $val_parcial->fetchAll();
+
+            $val_actividad_n=$val_actividad->rowCount()+1;
+            $dato_actividad = $val_actividad->fetchAll();
+
+            $tabla.='
+            <table class="table table-bordered table-secondary table-sm" id="table_cp">
+                <thead>
+                    <tr class="text-center roboto-medium">
+                        <th class="tabla-parcial" rowspan="4">#</th>
+                        <th class="tabla-parcial" rowspan="4">APELLIDOS Y NOMBRES</th>
+                        <th class="tabla-parcial" rowspan="4" id="rotate" style="font-size: 10px;"><div id="vertical">CRITERIOS DE EVALUACIÓN</div></th>
+                        <th class="tabla-parcial" colspan="'.$val_docente_n.'">EVALUACION MAESTRA/O</th>
+                        <th class="tabla-parcial" colspan="3">EV. Alumno</th>
+                        <th class="tabla-parcial" rowspan="4" id="rotate"><div id="vertical">TOTAL TRIMESTRAL</div></th>
+                        <th class="tabla-parcial" rowspan="4" id="rotate"><div id="vertical">SITUACIÓN TRIMESTRAL</div></th>
+                    </tr>
+                    <tr class="text-center roboto-medium">
+                        <th class="tabla-parcial" colspan="'.$val_parcial_n.'">SABER - 35</th>
+                        <th class="tabla-parcial" colspan="'.$val_actividad_n.'">HACER - 35</th>
+                        <th class="tabla-parcial" colspan="2">S-D 20</th>
+                        <th class="tabla-parcial" colspan="2">S-D 10</th>
+                        <th class="tabla-parcial"></th>
+                    </tr>
+                    <tr class="text-center roboto-medium">';
+                        if($val_parcial->rowCount()>0){
+        
+                            foreach($dato_parcial as $rows){
+                                $tabla.='<th class="tabla-parcial">35</th>';
+                            }
+                        }
+                        $tabla.='<th class="tabla-promedio">35</th>';
+
+                        if($val_actividad->rowCount()>0){
+                            foreach($dato_actividad as $rows){
+                                $tabla.='<th class="tabla-parcial">35</th>';
+                            }
+                        }
+                        $tabla.='<th class="tabla-promedio">35</th>
+
+                        <th class="tabla-parcial">10</th>
+                        <th class="tabla-parcial">10</th>
+                        <th class="tabla-parcial">5</th>
+                        <th class="tabla-parcial">5</th>
+                        <th class="tabla-promedio">30</th>
+                        
+                    </tr>
+                    <tr class="text-center roboto-medium tabla-evaluacion">';
+                        
+                        if($val_parcial->rowCount()>0){
+                            foreach($dato_parcial as $rows){
+                                $tabla.='<th id="rotate" style="font-size: 10px;"><div id="vertical">'.$rows['CRITERIO_VAL'].'</div></th>';
+                            }
+                        }
+                        $tabla.='<th class="tabla-promedio" id="rotate" style="font-size: 10px;"><div id="vertical">PROMEDIO</div></th>';
+                        
+                        if($val_actividad->rowCount()>0){
+                            foreach($dato_actividad as $rows){
+                                $tabla.='<th id="rotate" style="font-size: 10px;"><div id="vertical">'.$rows['CRITERIO_VAL'].'</div></th>';
+                            }
+                        }
+                        $tabla.='<th class="tabla-promedio" id="rotate" style="font-size: 10px;"><div id="vertical">PROMEDIO</div></th>
+                        
+                        <th id="rotate" style="font-size: 10px;"><div id="vertical">Ser</div></th>
+                        <th id="rotate" style="font-size: 10px;"><div id="vertical">Decidir</div></th>
+                        <th id="rotate" style="font-size: 10px;"><div id="vertical">Ser</div></th>
+                        <th id="rotate" style="font-size: 10px;"><div id="vertical">Decidir</div></th>
+                        <th class="tabla-promedio" id="rotate" style="font-size: 10px;"><div id="vertical">PROMEDIO</div></th>
+                    </tr>
+                </thead>
+                <tbody>';
+
+                $contador=1;
+                foreach($datos as $rows){
+                    $tabla.='<tr>
+                    <td>'.$contador.'</td>
+                    <td colspan="2">'.$rows['APELLIDOP_A'].' '.$rows['APELLIDOM_A'].' '.$rows['NOMBRE_A'].'</td>';
+                    $cont_val=0;
+
+                    if($val_parcial->rowCount()>0){
+                        foreach($dato_parcial as $rows){
+                            $tabla.='<td class="campo_par" id="'.main_model::encryption($rows['VAL_ID']).'" contenteditable="true"></td>';
+                        }
+                    }
+                    $tabla.='<td class="valor-promedio" id="prom_par">0.00</td>';
+
+                    if($val_actividad->rowCount()>0){
+                        foreach($dato_actividad as $rows){
+                            $tabla.='<td class="campo_act" id="'.main_model::encryption($rows['VAL_ID']).'" contenteditable="true"></td>';
+                        }
+                    }
+                    $tabla.='<td class="valor-promedio" id="prom_act">0.00</td>';
+
+                    if($val_SD_num>0){
+                        foreach($dato_SD as $rows){
+                            $tabla.='<td class="campo_sd" id="'.main_model::encryption($rows['VAL_ID']).'" contenteditable="true"></td>';
+                        }
+                    }
+                    $tabla.='<td class="valor-promedio" id="prom_SD">0.00</td>';
+
+                    $tabla.='<td class="campo_total" id="'.main_model::encryption($dato_prom_total['VAL_ID']).'">0</td>';
+                    $tabla.='<td class="prom_estado"></td>';
+
+                    $tabla.='</tr>';
+                    $contador++;
+                }
+
+            $tabla.='</tbody></table>';
+
+            return $tabla;
+        }
+
+        /* tabla cuadernoP lleno*/
+        public function tabla_periodo_llenar($periodo_id,$id_curso,$anio_academico,$id_anio_a){
+            $ue = main_model::limpiar_cadena($_SESSION['ua_id']);
+            $id_docente = main_model::limpiar_cadena($_SESSION['id_sa']);
+
+            $val_docente=main_model::ejecutar_consulta_simple("SELECT * FROM valoracion WHERE USUARIO_VAL='Docente'");
+            $val_docente_n=$val_docente->rowCount()+2; unset($val_docente);
+
+            $val_prom_total=main_model::ejecutar_consulta_simple("SELECT * FROM valoracion WHERE CRITERIO_VAL='Promedio'");
+            $dato_prom_total = $val_prom_total->fetch(); unset($val_prom_total);
+
+            $val_SD=main_model::ejecutar_consulta_simple("SELECT * FROM valoracion WHERE CRITERIO_VAL LIKE '%Ser%' OR CRITERIO_VAL LIKE '%Decir%' ");
+            $dato_SD = $val_SD->fetchAll(); unset($val_SD);
+            
+            $val_parcial=main_model::ejecutar_consulta_simple("SELECT * FROM valoracion WHERE CRITERIO_VAL LIKE '%Parcial%'");
+            $val_actividad=main_model::ejecutar_consulta_simple("SELECT * FROM valoracion WHERE CRITERIO_VAL LIKE '%Actividad%'");
+
+            $tabla="";
+
+            $cal_parcial=main_model::ejecutar_consulta_simple("SELECT V.VAL_ID,C.ALUMNO_ID,C.NOTA FROM valoracion AS V, calificacion AS C 
+            WHERE V.CRITERIO_VAL LIKE '%Parcial%' AND C.VAL_ID=V.VAL_ID AND COD_PER='$periodo_id' AND PROFESOR_ID='$id_docente' 
+            AND COD_CUR='$id_curso' AND COD_ANIO='$id_anio_a'");
+            $dato_parcial_cal = $cal_parcial->fetchAll(); unset($cal_parcial);
+
+            $cal_actividad=main_model::ejecutar_consulta_simple("SELECT V.VAL_ID,C.ALUMNO_ID,C.NOTA FROM valoracion AS V, calificacion AS C 
+            WHERE V.CRITERIO_VAL LIKE '%Actividad%' AND C.VAL_ID=V.VAL_ID AND COD_PER='$periodo_id' AND PROFESOR_ID='$id_docente' 
+            AND COD_CUR='$id_curso' AND COD_ANIO='$id_anio_a'");
+            $dato_actividad_cal = $cal_actividad->fetchAll(); unset($cal_actividad);
+
+            $cal_SD=main_model::ejecutar_consulta_simple("SELECT V.VAL_ID,C.ALUMNO_ID,C.NOTA FROM valoracion AS V, calificacion AS C 
+            WHERE (CRITERIO_VAL LIKE '%Ser%' OR CRITERIO_VAL LIKE '%Decir%') AND C.VAL_ID=V.VAL_ID AND COD_PER='$periodo_id' AND PROFESOR_ID='$id_docente' 
+            AND COD_CUR='$id_curso' AND COD_ANIO='$id_anio_a'");
+            $dato_SD_cal = $cal_SD->fetchAll(); unset($cal_SD);
+
+            $cal_promedio=main_model::ejecutar_consulta_simple("SELECT C.NOTA FROM valoracion AS V, calificacion AS C 
+            WHERE  CRITERIO_VAL='Promedio' AND C.VAL_ID=V.VAL_ID AND COD_PER='$periodo_id' AND PROFESOR_ID='$id_docente' 
+            AND COD_CUR='$id_curso' AND COD_ANIO='$id_anio_a'");
+            $dato_prom_cal = $cal_promedio->fetchAll(); unset($cal_promedio);
+
+            $val_alumno=main_model::ejecutar_consulta_simple("SELECT SQL_CALC_FOUND_ROWS A.* FROM cur_alum AS CA, alumno AS A WHERE 
+            A.UA_ID='$ue' AND CA.ALUMNO_ID=A.ALUMNO_ID AND CA.COD_CUR='$id_curso' AND YEAR(FECHA_INI_CA)='$anio_academico' 
+            GROUP BY A.ALUMNO_ID ORDER BY A.APELLIDOP_A ASC");
+
+            $datos = $val_alumno->fetchAll();
+
+            $val_parcial_n=$val_parcial->rowCount()+1;
+            $dato_parcial = $val_parcial->fetchAll();
+
+            $val_actividad_n=$val_actividad->rowCount()+1;
+            $dato_actividad = $val_actividad->fetchAll();
+
+            $tabla.='
+            <table class="table table-bordered table-secondary table-sm" id="table_cp">
+                <thead>
+                <tr class="text-center roboto-medium">
+                <th class="tabla-parcial" rowspan="4">#</th>
+                <th class="tabla-parcial" rowspan="4">APELLIDOS Y NOMBRES</th>
+                <th class="tabla-parcial" rowspan="4" id="rotate" style="font-size: 10px;"><div id="vertical">CRITERIOS DE EVALUACIÓN</div></th>
+                <th class="tabla-parcial" colspan="'.$val_docente_n.'">EVALUACION MAESTRA/O</th>
+                <th class="tabla-parcial" colspan="3">EV. Alumno</th>
+                <th class="tabla-parcial" rowspan="4" id="rotate"><div id="vertical">TOTAL TRIMESTRAL</div></th>
+                <th class="tabla-parcial" rowspan="4" id="rotate"><div id="vertical">SITUACIÓN TRIMESTRAL</div></th>
+            </tr>
+            <tr class="text-center roboto-medium">
+                <th class="tabla-parcial" colspan="'.$val_parcial_n.'">SABER - 35</th>
+                <th class="tabla-parcial" colspan="'.$val_actividad_n.'">HACER - 35</th>
+                <th class="tabla-parcial" colspan="2">S-D 20</th>
+                <th class="tabla-parcial" colspan="2">S-D 10</th>
+                <th class="tabla-parcial"></th>
+            </tr>
+            <tr class="text-center roboto-medium">';
+                if($val_parcial->rowCount()>0){
+
+                    foreach($dato_parcial as $rows){
+                        $tabla.='<th class="tabla-parcial">35</th>';
+                    }
+                }
+                $tabla.='<th class="tabla-promedio">35</th>';
+
+                if($val_actividad->rowCount()>0){
+                    foreach($dato_actividad as $rows){
+                        $tabla.='<th class="tabla-parcial">35</th>';
+                    }
+                }
+                $tabla.='<th class="tabla-promedio">35</th>
+
+                <th class="tabla-parcial">10</th>
+                <th class="tabla-parcial">10</th>
+                <th class="tabla-parcial">5</th>
+                <th class="tabla-parcial">5</th>
+                <th class="tabla-promedio">30</th>
+                
+            </tr>
+            <tr class="text-center roboto-medium tabla-evaluacion">';
+                
+                if($val_parcial->rowCount()>0){
+                    foreach($dato_parcial as $rows){
+                        $tabla.='<th id="rotate" style="font-size: 10px;"><div id="vertical">'.$rows['CRITERIO_VAL'].'</div></th>';
+                    }
+                }
+                $tabla.='<th class="tabla-promedio" id="rotate" style="font-size: 10px;"><div id="vertical">PROMEDIO</div></th>';
+                
+                if($val_actividad->rowCount()>0){
+                    foreach($dato_actividad as $rows){
+                        $tabla.='<th id="rotate" style="font-size: 10px;"><div id="vertical">'.$rows['CRITERIO_VAL'].'</div></th>';
+                    }
+                }
+                $tabla.='<th class="tabla-promedio" id="rotate" style="font-size: 10px;"><div id="vertical">PROMEDIO</div></th>
+                
+                <th id="rotate" style="font-size: 10px;"><div id="vertical">Ser</div></th>
+                <th id="rotate" style="font-size: 10px;"><div id="vertical">Decidir</div></th>
+                <th id="rotate" style="font-size: 10px;"><div id="vertical">Ser</div></th>
+                <th id="rotate" style="font-size: 10px;"><div id="vertical">Decidir</div></th>
+                <th class="tabla-promedio" id="rotate" style="font-size: 10px;"><div id="vertical">PROMEDIO</div></th>
+                    </tr>
+                </thead>
+                <tbody>';
+
+                $contador=1;
+                foreach($datos as $rows){
+                    $tabla.='<tr>
+                    <td>'.$contador.'</td>
+                    <td colspan="2">'.$rows['APELLIDOP_A'].' '.$rows['APELLIDOM_A'].' '.$rows['NOMBRE_A'].'</td>';
+                    $cont_val=0;
+
+                    $suma_par=0;$cont_total=0;
+                    foreach($dato_parcial_cal as $campos){
+                        if($rows['ALUMNO_ID']==$campos['ALUMNO_ID']){
+                            $tabla.='<td class="campo_par" id="'.main_model::encryption($campos['VAL_ID']).'" contenteditable="true">'.intval($campos['NOTA']).'</td>';
+                            $suma_par=$suma_par+intval($campos['NOTA']);
+                            $cont_total++;
+                        }   
+                    }
+                    $promedio_par=($suma_par/$cont_total)*0.35;
+                    $tabla.='<td class="valor-promedio" id="prom_par">'.number_format($promedio_par, 2, '.', ' ').'</td>';
+                    
+                    $suma_act=0;$cont_total=0;
+                    foreach($dato_actividad_cal as $campos){
+                        if($rows['ALUMNO_ID']==$campos['ALUMNO_ID']){
+                            $tabla.='<td class="campo_act" id="'.main_model::encryption($campos['VAL_ID']).'" contenteditable="true">'.intval($campos['NOTA']).'</td>';
+                            $suma_act=$suma_act+intval($campos['NOTA']);
+                            $cont_total++;
+                        }  
+                    }
+                    $pomedio_act=($suma_act/$cont_total)*0.35;
+                    $tabla.='<td class="valor-promedio" id="prom_act">'.number_format($pomedio_act, 2, '.', ' ').'</td>';
+
+                    $suma_sd=0;
+                    foreach($dato_SD_cal as $campos){
+                        if($rows['ALUMNO_ID']==$campos['ALUMNO_ID']){
+                            $tabla.='<td class="campo_sd" id="'.main_model::encryption($campos['VAL_ID']).'" contenteditable="true">'.intval($campos['NOTA']).'</td>';
+                            $suma_sd=$suma_sd+intval($campos['NOTA']);
+                        }
+                    }
+                    $tabla.='<td class="valor-promedio" id="prom_SD">'.number_format($suma_sd, 2, '.', ' ').'</td>';
+                    
+                    $promedio_total=number_format($promedio_par+$pomedio_act+$suma_sd);
+                    if($promedio_total<51){
+                        $tabla.='<td class="campo_total" id="'.main_model::encryption($dato_prom_total['VAL_ID']).'" style="color: red;">'.$promedio_total.'</td>';
+                        $tabla.='<td class="prom_estado" style="color: red;">REPROBADO</td>';
+                    }else{
+                        $tabla.='<td class="campo_total" id="'.main_model::encryption($dato_prom_total['VAL_ID']).'">'.$promedio_total.'</td>';
+                        $tabla.='<td class="prom_estado">APROBADO</td>';
+                    }
+
+                    $tabla.='</tr>';
+                    $contador++;
+                }
+
+            $tabla.='</tbody></table></div>';
+
+            return $tabla;
+        }
+
+        /* resumen cuadernoP*/
+        public function resumen_cuadroCP_controlador($id_curso){
+            $id_curso = main_model::decryption($id_curso);
+            $id_curso = main_model::limpiar_cadena($id_curso);
+            
+            $anio_academico = main_model::limpiar_cadena($_SESSION['anio_academico']);
+            $val_anio=main_model::ejecutar_consulta_simple("SELECT COD_ANIO FROM anio_academico WHERE NOMBRE_ANIO='$anio_academico'");
+            $id_anio = $val_anio->fetch(); unset($val_anio);
+            $id_anio_a=$id_anio['COD_ANIO'];
+            $ue = main_model::limpiar_cadena($_SESSION['ua_id']);
+            $id_docente = main_model::limpiar_cadena($_SESSION['id_sa']);
+
+            $tabla="";
+
+            $val_alumno=main_model::ejecutar_consulta_simple("SELECT SQL_CALC_FOUND_ROWS A.* FROM cur_alum AS CA, alumno AS A WHERE 
+            A.UA_ID='$ue' AND CA.ALUMNO_ID=A.ALUMNO_ID AND CA.COD_CUR='$id_curso' AND YEAR(FECHA_INI_CA)='$anio_academico' 
+            GROUP BY A.ALUMNO_ID ORDER BY A.APELLIDOP_A ASC");
+
+            $datos = $val_alumno->fetchAll();
+
+            $val_periodo=main_model::ejecutar_consulta_simple("SELECT * FROM periodo");
+            $cal_promedio=main_model::ejecutar_consulta_simple("SELECT C.NOTA, C.ALUMNO_ID, C.COD_PER FROM valoracion AS V, calificacion AS C 
+            WHERE  CRITERIO_VAL='Promedio' AND C.VAL_ID=V.VAL_ID AND PROFESOR_ID='$id_docente' 
+            AND COD_CUR='$id_curso' AND COD_ANIO='$id_anio_a'");
+            $dato_periodo = $val_periodo->fetchAll();
+            $dato_prom_cal = $cal_promedio->fetchAll();
+            
+            $tabla.='
+                    <table class="table table-bordered table-secondary table-sm" id="tabla_asignar_curso">
+                        <thead>
+                            <tr class="text-center roboto-medium tabla-evaluacion">
+                                <th>#</th>
+                                <th>APELLIDOS Y NOMBRES</th>';
+                                if($val_periodo->rowCount()>=1){
+                                    foreach($dato_periodo as $rows){
+                                        $tabla.='<th style="font-size: 10px;"><div>'.$rows['NOMBRE_PER'].'</div></th>';
+                                    }
+                                }
+                                $tabla.='<th class="tabla-promedio" style="font-size: 10px;"><div>ANUAL</div></th>
+                            </tr>
+                        </thead>
+                        <tbody>';
+            $nota_promedio = array();
+
+                $contador=1;
+                
+                foreach($datos as $rows){
+                    $fecha_nacimiento = new DateTime($rows['FECHANAC_A']);
+                    $hoy = new DateTime();
+                    $edad = $hoy->diff( $fecha_nacimiento);
+
+                    $tabla.='<tr>
+                        <td>'.$contador.'</td>
+                        <td>'.$rows['APELLIDOP_A'].' '.$rows['APELLIDOM_A'].' '.$rows['NOMBRE_A'].'</td>';
+                        $suma_act=0;$pomedio_act=0;
+
+                        if($val_periodo->rowCount()>1){
+                            foreach($dato_periodo as $campos_p){
+                                $nota_alumno=0;
+                                foreach($dato_prom_cal as $campos_n){
+                                    if($rows['ALUMNO_ID']==$campos_n['ALUMNO_ID'] && $campos_p['COD_PER']==$campos_n['COD_PER']){
+                                        $nota_alumno=$campos_n['NOTA'];
+                                        $suma_act=$suma_act+intval($campos_n['NOTA']);
+                                    }
+                                }
+                                $tabla.='<td>'.$nota_alumno.'</td>';
+                            }
+
+                            $pomedio_act=($suma_act/$val_periodo->rowCount());
+                            $nota_promedio[] = number_format($pomedio_act);
+                        }else{
+                            $tabla.='<td></td>';
+                        }
+
+
+                        if(number_format($pomedio_act)<51){
+                            $tabla.='<td class="valor-promedio" style="color: red;">'.number_format($pomedio_act).'</td>';
+                        }else{
+                            $tabla.='<td class="valor-promedio">'.number_format($pomedio_act).'</td>';
+                        }
+        
+                        $tabla.='</tr>';
+                    $contador++;
+                }
+                
+            $tabla.='</tbody></table>';
+
+            return $tabla;
         }
     }
