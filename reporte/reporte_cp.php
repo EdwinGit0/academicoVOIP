@@ -79,7 +79,7 @@
         require_once "../controlador/docente/controlador_reporte.php";
         $ins_afiliacion = new controlador_reporte();
 
-        echo $ins_afiliacion->referencial_curso_controlador($_GET['id'],"AFILIACIÓN DE ESTUDIANTES");
+        echo $ins_afiliacion->referencial_cursoCP_controlador($_GET['id'],"AFILIACIÓN DE ESTUDIANTES");
         echo $ins_afiliacion->paginador_alumno_controlador($_GET['id']);
 
     ?>
@@ -94,7 +94,7 @@
             foreach($campos_periodo as $rows){ ?>
                 <div style="page-break-after:always;"></div>
           <?php 
-                echo $ins_afiliacion->referencial_curso_controlador($_GET['id'],"REGISTRO DE VALORACIÓN - ".$rows['NOMBRE_PER']);
+                echo $ins_afiliacion->referencial_cursoCP_controlador($_GET['id'],"REGISTRO DE VALORACIÓN - ".$rows['NOMBRE_PER']);
                 echo $ins_afiliacion->tabla_periodo_cuaderno_controlador($_GET['id'],$rows['COD_PER']);
             } 
         }
@@ -105,7 +105,7 @@
     <div style="page-break-after:always;"></div>
     <?php
 
-        echo $ins_afiliacion->referencial_curso_controlador($_GET['id'],"RESUMEN / REGISTRO PEDAGÓGICO");
+        echo $ins_afiliacion->referencial_cursoCP_controlador($_GET['id'],"RESUMEN / REGISTRO PEDAGÓGICO");
         echo $ins_afiliacion->resumen_cuadroCP_controlador($_GET['id']);
 
     ?>

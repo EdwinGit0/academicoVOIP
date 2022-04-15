@@ -574,7 +574,8 @@
             $dato_prom_total = $val_prom_total->fetch(); unset($val_prom_total);
 
             $val_SD=main_model::ejecutar_consulta_simple("SELECT * FROM valoracion WHERE CRITERIO_VAL LIKE '%Ser%' OR CRITERIO_VAL LIKE '%Decir%' ");
-            $dato_SD = $val_SD->fetchAll(); unset($val_SD);
+            $dato_SD = $val_SD->fetchAll();
+            $val_SD_num = $val_SD->rowCount(); unset($val_SD);
             
             $val_parcial=main_model::ejecutar_consulta_simple("SELECT * FROM valoracion WHERE CRITERIO_VAL LIKE '%Parcial%'");
             $val_actividad=main_model::ejecutar_consulta_simple("SELECT * FROM valoracion WHERE CRITERIO_VAL LIKE '%Actividad%'");
@@ -598,7 +599,7 @@
             $cal_SD=main_model::ejecutar_consulta_simple("SELECT V.VAL_ID,C.ALUMNO_ID,C.NOTA FROM valoracion AS V, calificacion AS C 
             WHERE (CRITERIO_VAL LIKE '%Ser%' OR CRITERIO_VAL LIKE '%Decir%') AND C.VAL_ID=V.VAL_ID AND COD_PER='$periodo_id' AND PROFESOR_ID='$id_docente' 
             AND COD_CUR='$id_curso' AND COD_ANIO='$id_anio_a'");
-            $dato_SD_cal = $cal_SD->fetchAll(); unset($cal_SD);
+             $dato_SD_cal = $cal_SD->fetchAll(); unset($cal_SD);
 
             $cal_promedio=main_model::ejecutar_consulta_simple("SELECT C.NOTA FROM valoracion AS V, calificacion AS C 
             WHERE  CRITERIO_VAL='Promedio' AND C.VAL_ID=V.VAL_ID AND COD_PER='$periodo_id' AND PROFESOR_ID='$id_docente' 
@@ -699,44 +700,76 @@
                     <td colspan="2">'.$rows['APELLIDOP_A'].' '.$rows['APELLIDOM_A'].' '.$rows['NOMBRE_A'].'</td>';
                     $cont_val=0;
 
-                    $suma_par=0;$cont_total=0;
+                    $suma_par=0;$cont_total=0;$isempty=true;
                     foreach($dato_parcial_cal as $campos){
                         if($rows['ALUMNO_ID']==$campos['ALUMNO_ID']){
                             $tabla.='<td class="campo_par" id="'.main_model::encryption($campos['VAL_ID']).'" contenteditable="true">'.intval($campos['NOTA']).'</td>';
                             $suma_par=$suma_par+intval($campos['NOTA']);
                             $cont_total++;
+                            $isempty=false;
                         }   
                     }
-                    $promedio_par=($suma_par/$cont_total)*0.35;
-                    $tabla.='<td class="valor-promedio" id="prom_par">'.number_format($promedio_par, 2, '.', ' ').'</td>';
+                    if($isempty){
+                        if($val_parcial->rowCount()>0){
+                            foreach($dato_parcial as $rows){
+                                $tabla.='<td class="campo_par" id="'.main_model::encryption($rows['VAL_ID']).'" contenteditable="true">0</td>';
+                            }
+                        }
+                        $tabla.='<td class="valor-promedio" id="prom_par">0.00</td>';
+                    }else{
+                        $promedio_par=($suma_par/$cont_total)*0.35;
+                        $tabla.='<td class="valor-promedio" id="prom_par">'.number_format($promedio_par, 2, '.', ' ').'</td>';
+                    }
                     
-                    $suma_act=0;$cont_total=0;
+                    $suma_act=0;$cont_total=0;$isempty=true;
                     foreach($dato_actividad_cal as $campos){
                         if($rows['ALUMNO_ID']==$campos['ALUMNO_ID']){
                             $tabla.='<td class="campo_act" id="'.main_model::encryption($campos['VAL_ID']).'" contenteditable="true">'.intval($campos['NOTA']).'</td>';
                             $suma_act=$suma_act+intval($campos['NOTA']);
                             $cont_total++;
+                            $isempty=false;
                         }  
                     }
-                    $pomedio_act=($suma_act/$cont_total)*0.35;
-                    $tabla.='<td class="valor-promedio" id="prom_act">'.number_format($pomedio_act, 2, '.', ' ').'</td>';
+                    if($isempty){
+                        if($val_actividad->rowCount()>0){
+                            foreach($dato_actividad as $rows){
+                                $tabla.='<td class="campo_act" id="'.main_model::encryption($rows['VAL_ID']).'" contenteditable="true">0</td>';
+                            }
+                        }
+                        $tabla.='<td class="valor-promedio" id="prom_act">0.00</td>';
+                    }else{
+                        $pomedio_act=($suma_act/$cont_total)*0.35;
+                        $tabla.='<td class="valor-promedio" id="prom_act">'.number_format($pomedio_act, 2, '.', ' ').'</td>';
+                    }
 
-                    $suma_sd=0;
+                    $suma_sd=0;$isempty=true;
                     foreach($dato_SD_cal as $campos){
                         if($rows['ALUMNO_ID']==$campos['ALUMNO_ID']){
                             $tabla.='<td class="campo_sd" id="'.main_model::encryption($campos['VAL_ID']).'" contenteditable="true">'.intval($campos['NOTA']).'</td>';
                             $suma_sd=$suma_sd+intval($campos['NOTA']);
+                            $isempty=false;
                         }
                     }
-                    $tabla.='<td class="valor-promedio" id="prom_SD">'.number_format($suma_sd, 2, '.', ' ').'</td>';
-                    
-                    $promedio_total=number_format($promedio_par+$pomedio_act+$suma_sd);
-                    if($promedio_total<51){
-                        $tabla.='<td class="campo_total" id="'.main_model::encryption($dato_prom_total['VAL_ID']).'" style="color: red;">'.$promedio_total.'</td>';
-                        $tabla.='<td class="prom_estado" style="color: red;">REPROBADO</td>';
+                    if($isempty){
+                        if($val_SD_num>0){
+                            foreach($dato_SD as $rows){
+                                $tabla.='<td class="campo_sd" id="'.main_model::encryption($rows['VAL_ID']).'" contenteditable="true">0</td>';
+                            }
+                        }
+                        $tabla.='<td class="valor-promedio" id="prom_SD">0.00</td>';
+    
+                        $tabla.='<td class="campo_total" id="'.main_model::encryption($dato_prom_total['VAL_ID']).'">0</td>';
+                        $tabla.='<td class="prom_estado"></td>';
                     }else{
-                        $tabla.='<td class="campo_total" id="'.main_model::encryption($dato_prom_total['VAL_ID']).'">'.$promedio_total.'</td>';
-                        $tabla.='<td class="prom_estado">APROBADO</td>';
+                        $tabla.='<td class="valor-promedio" id="prom_SD">'.number_format($suma_sd, 2, '.', ' ').'</td>';
+                        $promedio_total=number_format($promedio_par+$pomedio_act+$suma_sd);
+                        if($promedio_total<51){
+                            $tabla.='<td class="campo_total" id="'.main_model::encryption($dato_prom_total['VAL_ID']).'" style="color: red;">'.$promedio_total.'</td>';
+                            $tabla.='<td class="prom_estado" style="color: red;">REPROBADO</td>';
+                        }else{
+                            $tabla.='<td class="campo_total" id="'.main_model::encryption($dato_prom_total['VAL_ID']).'">'.$promedio_total.'</td>';
+                            $tabla.='<td class="prom_estado">APROBADO</td>';
+                        }
                     }
 
                     $tabla.='</tr>';

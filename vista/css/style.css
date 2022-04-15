@@ -199,9 +199,8 @@ table form{
 .login-container{
 	width: 100vw;
 	height: 100vh;
-	background: #0575E6;
-	background: -webkit-linear-gradient(to right, #021B79, #0575E6);
-	background: linear-gradient(to right, #021B79, #0575E6);
+	background: #fff;
+
 }
 
 .position{
@@ -217,7 +216,7 @@ table form{
 	max-width: 500px;
 	height: auto;
 	border: 1px solid var(--border-color);
-	background-color: #212529;
+	background-color: #19222a;
 	border-radius: 4px;
 	padding: 15px;
 	color: white;
