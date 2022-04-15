@@ -40,7 +40,41 @@
 
 <!-- Content -->
 <div class="full-box tile-container">
-   
+
+    <a href="<?php echo SERVERURL; ?>docente/gestion-academico/" class="tile">
+        <div class="tile-tittle">Año académico</div>
+        <div class="tile-icon">
+            <i class="fas fa-tasks"></i>
+            <p><?php echo $_SESSION['anio_academico']; ?></p>
+        </div>
+    </a>
+
+    <?php 
+        require_once "./controlador/docente/controlador_cuadernoP.php";
+        $ins_cuadernoP = new controlador_cuadernoP();
+        $total_cuadernoP = $ins_cuadernoP->cursos_asignadosCP_controlador(); 
+    ?>
+    <a href="<?php echo SERVERURL; ?>docente/pedagogico-cuaderno/" class="tile">
+        <div class="tile-tittle">Cuaderno pedagógico </div>
+        <div class="tile-icon">
+            <i class="fas fa-book"></i>
+            <p><?php echo $total_cuadernoP;?> Cursos Asignadas</p>
+        </div>
+    </a>
+
+    <?php 
+        require_once "./controlador/docente/controlador_registroP.php";
+        $ins_cuadernoP = new controlador_registroP();
+        $total_cuadernoP = $ins_cuadernoP->cursos_asignadosRP_controlador(); 
+    ?>
+    <a href="<?php echo SERVERURL; ?>docente/pedagogico-registro/" class="tile">
+        <div class="tile-tittle">Registro pedagógico </div>
+        <div class="tile-icon">
+            <i class="fas fa-book"></i>
+            <p><?php echo $total_cuadernoP;?> Cursos Asignadas</p>
+        </div>
+    </a>
+ 
 </div>
 
 <script src="<?php echo SERVERURL;?>vista/js/star-time.js" ></script>
