@@ -954,5 +954,19 @@
             }
             return $tabla;
         }
+
+        /* cursos asignados a docentes*/
+        public function cursos_asignadosCP_controlador(){
+            session_start(['name'=>'SA']);
+            $anio=main_model::limpiar_cadena($_SESSION['anio_academico']);
+            $id_docente = main_model::limpiar_cadena($_SESSION['id_sa']);
+
+            $turno=main_model::ejecutar_consulta_simple("SELECT C.TURNO_CUR FROM curso AS C, cur_prof AS CP, 
+            profesor AS P WHERE C.COD_CUR=CP.COD_CUR AND CP.PROFESOR_ID=P.PROFESOR_ID 
+            AND P.PROFESOR_ID='$id_docente' AND YEAR(FECHA_INI_CP)='$anio'");
+
+            $total_cuadernoP = $turno->rowCount(); unset($turno);
+            return $total_cuadernoP;
+        }
   
     }
