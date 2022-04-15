@@ -27,8 +27,9 @@
         }
 
         protected static function update_cuadernoP_modelo($datos){
-            $sql=main_model::conectar()->prepare("UPDATE calificacion SET NOTA=:Nota_id WHERE ALUMNO_ID=:Alumno_id AND COD_PER=:Periodo_id AND PROFESOR_ID=:Docente_id AND 
-            COD_CUR=:Curso_id AND COD_ANIO=:Anio_id AND VAL_ID=:Val_id");
+
+            $sql=main_model::conectar()->prepare("INSERT INTO calificacion(ALUMNO_ID,COD_PER,PROFESOR_ID,COD_CUR,COD_ANIO,VAL_ID,NOTA) 
+            VALUES(:Alumno_id,:Periodo_id,:Docente_id,:Curso_id,:Anio_id,:Val_id,:Nota_id) ON DUPLICATE KEY UPDATE NOTA=:Nota_id");
 
             foreach ($datos as $value) {
                 $sql->bindParam(":Alumno_id",$value['Alumno_id']);

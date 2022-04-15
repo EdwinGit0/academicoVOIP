@@ -125,11 +125,9 @@
                             </tr>
                         </table>
                     
-                        <div class="full-box page-header">
-                            <h5 class="text-center">
-                                '.$tipo.'
-                            </h5>
-                        </div>
+                        <h5 class="text-center">
+                            '.$tipo.'
+                        </h5>
 
                         <table class="table table-libreta2 size-text11 table-sm">
                             <tr>
@@ -155,6 +153,85 @@
                                 $tabla.='                 
                                 <th>Fecha</th>
                                 <td>'.date("Y-m-d").'</td>  
+                            </tr>
+                        </table>';
+
+                return $tabla;
+                exit();
+            }else{
+                return '<div class="alert alert-warning" role="alert">
+                            <p class="text-center mb-0">
+                                <i class="fas fa-exclamation-triangle fa-2x"></i><br>
+                                El curso seleccionado no se encuentra registrado en el sistema
+                            </p>
+                        </div>';
+                exit();
+            }
+        }
+
+        /**Controlador datos referenciales*/
+        public function referencial_cursoCP_controlador($id_curso,$tipo){
+            $id_curso = main_model::decryption($id_curso);
+            $id_curso = main_model::limpiar_cadena($id_curso);
+
+            $anio_academico = main_model::limpiar_cadena($_SESSION['anio_academico']);
+
+            $id_ua=$_SESSION['ua_id'];
+            $id_area=$_SESSION['id_area'];
+            $check_referencial=main_model::ejecutar_consulta_simple("SELECT C.GRADO_CUR, C.SECCION_CUR, UA.DISTRITO_UA, UA.NOMBRE_UA, A.NOMBRE_AREA, A.CAMPO_AREA
+            FROM curso AS C, unidad_academico AS UA, area AS A WHERE C.COD_CUR='$id_curso' AND UA.UA_ID='$id_ua' AND A.COD_AREA='$id_area'");
+
+            if($check_referencial->rowCount()>=1){
+
+                $campos=$check_referencial->fetch();
+                $tabla = '<table class="size-text12">
+                            <tr class="text-center">
+                                <th>UNIDAD EDUCATIVA</th>
+                            </tr>
+                            <tr class="text-center">
+                                <th>'.$campos['NOMBRE_UA'].'</th>
+                            </tr>
+                            <tr class="text-center">
+                                <th>GESTIÓN '.$_SESSION['anio_academico'].'</th>
+                            </tr>
+                        </table>
+                    
+                        <h5 class="text-center">
+                            '.$tipo.'
+                        </h5>
+
+                        <table class="table table-libreta2 size-text11 table-sm">
+                            <tr>
+                                <th>Distrito Educativo</th>
+                                <td>'.$campos['DISTRITO_UA'].'</td>
+                                <th>Año de Escolaridad</th>
+                                <td>'.$campos['GRADO_CUR'].' '.$campos['SECCION_CUR'].'</td>  
+                                <th>Nivel</th>
+                                <td>Secundaria Comunitaria Productiva</td> 
+                            </tr>
+                            <tr>
+                                <th>Maestra/o</th>
+                                <td>'.$_SESSION['nombre_sa'].' '.$_SESSION['apellidoP_sa'].' '.$_SESSION['apellidoM_sa'].'</td>
+                                <th>Directora/ro</th>';
+                                $check_director=main_model::ejecutar_consulta_simple("SELECT NOMBRE_AD, APELLIDOP_AD, APELLIDOM_AD FROM admin WHERE UA_ID='$id_ua' AND TIPO='Director'");
+                                if($check_director->rowCount()>=1){
+                                    $campos_dir=$check_director->fetch();
+                                    $tabla.='<td>'.$campos_dir['NOMBRE_AD'].' '.$campos_dir['APELLIDOP_AD'].' '.$campos_dir['APELLIDOM_AD'].'</td>'; 
+                                }else{
+                                    $tabla.='<td></td>';
+                                }    
+                                
+                                $tabla.='                 
+                                <th>Fecha</th>
+                                <td>'.date("Y-m-d").'</td>  
+                            </tr>
+                            <tr>
+                                <th>Campo</th>
+                                <td>'.$campos['CAMPO_AREA'].'</td>
+                                <th></th>
+                                <td></td>
+                                <th>Área</th>
+                                <td>'.$campos['NOMBRE_AREA'].'</td>  
                             </tr>
                         </table>';
 
@@ -465,7 +542,7 @@
             $dato_actividad = $val_actividad->fetchAll();
 
             $tabla.='
-            <table class="table table-bordered table-secondary table-sm" id="table_cp">
+            <table class="table table-bordered table-sm" id="table_cp">
                 <thead>
                     <tr class="text-center roboto-medium">
                         <th class="tabla-parcial" rowspan="4">#</th>
@@ -540,21 +617,21 @@
 
                     if($val_parcial->rowCount()>0){
                         foreach($dato_parcial as $rows){
-                            $tabla.='<td class="campo_par" id="'.main_model::encryption($rows['VAL_ID']).'" contenteditable="true"></td>';
+                            $tabla.='<td class="campo_par" id="'.main_model::encryption($rows['VAL_ID']).'"></td>';
                         }
                     }
                     $tabla.='<td class="valor-promedio" id="prom_par">0.00</td>';
 
                     if($val_actividad->rowCount()>0){
                         foreach($dato_actividad as $rows){
-                            $tabla.='<td class="campo_act" id="'.main_model::encryption($rows['VAL_ID']).'" contenteditable="true"></td>';
+                            $tabla.='<td class="campo_act" id="'.main_model::encryption($rows['VAL_ID']).'"></td>';
                         }
                     }
                     $tabla.='<td class="valor-promedio" id="prom_act">0.00</td>';
 
                     if($val_SD_num>0){
                         foreach($dato_SD as $rows){
-                            $tabla.='<td class="campo_sd" id="'.main_model::encryption($rows['VAL_ID']).'" contenteditable="true"></td>';
+                            $tabla.='<td class="campo_sd" id="'.main_model::encryption($rows['VAL_ID']).'"></td>';
                         }
                     }
                     $tabla.='<td class="valor-promedio" id="prom_SD">0.00</td>';
@@ -583,7 +660,8 @@
             $dato_prom_total = $val_prom_total->fetch(); unset($val_prom_total);
 
             $val_SD=main_model::ejecutar_consulta_simple("SELECT * FROM valoracion WHERE CRITERIO_VAL LIKE '%Ser%' OR CRITERIO_VAL LIKE '%Decir%' ");
-            $dato_SD = $val_SD->fetchAll(); unset($val_SD);
+            $dato_SD = $val_SD->fetchAll(); 
+            $val_SD_num = $val_SD->rowCount(); unset($val_SD);
             
             $val_parcial=main_model::ejecutar_consulta_simple("SELECT * FROM valoracion WHERE CRITERIO_VAL LIKE '%Parcial%'");
             $val_actividad=main_model::ejecutar_consulta_simple("SELECT * FROM valoracion WHERE CRITERIO_VAL LIKE '%Actividad%'");
@@ -623,7 +701,7 @@
             $dato_actividad = $val_actividad->fetchAll();
 
             $tabla.='
-            <table class="table table-bordered table-secondary table-sm" id="table_cp">
+            <table class="table table-bordered table-sm" id="table_cp">
                 <thead>
                 <tr class="text-center roboto-medium">
                 <th class="tabla-parcial" rowspan="4">#</th>
@@ -643,7 +721,6 @@
             </tr>
             <tr class="text-center roboto-medium">';
                 if($val_parcial->rowCount()>0){
-
                     foreach($dato_parcial as $rows){
                         $tabla.='<th class="tabla-parcial">35</th>';
                     }
@@ -696,44 +773,76 @@
                     <td colspan="2">'.$rows['APELLIDOP_A'].' '.$rows['APELLIDOM_A'].' '.$rows['NOMBRE_A'].'</td>';
                     $cont_val=0;
 
-                    $suma_par=0;$cont_total=0;
+                    $suma_par=0;$cont_total=0;$isempty=true;
                     foreach($dato_parcial_cal as $campos){
                         if($rows['ALUMNO_ID']==$campos['ALUMNO_ID']){
                             $tabla.='<td class="campo_par" id="'.main_model::encryption($campos['VAL_ID']).'" contenteditable="true">'.intval($campos['NOTA']).'</td>';
                             $suma_par=$suma_par+intval($campos['NOTA']);
                             $cont_total++;
+                            $isempty=false;
                         }   
                     }
-                    $promedio_par=($suma_par/$cont_total)*0.35;
-                    $tabla.='<td class="valor-promedio" id="prom_par">'.number_format($promedio_par, 2, '.', ' ').'</td>';
+                    if($isempty){
+                        if($val_parcial->rowCount()>0){
+                            foreach($dato_parcial as $rows){
+                                $tabla.='<td class="campo_par" id="'.main_model::encryption($rows['VAL_ID']).'" contenteditable="true"></td>';
+                            }
+                        }
+                        $tabla.='<td class="valor-promedio" id="prom_par">0.00</td>';
+                    }else{
+                        $promedio_par=($suma_par/$cont_total)*0.35;
+                        $tabla.='<td class="valor-promedio" id="prom_par">'.number_format($promedio_par, 2, '.', ' ').'</td>';
+                    }
                     
-                    $suma_act=0;$cont_total=0;
+                    $suma_act=0;$cont_total=0;$isempty=true;
                     foreach($dato_actividad_cal as $campos){
                         if($rows['ALUMNO_ID']==$campos['ALUMNO_ID']){
                             $tabla.='<td class="campo_act" id="'.main_model::encryption($campos['VAL_ID']).'" contenteditable="true">'.intval($campos['NOTA']).'</td>';
                             $suma_act=$suma_act+intval($campos['NOTA']);
                             $cont_total++;
+                            $isempty=false;
                         }  
                     }
-                    $pomedio_act=($suma_act/$cont_total)*0.35;
-                    $tabla.='<td class="valor-promedio" id="prom_act">'.number_format($pomedio_act, 2, '.', ' ').'</td>';
+                    if($isempty){
+                        if($val_actividad->rowCount()>0){
+                            foreach($dato_actividad as $rows){
+                                $tabla.='<td class="campo_act" id="'.main_model::encryption($rows['VAL_ID']).'" contenteditable="true"></td>';
+                            }
+                        }
+                        $tabla.='<td class="valor-promedio" id="prom_act">0.00</td>';
+                    }else{
+                        $pomedio_act=($suma_act/$cont_total)*0.35;
+                        $tabla.='<td class="valor-promedio" id="prom_act">'.number_format($pomedio_act, 2, '.', ' ').'</td>';
+                    }
 
-                    $suma_sd=0;
+                    $suma_sd=0;$isempty=true;
                     foreach($dato_SD_cal as $campos){
                         if($rows['ALUMNO_ID']==$campos['ALUMNO_ID']){
                             $tabla.='<td class="campo_sd" id="'.main_model::encryption($campos['VAL_ID']).'" contenteditable="true">'.intval($campos['NOTA']).'</td>';
                             $suma_sd=$suma_sd+intval($campos['NOTA']);
+                            $isempty=false;
                         }
                     }
-                    $tabla.='<td class="valor-promedio" id="prom_SD">'.number_format($suma_sd, 2, '.', ' ').'</td>';
-                    
-                    $promedio_total=number_format($promedio_par+$pomedio_act+$suma_sd);
-                    if($promedio_total<51){
-                        $tabla.='<td class="campo_total" id="'.main_model::encryption($dato_prom_total['VAL_ID']).'" style="color: red;">'.$promedio_total.'</td>';
-                        $tabla.='<td class="prom_estado" style="color: red;">REPROBADO</td>';
+                    if($isempty){
+                        if($val_SD_num>0){
+                            foreach($dato_SD as $rows){
+                                $tabla.='<td class="campo_sd" id="'.main_model::encryption($rows['VAL_ID']).'" contenteditable="true"></td>';
+                            }
+                        }
+                        $tabla.='<td class="valor-promedio" id="prom_SD">0.00</td>';
+    
+                        $tabla.='<td class="campo_total" id="'.main_model::encryption($dato_prom_total['VAL_ID']).'">0</td>';
+                        $tabla.='<td class="prom_estado"></td>';
                     }else{
-                        $tabla.='<td class="campo_total" id="'.main_model::encryption($dato_prom_total['VAL_ID']).'">'.$promedio_total.'</td>';
-                        $tabla.='<td class="prom_estado">APROBADO</td>';
+                        $tabla.='<td class="valor-promedio" id="prom_SD">'.number_format($suma_sd, 2, '.', ' ').'</td>';
+                        $promedio_total=number_format($promedio_par+$pomedio_act+$suma_sd);
+                        if($promedio_total<51){
+                            $tabla.='<td class="campo_total" id="'.main_model::encryption($dato_prom_total['VAL_ID']).'" style="color: red;">'.$promedio_total.'</td>';
+                            $tabla.='<td class="prom_estado" style="color: red;">REPROBADO</td>';
+                        }else{
+                            $tabla.='<td class="campo_total" id="'.main_model::encryption($dato_prom_total['VAL_ID']).'">'.$promedio_total.'</td>';
+                            $tabla.='<td class="prom_estado">APROBADO</td>';
+                        }
                     }
 
                     $tabla.='</tr>';
