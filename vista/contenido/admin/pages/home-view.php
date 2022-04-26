@@ -1,9 +1,11 @@
 		<!-- Page header -->
-<div class="full-box page-header" >
+<div class="full-box page-header mb-0 y pb-0" >
     <h3 class="text-left">
         <i class="fab fa-dashcube fa-fw"></i> &nbsp; DASHBOARD
     </h3>
-    <h5>
+</div>
+<div class="full-box page-header-next">
+<h5>
         <div class="input-group">
             <strong>Tu último acceso es:</strong>
             <span class="input-group-addon">&nbsp;</span>

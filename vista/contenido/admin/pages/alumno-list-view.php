@@ -4,7 +4,6 @@
         <i class="fas fa-user-graduate fa-fw"></i> &nbsp; ALUMNO
     </h3>
 </div>
-<hr align="center" width="95%"/>
 
 
 <div class="container-fluid">

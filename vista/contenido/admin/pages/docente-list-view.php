@@ -1,8 +1,7 @@
-<div class="full-box page-header">
+<div class="full-box page-header mb-0 y pb-0">
     <h3 class="text-left">
         <i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE DOCENTE
     </h3>
-	<hr align="center" width="95%"/>
 </div>
 <div class="container-fluid">
     <ul class="full-box list-unstyled page-nav-tabs">
