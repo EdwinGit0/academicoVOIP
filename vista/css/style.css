@@ -63,7 +63,11 @@ body,html{
 
 /*----------  Page headers styles  ----------*/
 .page-header{
-	padding: 30px 20px 30px 20px;
+	padding: 10px 10px 10px 10px;
+	background-color: #ddd;
+}
+.page-header-next{
+	padding: 0px 10px 10px 10px;
 }
 .page-header > :nth-child(1){
 	padding-bottom: 7px;
@@ -211,9 +215,9 @@ table form{
 	place-items: center;
 }
 
-.login-content{
+/*.login-content{
 	width: 95%;
-	max-width: 500px;
+	max-width: 600px;
 	height: auto;
 	border: 1px solid var(--border-color);
 	background-color: #19222a;
@@ -234,13 +238,8 @@ table form{
 	color: white;
 }
 
-.login-content .bmd-label-floating {
-	color: white;
-	padding-left: 10px;
-}
-
 .btn-login{
-	width: 90%;
+	width: 100%;
 	padding: 10px 0;
 	display: block;
 	margin: 0 auto;
@@ -259,15 +258,66 @@ table form{
 }
 .btn-login{
 	width: 100%;
-	height: 40px;
+	height: auto;
 	background: #017bab;
 	border: none;
 	color: white;
 	margin-bottom: 16px;
-}
+} */
 .btn-login:active,
 .btn-login:focus{
 	outline: none;
+}
+
+
+/* .login-container{
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: #0575E6;
+	background: -webkit-linear-gradient(to right, #021B79, #0575E6);
+	background: linear-gradient(to right, #021B79, #0575E6);
+
+} */
+
+.bmd-label-floating {
+	color: var(--accent-color);
+	padding-left: 10px;
+}
+
+.login-content{
+	width: 95%;
+	max-width: 600px;
+	height: auto;
+	border: 2px solid var(--border-color);
+	background-color: #FFF;
+	border-radius: 1rem;
+	padding: 15px;
+	color: var(--accent-color);
+}
+
+.login-content h4{
+	font: 150% sans-serif;
+}
+.btn-login{
+	width: 100%;
+	padding: 10px 0;
+	display: block;
+	margin: 0 auto;
+	border-radius: 3px;
+	margin-top: 30px;
+	background-color: transparent;
+	color: var(--accent-color);
+	border: 1px solid var(--accent-color);
+	transition: all .2s ease-out;
+}
+.btn-login:hover{
+	background-color: #0159ab;
+	border: 1px solid #0159ab;
+	text-decoration: none;
+	color: #fff;
 }
 
 /*----------  Page layout Styles  ----------*/

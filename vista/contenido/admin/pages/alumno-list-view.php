@@ -4,7 +4,6 @@
         <i class="fas fa-user-graduate fa-fw"></i> &nbsp; ALUMNO
     </h3>
 </div>
-<hr align="center" width="95%"/>
 
 
 <div class="container-fluid">
@@ -31,7 +30,7 @@
 ?>
 
 <div class="container-fluid">
-	<form class="form-neon FormularioAjax" action="<?php echo SERVERURL; ?>ajax/admin/buscadorAjax.php" method="POST" data-form="default" autocomplete="off">
+	<form class="FormularioAjax" action="<?php echo SERVERURL; ?>ajax/admin/buscadorAjax.php" method="POST" data-form="default" autocomplete="off">
 		<input type="hidden" name="modulo" value="alumno">
 		<div class="container-fluid">
 			<div class="row justify-content-md-center">

@@ -1,8 +1,7 @@
-<div class="full-box page-header">
+<div class="full-box page-header mb-0 y pb-0">
     <h3 class="text-left">
         <i class="fas fa-building fa-fw"></i> &nbsp; INFORMACÓN DEL ESTABLECIMIENTO EDUCATIVO
     </h3>
-    <hr align="center" width="95%"/>
 </div>
 
 <?php

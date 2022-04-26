@@ -4,11 +4,10 @@
 		exit();
 	}
 ?>
-<div class="full-box page-header">
+<div class="full-box page-header mb-0 y pb-0">
     <h3 class="text-left">
         <i class="fas fa-plus fa-fw"></i> &nbsp; ACTUALIZAR PERIODO
     </h3>
-    <hr align="center" width="95%"/>
 </div>
 <div class="container-fluid">
     <ul class="full-box list-unstyled page-nav-tabs">

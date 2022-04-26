@@ -1,4 +1,4 @@
-<div class="full-box page-header">
+<div class="full-box page-header mb-0 y pb-0">
   <h3 class="text-left">
     <i class="fas fa-book"></i> &nbsp; CUADERNO PEDAGÓGICO
   </h3>
