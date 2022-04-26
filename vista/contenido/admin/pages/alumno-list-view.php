@@ -30,7 +30,7 @@
 ?>
 
 <div class="container-fluid">
-	<form class="FormularioAjax" action="<?php echo SERVERURL; ?>ajax/admin/buscadorAjax.php" method="POST" data-form="default" autocomplete="off">
+	<form class="form-neon FormularioAjax" action="<?php echo SERVERURL; ?>ajax/admin/buscadorAjax.php" method="POST" data-form="default" autocomplete="off">
 		<input type="hidden" name="modulo" value="alumno">
 		<div class="container-fluid">
 			<div class="row justify-content-md-center">
