@@ -18,12 +18,7 @@
                 tabla_alumno.innerHTML=respuesta;
             });
         }else{
-            Swal.fire({
-                title: 'Ocurrio un error',
-                text: 'Debes introducir el CI, Nombre, Apellido',
-                type: 'error',
-                confirmButtonText:'Aceptar'
-            });
+            getIDInput("input_alumno_error").innerHTML = 'Debes introducir el CI, Nombre o Apellido';  
         }
     }
 
@@ -31,17 +26,15 @@
     function agregar_alumno(id_alumno){
         $('#ModalAlumno').modal('hide');
 
-        Swal.fire({
-        title: "¿Quieres agregar el alumno?",
-        text: 'Se asignará el alumno para el tutor',
-        type: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText:'Si, agregar',
-        cancelButtonText:'No, cancelar'
-        }).then((result) => {
-            if (result.value){
+        swal({
+            title: "¿Quieres agregar el alumno?",
+            text: 'Se asignará el alumno para el tutor',
+            icon: "warning",
+            buttons: ['No, cancelar', 'Si, agregar'],
+            closeOnClickOutside: false,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
                 let datos = new FormData();
                 datos.append("id_agregar_alumno", id_alumno);
 
@@ -68,11 +61,11 @@
                     }else if(respuesta.Alerta){
                         return alertas_ajax(respuesta);
                     }else{
-                        Swal.fire({
+                        swal({
                             title: 'Advertencia',
                             text: 'El alumno ya se encuentra seleccionado, por favor seleccione otro',
-                            type: 'warning',
-                            confirmButtonText:'Aceptar'
+                            icon: 'warning',
+                            button: "Aceptar",
                         });
                         $('#ModalAlumno').modal('show');
                     }

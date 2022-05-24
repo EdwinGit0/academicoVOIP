@@ -27,11 +27,11 @@
                 tablaResumen();
             });
         }else{
-            Swal.fire({
+            swal({
                 title: 'Ocurrio un error',
                 text: 'El curso que selecciono no existe',
-                type: 'error',
-                confirmButtonText:'Aceptar'
+                icon: 'error',
+                button: "Aceptar",
             });
         }
     } 
@@ -65,11 +65,11 @@
                 tabla_padre.innerHTML=respuesta;
             });
         }else{
-            Swal.fire({
+            swal({
                 title: 'Ocurrio un error',
                 text: 'El curso que selecciono no existe',
-                type: 'error',
-                confirmButtonText:'Aceptar'
+                icon: 'error',
+                button: "Aceptar",
             });
         }
     }  
@@ -109,11 +109,11 @@
 
             });
         }else{
-            Swal.fire({
+            swal({
                 title: 'Ocurrio un error',
                 text: 'El curso que selecciono no existe',
-                type: 'error',
-                confirmButtonText:'Aceptar'
+                icon: 'error',
+                button: "Aceptar",
             });
         }
     } 
@@ -196,17 +196,16 @@
 
     /**--------------------------------- GUARDAR Y ACTUALIZAR CUADERNO P --------------------------------- */
     function guardar_cuadernoP(table){
-        Swal.fire({
-        title: "¿Estas seguro?",
-        text: 'Los datos quedaran guardados en el sistema',
-        type: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText:'Si, agregar',
-        cancelButtonText:'No, cancelar'
-        }).then((result) => {
-            if (result.value){
+        var enviar = true;
+        swal({
+            title: "¿Estas seguro?",
+            text: 'Los datos quedaran guardados en el sistema',
+            icon: "warning",
+            buttons: ['No, cancelar', 'Si, agregar'],
+            closeOnClickOutside: false,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
                 let id_curso=document.querySelector('#id_curso_table').value;
                 table.find('input#id_periodo_table').each(function() {
                     id_periodo = this.value;
@@ -226,7 +225,12 @@
                     $(this).find('td').each(function() {
                         let parcial = this.id;
                         let nota = this.textContent;
+                  
                         if(this.className=="campo_par" || this.className=="campo_act" || this.className=="campo_sd" || this.className=="campo_total"){
+                            if(isNaN(nota) || nota > 100 || nota < 0){
+                                enviar = false;
+                                return;
+                            }
                             var fila_par = {
                                 parcial,
                                 nota
@@ -242,21 +246,31 @@
                     filas.push(fila);
                 });
 
-                let datos = new FormData();
-                datos.append("id_cuaderno_reg", cuaderno_reg);
-                datos.append("id_agregar_curso", id_curso);
-                datos.append("id_agregar_periodo", id_periodo);
-                datos.append("tabla", JSON.stringify(filas));
+                if(enviar){
+                    let datos = new FormData();
+                    datos.append("id_cuaderno_reg", cuaderno_reg);
+                    datos.append("id_agregar_curso", id_curso);
+                    datos.append("id_agregar_periodo", id_periodo);
+                    datos.append("tabla", JSON.stringify(filas));
 
-                fetch("<?php echo SERVERURL?>ajax/docente/cuadernoPAjax.php",{
-                    method: 'POST',
-                    body: datos
-                })
-                .then(respuesta => respuesta.json())
-                .then(respuesta => {
-                    datosReferenciales();
-                    return alertas_ajax(respuesta);
-                });
+                    fetch("<?php echo SERVERURL?>ajax/docente/cuadernoPAjax.php",{
+                        method: 'POST',
+                        body: datos
+                    })
+                    .then(respuesta => respuesta.json())
+                    .then(respuesta => {
+                        datosReferenciales();
+                        return alertas_ajax(respuesta);
+                    });
+                }else{
+                    let alerta = {
+                                "Alerta":"simple",
+                                "Titulo":"Ocurrio un error inesperado",
+                                "Texto":"Los datos que ingreso son invalidos",
+                                "Tipo":"error"
+                                } 
+                    return alertas_ajax(alerta);
+                }  
             }
         });
     }
@@ -310,11 +324,11 @@
                 pastelAnual();
             });
         }else{
-            Swal.fire({
+            swal({
                 title: 'Ocurrio un error',
                 text: 'El curso que selecciono no existe',
-                type: 'error',
-                confirmButtonText:'Aceptar'
+                icon: 'error',
+                button: "Aceptar",
             });
         }
     } 

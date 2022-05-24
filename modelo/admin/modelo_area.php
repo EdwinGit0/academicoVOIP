@@ -5,9 +5,10 @@
 
         /**Modelo agregar area */
         protected static function agregar_area_modelo($datos){
-            $sql=main_model::conectar()->prepare("INSERT INTO area(NOMBRE_AREA,INFO,CREADO_AREA) 
-            VALUES(:Nombre,:Info,:Creado)");
+            $sql=main_model::conectar()->prepare("INSERT INTO area(NOMBRE_AREA,CAMPO_AREA,INFO,CREADO_AREA) 
+            VALUES(:Nombre,:Campo,:Info,:Creado)");
             $sql->bindParam(":Nombre",$datos['Nombre']);
+            $sql->bindParam(":Campo",$datos['Campo']);
             $sql->bindParam(":Info",$datos['Info']);
             $sql->bindParam(":Creado",$datos['Creado']);
             $sql->execute();
@@ -40,9 +41,10 @@
         /* modelo actualizar area */
         protected static function actualizar_area_modelo($datos){
             $sql=main_model::conectar()->prepare("UPDATE area SET NOMBRE_AREA=:Nombre,
-            INFO=:Info WHERE COD_AREA=:ID");
+            CAMPO_AREA=:Campo, INFO=:Info WHERE COD_AREA=:ID");
             
             $sql->bindParam(":Nombre",$datos['Nombre']);
+            $sql->bindParam(":Campo",$datos['Campo']);
             $sql->bindParam(":Info",$datos['Info']);
             $sql->bindParam(":ID",$datos['ID']);
             $sql->execute();

@@ -38,7 +38,7 @@
 			$campos = $datos_periodo->fetch();
 	?>
 
-	<form class="form-neon FormularioAjax" action="<?php echo SERVERURL; ?>ajax/admin/periodoAjax.php" method="POST" data-form="update" autocomplete="off">
+	<form class="form-neon FormularioAjax" action="<?php echo SERVERURL; ?>ajax/admin/periodoAjax.php" method="POST" data-form="update" autocomplete="off" novalidate onsubmit="return period_new_validata()">
         <input type="hidden" name="periodo_id_up" value="<?php echo $pagina[2]; ?>">
         <fieldset>
 			<legend><i class="far fa-plus-square"></i> &nbsp; Información de la sección</legend>
@@ -47,7 +47,9 @@
 					<div class="col-12 col-md-12">
 						<div class="form-group">
 							<label for="periodo_nombre" class="bmd-label-floating">Nombre</label>
-							<input type="text" pattern="[a-zA-záéíóúÁÉÍÓÚñÑ0-9 ]{1,20}" class="form-control" name="periodo_nombre_up" id="periodo_nombre" maxlength="20" value="<?php echo $campos['NOMBRE_PER']; ?>" required="">
+							<input type="text" pattern="[a-zA-záéíóúÁÉÍÓÚñÑ0-9 ]{1,50}" class="form-control" name="periodo_nombre_up" 
+							id="periodo_nombre" maxlength="50" value="<?php echo $campos['NOMBRE_PER']; ?>" required="" onchange="deleteErrorMessage('periodo_nombre_error')">
+							<div class='message-error' id="periodo_nombre_error"></div>
 						</div>
 					</div>
 				</div>

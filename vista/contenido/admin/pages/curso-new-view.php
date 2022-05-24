@@ -21,7 +21,7 @@
 </div>
 
 <div class="container-fluid">
-	<form class="form-neon FormularioAjax" action="<?php echo SERVERURL; ?>ajax/admin/cursoAjax.php" method="POST" data-form="save" autocomplete="off">
+	<form class="form-neon FormularioAjax" action="<?php echo SERVERURL; ?>ajax/admin/cursoAjax.php" method="POST" data-form="save" autocomplete="off" novalidate onsubmit="return course_new_validata()">
 		<fieldset>
 			<legend><i class="far fa-plus-square"></i> &nbsp; Información del curso</legend>
 			<div class="container-fluid">
@@ -29,18 +29,21 @@
 					<div class="col-12 col-md-6">
 						<div class="form-group">
 							<label for="curso_turno" class="bmd-label-floating">Turno</label>
-							<select class="form-control" name="curso_turno_reg" id="curso_turno" required="">
+							<select class="form-control" name="curso_turno_reg" 
+							id="curso_turno" required="" onchange="deleteErrorMessage('curso_turno_error')">
 								<option value="" selected="" disabled="">Seleccione una opción</option>
 								<option value="Mañana">Mañana</option>
 								<option value="Tarde">Tarde</option>
 								<option value="Noche">Noche</option>
 							</select>
+							<div class='message-error' id="curso_turno_error"></div>
 						</div>
 					</div>
 					<div class="col-12 col-md-6">
 						<div class="form-group">
 							<label for="curso_grado" class="bmd-label-floating">Grado</label>
-							<select class="form-control" name="curso_grado_reg" id="curso_grado" required="">
+							<select class="form-control" name="curso_grado_reg" 
+							id="curso_grado" required="" onchange="deleteErrorMessage('curso_grado_error')">
 								<option value="" selected="" disabled="">Seleccione una opción</option>
 								<option value="Primero">Primero</option>
 								<option value="Segundo">Segundo</option>
@@ -49,12 +52,14 @@
 								<option value="Quinto">Quinto</option>
 								<option value="Sexto">Sexto</option>
 							</select>
+							<div class='message-error' id="curso_grado_error"></div>
 						</div>
 					</div>
 					<div class="col-12 col-md-6">
 						<div class="form-group">
 							<label for="curso_seccion" class="bmd-label-floating">sección</label>
-							<select class="form-control" name="curso_seccion_reg" id="curso_seccion" required="">
+							<select class="form-control" name="curso_seccion_reg" 
+							id="curso_seccion" required="" onchange="deleteErrorMessage('curso_seccion_error')">
 								<option value="" selected="" disabled="">Seleccione una opción</option>
 								<option value="A">A</option>
 								<option value="B">B</option>
@@ -70,12 +75,15 @@
 								<option value="L">L</option>
 								<option value="M">M</option>
 							</select>
+							<div class='message-error' id="curso_seccion_error"></div>
 						</div>
 					</div>
 					<div class="col-12 col-md-6">
 						<div class="form-group">
 							<label for="curso_capacidad" class="bmd-label-floating">Capacidad</label>
-							<input type="text" pattern="[0-9]{1,2}" class="form-control" name="curso_capacidad_reg" id="curso_capacidad" maxlength="2" required="">
+							<input type="text" pattern="[0-9]{1,2}" class="form-control" name="curso_capacidad_reg" 
+							id="curso_capacidad" maxlength="2" required="" onchange="deleteErrorMessage('curso_capacidad_error')">
+							<div class='message-error' id="curso_capacidad_error"></div>
 						</div>
 					</div>
                     <input type="hidden" name="curso_creado_reg" id="curso_creado" value="<?php echo date("Y-m-d H:i:s");?>">

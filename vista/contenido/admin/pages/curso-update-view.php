@@ -38,7 +38,7 @@
 			$campos = $datos_curso->fetch();
 	?>
 
-	<form class="form-neon FormularioAjax" action="<?php echo SERVERURL; ?>ajax/admin/cursoAjax.php" method="POST" data-form="update" autocomplete="off">
+	<form class="form-neon FormularioAjax" action="<?php echo SERVERURL; ?>ajax/admin/cursoAjax.php" method="POST" data-form="update" autocomplete="off" novalidate onsubmit="return course_new_validata()">
         <input type="hidden" name="curso_id_up" value="<?php echo $pagina[2]; ?>">
         <fieldset>
 			<legend><i class="far fa-plus-square"></i> &nbsp; Información de la curso</legend>
@@ -47,18 +47,21 @@
 					<div class="col-12 col-md-6">
 						<div class="form-group">
 							<label for="curso_turno" class="bmd-label-floating">Turno</label>
-							<select class="form-control" name="curso_turno_up" id="curso_turno" required="">
+							<select class="form-control" name="curso_turno_up" 
+							id="curso_turno" required="" onchange="deleteErrorMessage('curso_turno_error')">
 								<option value="" selected="" disabled="">Seleccione una opción</option>
 								<option value="Mañana" <?php if($campos['TURNO_CUR'] == "Mañana"){ echo 'selected=""'; } ?>>Mañana</option>
 								<option value="Tarde" <?php if($campos['TURNO_CUR'] == "Tarde"){ echo 'selected=""'; } ?>>Tarde</option>
 								<option value="Noche" <?php if($campos['TURNO_CUR'] == "Noche"){ echo 'selected=""'; } ?>>Noche</option>
 							</select>
+							<div class='message-error' id="curso_turno_error"></div>
 						</div>
 					</div>
 					<div class="col-12 col-md-6">
 						<div class="form-group">
 							<label for="curso_grado" class="bmd-label-floating">Grado</label>
-							<select class="form-control" name="curso_grado_up" id="curso_grado" required="">
+							<select class="form-control" name="curso_grado_up" 
+							id="curso_grado" required="" onchange="deleteErrorMessage('curso_grado_error')">
 								<option value="Primero" <?php if($campos['GRADO_CUR'] == "Primero"){ echo 'selected=""'; } ?>>Primero</option>
 								<option value="Segundo" <?php if($campos['GRADO_CUR'] == "Segundo"){ echo 'selected=""'; } ?>>Segundo</option>
 								<option value="Tercero" <?php if($campos['GRADO_CUR'] == "Tercero"){ echo 'selected=""'; } ?>>Tercero</option>
@@ -66,12 +69,14 @@
 								<option value="Quinto" <?php if($campos['GRADO_CUR'] == "Quinto"){ echo 'selected=""'; } ?>>Quinto</option>
 								<option value="Sexto" <?php if($campos['GRADO_CUR'] == "Sexto"){ echo 'selected=""'; } ?>>Sexto</option>
 							</select>
+							<div class='message-error' id="curso_grado_error"></div>
 						</div>
 					</div>
 					<div class="col-12 col-md-6">
 						<div class="form-group">
 							<label for="curso_seccion" class="bmd-label-floating">sección</label>
-							<select class="form-control" name="curso_seccion_up" id="curso_seccion" required="">
+							<select class="form-control" name="curso_seccion_up" 
+							id="curso_seccion" required="" onchange="deleteErrorMessage('curso_seccion_error')">
 								<option value="A" <?php if($campos['SECCION_CUR'] == "A"){ echo 'selected=""'; } ?>>A</option>
 								<option value="B" <?php if($campos['SECCION_CUR'] == "B"){ echo 'selected=""'; } ?>>B</option>
 								<option value="C" <?php if($campos['SECCION_CUR'] == "C"){ echo 'selected=""'; } ?>>C</option>
@@ -86,12 +91,15 @@
 								<option value="L" <?php if($campos['SECCION_CUR'] == "L"){ ecHo 'selected=""'; } ?>>L</option>
 								<option value="M" <?php if($campos['SECCION_CUR'] == "M"){ echo 'selected=""'; } ?>>M</option>
 							</select>
+							<div class='message-error' id="curso_seccion_error"></div>
 						</div>
 					</div>
 					<div class="col-12 col-md-6">
 						<div class="form-group">
 							<label for="curso_capacidad" class="bmd-label-floating">Capacidad</label>
-							<input type="text" pattern="[0-9]{1,2}" class="form-control" name="curso_capacidad_up" id="curso_capacidad" maxlength="2" value="<?php echo $campos['CAPACIDAD_CUR']; ?>" required="">
+							<input type="text" pattern="[0-9]{1,2}" class="form-control" name="curso_capacidad_up" 
+							id="curso_capacidad" maxlength="2" value="<?php echo $campos['CAPACIDAD_CUR']; ?>" required="" onchange="deleteErrorMessage('curso_capacidad_error')">
+							<div class='message-error' id="curso_capacidad_error"></div>
 						</div>
 					</div>
 				</div>

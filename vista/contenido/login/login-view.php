@@ -8,14 +8,17 @@
                 <h4 class="text-center fw-bold mb-2"><strong>Inicia sesión con tu cuenta</strong></h4>
             </p>
 
-            <form action="" method="POST" autocomplete="off" >
+            <form action="" method="POST" autocomplete="off" novalidate onsubmit="return login_validata()" >
                 <div class="form-group">
                     <label for="UserName" class="bmd-label-floating"><i class="fas fa-user-secret"></i> &nbsp; Correo</label>
-                    <input type="email" class="form-control" id="usuario_email" name="usuario_correo_lo" maxlength="50"  >
+                    <input type="email" class="form-control" id="usuario_email" name="usuario_correo_lo" maxlength="50" required onchange="deleteErrorMessage('usuario_email_error')">
+                    <div class='message-error' id="usuario_email_error"></div>
                 </div>
+         
                 <div class="form-group">
                     <label for="UserPassword" class="bmd-label-floating"><i class="fas fa-key"></i> &nbsp; Contraseña</label>
-                    <input type="password" class="form-control" id="UserPassword" name="usuario_clave_lo" pattern="[a-zA-Z0-9$@.-]{7,100}" maxlength="100"  >
+                    <input type="password" class="form-control" id="UserPassword" name="usuario_clave_lo" pattern="[a-zA-Z0-9@#$%&.-]{7,20}" maxlength="20" required onchange="deleteErrorMessage('usuario_password_error')">
+                    <div class='message-error' id="usuario_password_error"></div>
                 </div>
                 <button type="submit" class="btn-login text-center btn-lg">Iniciar sesión</button>
             </form>

@@ -39,7 +39,7 @@
 			$campos = $datos_area->fetch();
 	?>
  
-	<form class="form-neon FormularioAjax" action="<?php echo SERVERURL; ?>ajax/admin/areaAjax.php" method="POST" data-form="update" autocomplete="off">
+	<form class="form-neon FormularioAjax" action="<?php echo SERVERURL; ?>ajax/admin/areaAjax.php" method="POST" data-form="update" autocomplete="off" novalidate onsubmit="return area_new_validata()">
         <input type="hidden" name="area_id_up" value="<?php echo $pagina[2]; ?>">
         <fieldset>
 			<legend><i class="far fa-plus-square"></i> &nbsp; Información del área</legend>
@@ -48,13 +48,30 @@
 					<div class="col-12 col-md-6">
 						<div class="form-group">
 							<label for="area_nombre" class="bmd-label-floating">Nombre</label>
-							<input type="text" pattern="[a-zA-záéíóúÁÉÍÓÚñÑ0-9 ]{1,50}" class="form-control" name="area_nombre_up" id="area_nombre" maxlength="50" value="<?php echo $campos['NOMBRE_AREA']; ?>" required="">
+							<input type="text" pattern="[a-zA-záéíóúÁÉÍÓÚñÑ0-9 ]{1,50}" class="form-control" name="area_nombre_up" 
+							id="area_nombre" maxlength="50" value="<?php echo $campos['NOMBRE_AREA']; ?>" required="" onchange="deleteErrorMessage('area_nombre_error')">
+							<div class='message-error' id="area_nombre_error"></div>
 						</div>
 					</div>
-                    <div class="col-12 col-md-6">
+					<div class="col-12 col-md-6">
+						<div class="form-group">
+							<label for="area_campo" class="bmd-label-floating">Campo</label>
+							<select class="form-control" name="area_campo_up" 
+							id="area_campo" required="" onchange="deleteErrorMessage('area_campo_error')">
+								<option value="Ciencia, Tecnología y Producción" <?php if($campos['CAMPO_AREA'] == "Ciencia, Tecnología y Producción"){ echo 'selected=""'; } ?>>Ciencia, Tecnología y Producción</option>
+								<option value="Comunidad y Sociedad" <?php if($campos['CAMPO_AREA'] == "Comunidad y Sociedad"){ echo 'selected=""'; } ?>>Comunidad y Sociedad</option>
+								<option value="Tierra Territorio" <?php if($campos['CAMPO_AREA'] == "Tierra Territorio"){ echo 'selected=""'; } ?>>Tierra Territorio</option>
+								<option value="Cosmos y Pensamiento" <?php if($campos['CAMPO_AREA'] == "Cosmos y Pensamiento"){ echo 'selected=""'; } ?>>Cosmos y Pensamiento</option>
+							</select>
+							<div class='message-error' id="area_campo_error"></div>
+						</div>
+					</div>
+                    <div class="col-12 col-md-12">
 						<div class="form-group">
 							<label for="area_info" class="bmd-label-floating">Información</label>
-							<input type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{3,255}" class="form-control" name="area_info_up" id="area_info" maxlength="255" value="<?php echo $campos['INFO']; ?>">
+							<input type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{3,255}" class="form-control" name="area_info_up" 
+							id="area_info" maxlength="255" value="<?php echo $campos['INFO']; ?>" onchange="deleteErrorMessage('area_info_error')">
+							<div class='message-error' id="area_info_error"></div>
 						</div>
 					</div>
 				</div>

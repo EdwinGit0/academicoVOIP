@@ -30,29 +30,24 @@
             exit();
         }
 
-        if($modulo=="prestamo"){
+        $name_var="busqueda_".$modulo;
 
-        }else{
-            $name_var="busqueda_".$modulo;
-
-            /** iniciar busqueda */
-            if(isset($_POST['busqueda_inicial'])){
-                if($_POST['busqueda_inicial']==""){
-                    $alerta=[
-                        "Alerta"=>"simple",
-                        "Titulo"=>"Ocurrio un error inesperado",
-                        "Texto"=>"Por favor introduce un termino de busqueda para empezar",
-                        "Tipo"=>"error"
-                    ];
-                    echo json_encode($alerta);
-                    exit();
-                }
-                $_SESSION[$name_var]=$_POST['busqueda_inicial'];
+        /** iniciar busqueda */
+        if(isset($_POST['busqueda_inicial'])){
+            if($_POST['busqueda_inicial']==""){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Tipo"=>"validation",
+                    "Input"=>$modulo,
+                ];
+                echo json_encode($alerta);
+                exit();
             }
-            //eliminar busqueda
-            if(isset($_POST['eliminar_busqueda'])){
-                unset($_SESSION[$name_var]);
-            }
+            $_SESSION[$name_var]=$_POST['busqueda_inicial'];
+        }
+        //eliminar busqueda
+        if(isset($_POST['eliminar_busqueda'])){
+            unset($_SESSION[$name_var]);
         }
 
         //redireccionar 

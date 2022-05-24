@@ -30,17 +30,18 @@
 ?>
 
 <div class="container-fluid">
-	<form class="form-neon FormularioAjax" action="<?php echo SERVERURL; ?>ajax/admin/buscadorAjax.php" method="POST" data-form="default" autocomplete="off">
+	<form class="form-neon FormularioAjax" action="<?php echo SERVERURL; ?>ajax/admin/buscadorAjax.php" method="POST" data-form="default" autocomplete="off" novalidate onsubmit="return search_validata('alumno')">
 		<input type="hidden" name="modulo" value="alumno">
 		<div class="container-fluid">
 			<div class="row justify-content-md-center">
 				<div class="col-12 col-md-12">
 					<div class="form-group input-group">
 						<label for="inputSearch" class="bmd-label-floating">¿Qué alumno estas buscando?</label>
-						<input type="text" class="form-control" name="busqueda_inicial" id="inputSearch" maxlength="30">
+						<input type="text" class="form-control" name="busqueda_inicial" id="alumno" required="" onchange="deleteErrorMessage('alumno_error')">
 						<div class="input-group-addon"></div>
 						<button type="submit" class="btn btn-raised btn-info"><i class="fas fa-search"></i> &nbsp; BUSCAR</button>
 					</div>
+					<div class='message-error' id="alumno_error"></div>
 				</div>
 			</div>
 		</div>

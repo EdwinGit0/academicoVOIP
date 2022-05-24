@@ -15,12 +15,12 @@
             if($email=="" || $clave==""){
                 echo 
                 '<script>
-                    Swal.fire({
+                    swal({
                         title: "Ocurrio un error inesperado",
                         text: "No has llenado todos los campos que son requeridos",
-                        type: "error",
-                        confirmButtonText: "Aceptar"
-                  });
+                        icon: "error",
+                        button: "Aceptar",
+                    });
                 </script>';
                 exit();
             }
@@ -29,25 +29,25 @@
             if(!filter_var($email,FILTER_VALIDATE_EMAIL)){
                 echo 
                 '<script>
-                    Swal.fire({
+                    swal({
                         title: "Ocurrio un error inesperado",
-                        text: "La CORREO no coincide con el formato solicitado",
-                        type: "error",
-                        confirmButtonText: "Aceptar"
-                  });
+                        text: "El CORREO no coincide con el formato solicitado",
+                        icon: "error",
+                        button: "Aceptar",
+                    });
                 </script>';
                 exit();
             }
 
-            if(main_model::verificar_datos("[a-zA-Z0-9$@.-]{7,100}",$clave)){
+            if(main_model::verificar_datos("[a-zA-Z0-9@#$%&.-]{7,20}",$clave)){
                 echo 
                 '<script>
-                    Swal.fire({
+                    swal({
                         title: "Ocurrio un error inesperado",
-                        text: "EL CLAVE no coincide con el formato solicitado",
-                        type: "error",
-                        confirmButtonText: "Aceptar"
-                  });
+                        text: "La CLAVE no coincide con el formato solicitado",
+                        icon: "error",
+                        button: "Aceptar",
+                    });
                 </script>';
                 exit();
             }
@@ -102,12 +102,12 @@
                 }else{
                     echo 
                     '<script>
-                        Swal.fire({
+                        swal({
                             title: "Ocurrio un error inesperado",
                             text: "El USUARIO y/o CLAVE son incorrectos",
-                            type: "error",
-                            confirmButtonText: "Aceptar"
-                    });
+                            icon: "error",
+                            button: "Aceptar",
+                        });
                     </script>';
                 }
             }

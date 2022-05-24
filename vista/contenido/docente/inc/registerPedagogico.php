@@ -27,11 +27,11 @@
                 tablaResumen();
             });
         }else{
-            Swal.fire({
+            swal({
                 title: 'Ocurrio un error',
                 text: 'El curso que selecciono no existe',
-                type: 'error',
-                confirmButtonText:'Aceptar'
+                icon: 'error',
+                button: "Aceptar",
             });
         }
     } 
@@ -65,11 +65,11 @@
                 tabla_padre.innerHTML=respuesta;
             });
         }else{
-            Swal.fire({
+            swal({
                 title: 'Ocurrio un error',
                 text: 'El curso que selecciono no existe',
-                type: 'error',
-                confirmButtonText:'Aceptar'
+                icon: 'error',
+                button: "Aceptar",
             });
         }
     }  
@@ -109,11 +109,11 @@
 
             });
         }else{
-            Swal.fire({
+            swal({
                 title: 'Ocurrio un error',
                 text: 'El curso que selecciono no existe',
-                type: 'error',
-                confirmButtonText:'Aceptar'
+                icon: 'error',
+                button: "Aceptar",
             });
         }
     } 
@@ -243,11 +243,11 @@
                 pastelAnual();
             });
         }else{
-            Swal.fire({
+            swal({
                 title: 'Ocurrio un error',
                 text: 'El curso que selecciono no existe',
-                type: 'error',
-                confirmButtonText:'Aceptar'
+                icon: 'error',
+                button: "Aceptar",
             });
         }
     } 

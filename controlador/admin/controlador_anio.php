@@ -16,12 +16,11 @@
     
 
             /* comprobar campos vacios */
-            if($nombre=="" || $creado==""){
+            if($nombre=="" || $nombre==null){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"No has llenado todos los campos obligatorios",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"anio_nombre",
                 ];
                 echo json_encode($alerta);
                 exit();
@@ -31,9 +30,8 @@
             if(main_model::verificar_datos("[a-zA-záéíóúÁÉÍÓÚñÑ0-9 ]{4,5}",$nombre)){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"El Nombre no coincide con el formato solicitado",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"anio_nombre",
                 ];
                 echo json_encode($alerta);
                 exit();
@@ -175,7 +173,7 @@
                     <a href="'.$url.'" class="btn btn-raised btn-primary btn-sm">Haga clic aca para recargar el listado</a>
                     </td></tr>';
                 }else{
-                    $tabla.='<tr class="text-center"><td colspan="5">No hay registros en el sistema</td></tr>';
+                    $tabla.='<tr class="text-center"><td colspan="6">No hay registros en el sistema</td></tr>';
                 }
             }
             $tabla.='</tbody></table></div>';
@@ -221,12 +219,11 @@
             $nombre=main_model::limpiar_cadena($_POST['anio_nombre_up']);
 
             /* comprobar campos vacios */
-            if($nombre==""){
+            if($nombre=="" || $nombre==null){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"No has llenado todos los campos obligatorios",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"anio_nombre",
                 ];
                 echo json_encode($alerta);
                 exit();
@@ -237,9 +234,8 @@
                 if(main_model::verificar_datos("[a-zA-záéíóúÁÉÍÓÚñÑ0-9 ]{4,5}",$nombre)){
                     $alerta=[
                         "Alerta"=>"simple",
-                        "Titulo"=>"Ocurrio un error inesperado",
-                        "Texto"=>"El Nombre no coincide con el formato solicitado",
-                        "Tipo"=>"error"
+                        "Tipo"=>"validation",
+                        "Input"=>"anio_nombre",
                     ];
                     echo json_encode($alerta);
                     exit();

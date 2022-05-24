@@ -22,17 +22,15 @@
     function agregar_area(id_area){
         $('#ModalArea').modal('hide');
 
-        Swal.fire({
-        title: "¿Quieres agregar este área?",
-        text: 'Se va agregar este área para el docente',
-        type: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText:'Si, agregar',
-        cancelButtonText:'No, cancelar'
-        }).then((result) => {
-            if (result.value){
+        swal({
+            title: "¿Quieres agregar este área?",
+            text: 'Se va agregar este área para el docente',
+            icon: "warning",
+            buttons: ['No, cancelar', 'Si, agregar'],
+            closeOnClickOutside: false,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
                 let datos = new FormData();
                 datos.append("id_agregar_area", id_area);
 
@@ -50,11 +48,11 @@
                     }else if(respuesta.Alerta){
                         return alertas_ajax(respuesta);
                     }else{
-                        Swal.fire({
+                        swal({
                             title: 'Advertencia',
                             text: 'El área ya se encuentra seleccionado, por favor seleccione otro',
-                            type: 'warning',
-                            confirmButtonText:'Aceptar'
+                            icon: 'warning',
+                            button: "Aceptar",
                         });
                         $('#ModalArea').modal('show');
                     }
@@ -119,12 +117,7 @@
                 tabla_educativo.innerHTML=respuesta;
             });
         }else{
-            Swal.fire({
-                title: 'Ocurrio un error',
-                text: 'Debes introducir el Código, Nombre',
-                type: 'error',
-                confirmButtonText:'Aceptar'
-            });
+            getIDInput("input_educativo_error").innerHTML = 'Debes introducir el Código o Nombre';  
         }
     }
 
@@ -132,17 +125,15 @@
     function agregar_educativo(id_educativo){
         $('#ModalEducativo').modal('hide');
 
-        Swal.fire({
-        title: "¿Quieres agregar este establecimieto?",
-        text: 'Se asignará este establecimieto para el docente',
-        type: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText:'Si, agregar',
-        cancelButtonText:'No, cancelar'
-        }).then((result) => {
-            if (result.value){
+        swal({
+            title: "¿Quieres agregar este establecimieto?",
+            text: 'Se asignará este establecimieto para el docente',
+            icon: "warning",
+            buttons: ['No, cancelar', 'Si, agregar'],
+            closeOnClickOutside: false,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
                 let datos = new FormData();
                 datos.append("id_agregar_educativo", id_educativo);
 
@@ -160,11 +151,11 @@
                     }else if(respuesta.Alerta){
                         return alertas_ajax(respuesta);
                     }else{
-                        Swal.fire({
+                        swal({
                             title: 'Advertencia',
                             text: 'El establecimiento ya se encuentra seleccionado, por favor seleccione otro',
-                            type: 'warning',
-                            confirmButtonText:'Aceptar'
+                            icon: 'warning',
+                            button: "Aceptar",
                         });
                         $('#ModalEducativo').modal('show');
                     }

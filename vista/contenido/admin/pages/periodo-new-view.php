@@ -21,7 +21,7 @@
 </div>
 
 <div class="container-fluid">
-	<form class="form-neon FormularioAjax" action="<?php echo SERVERURL; ?>ajax/admin/periodoAjax.php" method="POST" data-form="save" autocomplete="off">
+	<form class="form-neon FormularioAjax" action="<?php echo SERVERURL; ?>ajax/admin/periodoAjax.php" method="POST" data-form="save" autocomplete="off" novalidate onsubmit="return period_new_validata()">
 		<fieldset>
 			<legend><i class="far fa-plus-square"></i> &nbsp; Información del periodo</legend>
 			<div class="container-fluid">
@@ -29,7 +29,9 @@
 					<div class="col-12 col-md-12">
 						<div class="form-group">
 							<label for="periodo_nombre" class="bmd-label-floating">Nombre</label>
-							<input type="text" pattern="[a-zA-záéíóúÁÉÍÓÚñÑ0-9 ]{1,50}" class="form-control" name="periodo_nombre_reg" id="periodo_nombre" maxlength="50" required="">
+							<input type="text" pattern="[a-zA-záéíóúÁÉÍÓÚñÑ0-9 ]{1,50}" class="form-control" name="periodo_nombre_reg" 
+							id="periodo_nombre" maxlength="50" required="" onchange="deleteErrorMessage('periodo_nombre_error')">
+							<div class='message-error' id="periodo_nombre_error"></div>
 						</div>
 					</div>
                     <input type="hidden" name="periodo_creado_reg" id="periodo_creado" value="<?php echo date("Y-m-d H:i:s");?>">

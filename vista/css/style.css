@@ -328,6 +328,7 @@ table form{
 	left: 0;
 	overflow: hidden;
 }
+
 .page-content,
 .nav-lateral{
 	height: 100%;
@@ -822,6 +823,28 @@ canvas.grafico-pastel-anual{
 	height: 80vh !important;
 }
 
+/*----------  Error messages -------------*/
 
+.message-error {
+	margin-bottom: 1rem;
+	color: #d50000;
+    font-size: .875em;
+	font-weight: 600;
+	text-align: left;
+}
+
+.swal-button.swal-button--confirm {
+	background-color: #3085d6 !important;
+	color: white !important;
+}
+
+.swal-button.swal-button--cancel {
+	background-color: #d33 !important;
+	color: white !important;
+}
+
+.swal-footer {
+    text-align: center !important;
+}
 
 /*----------  Keyframes  ----------*/
