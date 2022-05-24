@@ -16,12 +16,11 @@
     
 
             /* comprobar campos vacios */
-            if($nombre=="" || $creado==""){
+            if($nombre=="" || $nombre==null){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"No has llenado todos los campos obligatorios",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"periodo_nombre",
                 ];
                 echo json_encode($alerta);
                 exit();
@@ -31,9 +30,8 @@
             if(main_model::verificar_datos("[a-zA-záéíóúÁÉÍÓÚñÑ0-9 ]{1,50}",$nombre)){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"El Nombre no coincide con el formato solicitado",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"periodo_nombre",
                 ];
                 echo json_encode($alerta);
                 exit();
@@ -206,12 +204,11 @@
             $nombre=main_model::limpiar_cadena($_POST['periodo_nombre_up']);
 
             /* comprobar campos vacios */
-            if($nombre==""){
+            if($nombre=="" || $nombre==null){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"No has llenado todos los campos obligatorios",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"periodo_nombre",
                 ];
                 echo json_encode($alerta);
                 exit();
@@ -219,12 +216,11 @@
 
             /* Verficando integridad de los datos */
             if($nombre!=$campos['NOMBRE_PER'] && $nombre!=""){
-                if(main_model::verificar_datos("[a-zA-záéíóúÁÉÍÓÚñÑ0-9 ]{1,20}",$nombre)){
+                if(main_model::verificar_datos("[a-zA-záéíóúÁÉÍÓÚñÑ0-9 ]{1,50}",$nombre)){
                     $alerta=[
                         "Alerta"=>"simple",
-                        "Titulo"=>"Ocurrio un error inesperado",
-                        "Texto"=>"El Nombre no coincide con el formato solicitado",
-                        "Tipo"=>"error"
+                        "Tipo"=>"validation",
+                        "Input"=>"periodo_nombre",
                     ];
                     echo json_encode($alerta);
                     exit();

@@ -38,7 +38,7 @@
 			$campos = $datos_anio->fetch();
 	?>
 
-	<form class="form-neon FormularioAjax" action="<?php echo SERVERURL; ?>ajax/admin/anioAjax.php" method="POST" data-form="update" autocomplete="off">
+	<form class="form-neon FormularioAjax" action="<?php echo SERVERURL; ?>ajax/admin/anioAjax.php" method="POST" data-form="update" autocomplete="off" novalidate onsubmit="return year_new_validata()">
         <input type="hidden" name="anio_id_up" value="<?php echo $pagina[2]; ?>">
         <fieldset>
 			<legend><i class="far fa-plus-square"></i> &nbsp; Información de la sección</legend>
@@ -47,7 +47,9 @@
 					<div class="col-12 col-md-12">
 						<div class="form-group">
 							<label for="anio_nombre" class="bmd-label-floating">Nombre</label>
-							<input type="text" pattern="[a-zA-záéíóúÁÉÍÓÚñÑ0-9 ]{4,5}" class="form-control" name="anio_nombre_up" id="anio_nombre" maxlength="5" value="<?php echo $campos['NOMBRE_ANIO']; ?>" required="">
+							<input type="text" pattern="[a-zA-záéíóúÁÉÍÓÚñÑ0-9 ]{4,5}" class="form-control" name="anio_nombre_up" 
+							id="anio_nombre" maxlength="5" value="<?php echo $campos['NOMBRE_ANIO']; ?>" required="" onchange="deleteErrorMessage('anio_nombre_error')">
+							<div class='message-error' id="anio_nombre_error"></div>
 						</div>
 					</div>
 				</div>

@@ -17,7 +17,7 @@
 
 <div class="container-fluid">
 	<!-- formulario -->
-	<form class="form-neon FormularioAjax" action="<?php echo SERVERURL; ?>ajax/admin/padreAjax.php" method="POST" data-form="save" autocomplete="off">
+	<form class="form-neon FormularioAjax" action="<?php echo SERVERURL; ?>ajax/admin/padreAjax.php" method="POST" data-form="save" autocomplete="off" novalidate onsubmit="return parent_new_validata()">
 		<fieldset>
 			<legend><i class="fas fa-user"></i> &nbsp; Información básica</legend>
 			<div class="container-fluid">
@@ -25,53 +25,69 @@
 					<div class="col-12 col-md-3">
 						<div class="form-group">
 							<label for="padre_ci" class="bmd-label-floating">CI</label>
-							<input type="text" pattern="[0-9-]{5,15}" class="form-control" name="padre_ci_reg" id="padre_ci" maxlength="15" required="">
+							<input type="text" pattern="[0-9-]{5,15}" class="form-control" name="padre_ci_reg" 
+							id="padre_ci" maxlength="15" required="" onchange="deleteErrorMessage('padre_ci_error')">
+							<div class='message-error' id="padre_ci_error"></div>
 						</div>
 					</div>
 					<div class="col-12 col-md-3">
 						<div class="form-group">
 							<label for="padre_nombre" class="bmd-label-floating">Nombre</label>
-							<input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,30}" class="form-control" name="padre_nombre_reg" id="padre_nombre" maxlength="30" required="">
+							<input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,30}" class="form-control" name="padre_nombre_reg" 
+							id="padre_nombre" maxlength="30" required="" onchange="deleteErrorMessage('padre_nombre_error')">
+							<div class='message-error' id="padre_nombre_error"></div>
 						</div>
 					</div>
 					<div class="col-12 col-md-3">
 						<div class="form-group">
 							<label for="padre_apellidoP" class="bmd-label-floating">Apellido Paterno</label>
-							<input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,50}" class="form-control" name="padre_apellidoP_reg" id="padre_apellidoP" maxlength="50" required="">
+							<input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,50}" class="form-control" name="padre_apellidoP_reg" 
+							id="padre_apellidoP" maxlength="50" required="" onchange="deleteErrorMessage('padre_apellidoP_error')">
+							<div class='message-error' id="padre_apellidoP_error"></div>
 						</div>
 					</div>
 					<div class="col-12 col-md-3">
 						<div class="form-group">
 							<label for="padre_apellidoM" class="bmd-label-floating">Apellido Materno</label>
-							<input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,50}" class="form-control" name="padre_apellidoM_reg" id="padre_apellidoM" maxlength="50" required="">
+							<input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,50}" class="form-control" name="padre_apellidoM_reg" 
+							id="padre_apellidoM" maxlength="50" required="" onchange="deleteErrorMessage('padre_apellidoM_error')">
+							<div class='message-error' id="padre_apellidoM_error"></div>
 						</div>
 					</div>
 					<div class="col-12 col-md-6">
 						<div class="form-group">
 							<label for="padre_fechaNac">Fecha de Nacimiento</label>
-							<input type="date" class="form-control" name="padre_fechaNac_reg" id="padre_fechaNac" required="">
+							<input type="date" class="form-control" name="padre_fechaNac_reg" 
+							id="padre_fechaNac" required="" onchange="deleteErrorMessage('padre_fechaNac_error')">
+							<div class='message-error' id="padre_fechaNac_error"></div>
 						</div>
 					</div>
 					<div class="col-12 col-md-6">
                             <div class="form-group">
                                 <label for="padre_sexo" class="bmd-label-floating">Sexo</label>
-                                <select class="form-control" name="padre_sexo_reg" id="padre_sexo" required="">
+                                <select class="form-control" name="padre_sexo_reg" 
+								id="padre_sexo" required="" onchange="deleteErrorMessage('padre_sexo_error')">
                                     <option value="" selected="" disabled="">Seleccione una opción</option>
                                     <option value="Masculino">Masculino</option>
                                     <option value="Femenino">Femenino</option>
                                 </select>
+								<div class='message-error' id="padre_sexo_error"></div>
                             </div>
                         </div>
 					<div class="col-12 col-md-6">
 						<div class="form-group">
 							<label for="padre_email" class="bmd-label-floating">Correo</label>
-							<input type="email" class="form-control" name="padre_email_reg" id="padre_email" maxlength="70">
+							<input type="email" class="form-control" name="padre_email_reg" 
+							id="padre_email" maxlength="70" onchange="deleteErrorMessage('padre_email_error')">
+							<div class='message-error' id="padre_email_error"></div>
 						</div>
 					</div>
 					<div class="col-12 col-md-6">
 						<div class="form-group">
 							<label for="padre_rol" class="bmd-label-floating">Rol</label>
-							<input type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{3,50}" class="form-control" name="padre_rol_reg" id="padre_rol" maxlength="50" required="">
+							<input type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{3,50}" class="form-control" name="padre_rol_reg" 
+							id="padre_rol" maxlength="50" required="" onchange="deleteErrorMessage('padre_rol_error')">
+							<div class='message-error' id="padre_rol_error"></div>
 						</div>
 					</div>
 				</div>
@@ -85,20 +101,26 @@
 				<div class="col-12 col-md-6">
 						<div class="form-group">
 							<label for="padre_telefono" class="bmd-label-floating">Teléfono</label>
-							<input type="text" pattern="[0-9()+]{7,15}" class="form-control" name="padre_telefono_reg" id="padre_telefono" maxlength="15" required="">
+							<input type="text" pattern="[0-9()+]{7,15}" class="form-control" name="padre_telefono_reg" 
+							id="padre_telefono" maxlength="15" required="" onchange="deleteErrorMessage('padre_telefono_error')">
+							<div class='message-error' id="padre_telefono_error"></div>
 						</div>
 					</div>
 					<div class="col">
 					<div class="col-12 col-md-12">
 						<div class="form-group">
 							<label for="padre_clave_1" class="bmd-label-floating">Contraseña</label>
-							<input type="password" class="form-control" name="padre_clave_1_reg" id="padre_clave_1" pattern="[a-zA-Z0-9$@.-]{7,50}" maxlength="50" required="">
+							<input type="password" class="form-control" name="padre_clave_1_reg" 
+							id="padre_clave_1" pattern="[a-zA-Z0-9@#$%&.-]{7,20}" maxlength="20" required="" onchange="deleteErrorMessage('padre_clave_1_error')">
+							<div class='message-error' id="padre_clave_1_error"></div>
 						</div>
 					</div>
 					<div class="col-12 col-md-12">
 						<div class="form-group">
 							<label for="padre_clave_2" class="bmd-label-floating">Repetir contraseña</label>
-							<input type="password" class="form-control" name="padre_clave_2_reg" id="padre_clave_2" pattern="[a-zA-Z0-9$@.-]{7,50}" maxlength="50" required="">
+							<input type="password" class="form-control" name="padre_clave_2_reg" 
+							id="padre_clave_2" pattern="[a-zA-Z0-9@#$%&.-]{7,20}" maxlength="20" required="" onchange="deleteErrorMessage('padre_clave_2_error')">
+							<div class='message-error' id="padre_clave_2_error"></div>
 						</div>
 					</div>
 					</div>
@@ -152,8 +174,10 @@
                 <div class="container-fluid">
                     <div class="form-group">
                         <label for="input_alumno" class="bmd-label-floating">CI, Nombre, Apellido</label>
-                        <input type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]{1,30}" class="form-control" name="input_alumno" id="input_alumno" maxlength="30">
-                    </div>
+                        <input type="text" class="form-control" name="input_alumno" 
+						id="input_alumno" required="" onchange="deleteErrorMessage('input_alumno_error')">
+						<div class='message-error' id="input_alumno_error"></div>
+					</div>
                 </div>
                 <br>
 

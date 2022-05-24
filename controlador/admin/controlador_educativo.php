@@ -33,12 +33,11 @@
             $id=main_model::decryption($_POST['admin_id_up']);
             $id=main_model::limpiar_cadena($id);
 
-            if($codigo=="" || $nombre==""){
+            if($codigo=="" || $codigo==null){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"No has llenado todos los campos obligatorios",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"educativo_codigo",
                 ];
                 echo json_encode($alerta);
                 exit();
@@ -48,9 +47,8 @@
             if(main_model::verificar_datos("[a-zA-z0-9áéíóúÁÉÍÓÚñÑ. ]{3,20}",$codigo)){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"El codigo no coincide con el formato solicitado",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"educativo_codigo",
                 ];
                 echo json_encode($alerta);
                 exit();
@@ -67,13 +65,22 @@
                     exit();
                 }
             }
+
+            if($nombre=="" || $nombre==null){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Tipo"=>"validation",
+                    "Input"=>"educativo_nombre",
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
    
             if(main_model::verificar_datos("[a-zA-z0-9áéíóúÁÉÍÓÚñÑ. ]{3,150}",$nombre)){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"El NOMBRE no coincide con el formato solicitado",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"educativo_nombre",
                 ];
                 echo json_encode($alerta);
                 exit();
@@ -91,32 +98,16 @@
                 }
             }
 
-            if($direccion!=""){
-                if(main_model::verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{3,255}",$direccion)){
-                    $alerta=[
-                        "Alerta"=>"simple",
-                        "Titulo"=>"Ocurrio un error inesperado",
-                        "Texto"=>"Ha ingresado una direccion no valido",
-                        "Tipo"=>"error"
-                    ];
-                    echo json_encode($alerta);
-                    exit();
-                }   
+            if($dependencia=="" || $dependencia==null){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Tipo"=>"validation",
+                    "Input"=>"educativo_dependecia",
+                ];
+                echo json_encode($alerta);
+                exit();
             }
 
-            if($descripcion!=""){
-                if(main_model::verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{2,255}",$descripcion)){
-                    $alerta=[
-                        "Alerta"=>"simple",
-                        "Titulo"=>"Ocurrio un error inesperado",
-                        "Texto"=>"La descripcion no coincide con el formato solicitado",
-                        "Tipo"=>"error"
-                    ];
-                    echo json_encode($alerta);
-                    exit();
-                }
-            }
-            /********************************* */
             if($dependencia!="Fiscal"){
                     $alerta=[
                         "Alerta"=>"simple",
@@ -126,6 +117,28 @@
                     ];
                     echo json_encode($alerta);
                     exit();
+            }
+
+            if($descripcion!=""){
+                if(main_model::verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{2,255}",$descripcion)){
+                    $alerta=[
+                        "Alerta"=>"simple",
+                        "Tipo"=>"validation",
+                        "Input"=>"educativo_descripcion",
+                    ];
+                    echo json_encode($alerta);
+                    exit();
+                }
+            }
+
+            if($dpto=="" || $dpto==null){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Tipo"=>"validation",
+                    "Input"=>"educativo_dpto",
+                ];
+                echo json_encode($alerta);
+                exit();
             }
 
             if($dpto!="Beni" && $dpto!="Chuquisaca" && $dpto!="Cochabamba" && $dpto!="La Paz" && $dpto!="Oruro"
@@ -144,22 +157,33 @@
                 if(main_model::verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{3,150}",$localidad)){
                     $alerta=[
                         "Alerta"=>"simple",
-                        "Titulo"=>"Ocurrio un error inesperado",
-                        "Texto"=>"La localidad no coincide con el formato solicitado",
-                        "Tipo"=>"error"
+                        "Tipo"=>"validation",
+                        "Input"=>"educativo_localidad",
                     ];
                     echo json_encode($alerta);
                     exit();
                 }
             }
 
+            if($direccion!=""){
+                if(main_model::verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{3,255}",$direccion)){
+                    $alerta=[
+                        "Alerta"=>"simple",
+                        "Tipo"=>"validation",
+                        "Input"=>"educativo_direccion",
+                    ];
+                    echo json_encode($alerta);
+                    exit();
+                }   
+            }
+            /********************************* */
+
             if($distrito!=""){
                 if(main_model::verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{3,150}",$distrito)){
                     $alerta=[
                         "Alerta"=>"simple",
-                        "Titulo"=>"Ocurrio un error inesperado",
-                        "Texto"=>"El distrito no coincide con el formato solicitado",
-                        "Tipo"=>"error"
+                        "Tipo"=>"validation",
+                        "Input"=>"educativo_distrito",
                     ];
                     echo json_encode($alerta);
                     exit();
@@ -211,12 +235,11 @@
             $estado=main_model::limpiar_cadena($_POST['educativo_estado_up']);
             $id=main_model::limpiar_cadena($_POST['educativo_id_up']);
 
-            if($codigo=="" || $nombre==""){
+            if($codigo=="" || $codigo==null){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"No has llenado todos los campos obligatorios",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"educativo_codigo",
                 ];
                 echo json_encode($alerta);
                 exit();
@@ -242,9 +265,8 @@
                 if(main_model::verificar_datos("[a-zA-z0-9áéíóúÁÉÍÓÚñÑ. ]{3,20}",$codigo)){
                     $alerta=[
                         "Alerta"=>"simple",
-                        "Titulo"=>"Ocurrio un error inesperado",
-                        "Texto"=>"El codigo no coincide con el formato solicitado",
-                        "Tipo"=>"error"
+                        "Tipo"=>"validation",
+                        "Input"=>"educativo_codigo",
                     ];
                     echo json_encode($alerta);
                     exit();
@@ -262,14 +284,23 @@
                     }
                 }
             }
+
+            if($nombre=="" || $nombre==null){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Tipo"=>"validation",
+                    "Input"=>"educativo_nombre",
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
    
             if($nombre!=$campos['NOMBRE_UA'] && $nombre!=""){
                 if(main_model::verificar_datos("[a-zA-z0-9áéíóúÁÉÍÓÚñÑ. ]{3,150}",$nombre)){
                     $alerta=[
                         "Alerta"=>"simple",
-                        "Titulo"=>"Ocurrio un error inesperado",
-                        "Texto"=>"El NOMBRE no coincide con el formato solicitado",
-                        "Tipo"=>"error"
+                        "Tipo"=>"validation",
+                        "Input"=>"educativo_nombre",
                     ];
                     echo json_encode($alerta);
                     exit();
@@ -288,30 +319,14 @@
                 }
             }
 
-            if($direccion!=""){
-                if(main_model::verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{3,150}",$direccion)){
-                    $alerta=[
-                        "Alerta"=>"simple",
-                        "Titulo"=>"Ocurrio un error inesperado",
-                        "Texto"=>"Ha ingresado una direccion no valido",
-                        "Tipo"=>"error"
-                    ];
-                    echo json_encode($alerta);
-                    exit();
-                }   
-            }
-
-            if($descripcion!=""){
-                if(main_model::verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{2,255}",$descripcion)){
-                    $alerta=[
-                        "Alerta"=>"simple",
-                        "Titulo"=>"Ocurrio un error inesperado",
-                        "Texto"=>"La descripcion no coincide con el formato solicitado",
-                        "Tipo"=>"error"
-                    ];
-                    echo json_encode($alerta);
-                    exit();
-                }
+            if($dependencia=="" || $dependencia==null){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Tipo"=>"validation",
+                    "Input"=>"educativo_dependecia",
+                ];
+                echo json_encode($alerta);
+                exit();
             }
 
             if($dependencia!="Fiscal"){
@@ -325,13 +340,34 @@
                 exit();
             }
 
+            if($descripcion!=""){
+                if(main_model::verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{2,255}",$descripcion)){
+                    $alerta=[
+                        "Alerta"=>"simple",
+                        "Tipo"=>"validation",
+                        "Input"=>"educativo_descripcion",
+                    ];
+                    echo json_encode($alerta);
+                    exit();
+                }
+            }
+
+            if($dpto=="" || $dpto==null){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Tipo"=>"validation",
+                    "Input"=>"educativo_dpto",
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
             if($dpto!="Beni" && $dpto!="Chuquisaca" && $dpto!="Cochabamba" && $dpto!="La Paz" && $dpto!="Oruro"
             && $dpto!="Pando" && $dpto!="Potosí" && $dpto!="Santa Cruz" && $dpto!="Tarija"){       
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"El departamento no coincide con el formato solicitado",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"educativo_dpto",
                 ];
                 echo json_encode($alerta);
                 exit();
@@ -341,22 +377,32 @@
                 if(main_model::verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{3,150}",$localidad)){
                     $alerta=[
                         "Alerta"=>"simple",
-                        "Titulo"=>"Ocurrio un error inesperado",
-                        "Texto"=>"La localidad no coincide con el formato solicitado",
-                        "Tipo"=>"error"
+                        "Tipo"=>"validation",
+                        "Input"=>"educativo_localidad",
                     ];
                     echo json_encode($alerta);
                     exit();
                 }
             }
 
+            if($direccion!=""){
+                if(main_model::verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{3,150}",$direccion)){
+                    $alerta=[
+                        "Alerta"=>"simple",
+                        "Tipo"=>"validation",
+                        "Input"=>"educativo_direccion",
+                    ];
+                    echo json_encode($alerta);
+                    exit();
+                }   
+            }
+
             if($distrito!=""){
                 if(main_model::verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{3,150}",$distrito)){
                     $alerta=[
                         "Alerta"=>"simple",
-                        "Titulo"=>"Ocurrio un error inesperado",
-                        "Texto"=>"El distrito no coincide con el formato solicitado",
-                        "Tipo"=>"error"
+                        "Tipo"=>"validation",
+                        "Input"=>"educativo_distrito",
                     ];
                     echo json_encode($alerta);
                     exit();

@@ -22,12 +22,11 @@
             $tipo_usuario=main_model::limpiar_cadena($_POST['usuario_tipo_reg']);
 
             /* comprobar campos vacios */
-            if($nombre=="" || $apellidoP=="" || $apellidoM=="" || $email=="" || $clave1=="" || $clave2==""){
+            if($nombre=="" || $nombre==null){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"No has llenado todos los campos obligatorios",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"usuario_nombre",
                 ];
                 echo json_encode($alerta);
                 exit();
@@ -36,43 +35,59 @@
             if(main_model::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,30}",$nombre)){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"El NOMBRE no coincide con el formato solicitado",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"usuario_nombre",
                 ];
                 echo json_encode($alerta);
                 exit();
             }
 
-            if(main_model::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,35}",$apellidoP)){
+            if($apellidoP=="" || $apellidoP==null){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"El APELLIDO PATERNO no coincide con el formato solicitado",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"usuario_apellidoP",
                 ];
                 echo json_encode($alerta);
                 exit();
             }
 
-            if(main_model::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,35}",$apellidoM)){
+            if(main_model::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,50}",$apellidoP)){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"El APELLIDO MATERNO no coincide con el formato solicitado",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"usuario_apellidoP",
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if($apellidoM=="" || $apellidoM==null){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Tipo"=>"validation",
+                    "Input"=>"usuario_apellidoM",
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if(main_model::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,50}",$apellidoM)){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Tipo"=>"validation",
+                    "Input"=>"usuario_apellidoM",
                 ];
                 echo json_encode($alerta);
                 exit();
             }
 
             if($telefono!=""){
-                if(main_model::verificar_datos("[0-9()+]{7,20}",$telefono)){
+                if(main_model::verificar_datos("[0-9()+]{7,15}",$telefono)){
                     $alerta=[
                         "Alerta"=>"simple",
-                        "Titulo"=>"Ocurrio un error inesperado",
-                        "Texto"=>"El TELEFONO no coincide con el formato solicitado",
-                        "Tipo"=>"error"
+                        "Tipo"=>"validation",
+                        "Input"=>"usuario_telefono",
                     ];
                     echo json_encode($alerta);
                     exit();
@@ -80,35 +95,82 @@
             }
 
             if($direccion!=""){
-                if(main_model::verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{1,190}",$direccion)){
+                if(main_model::verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{1,255}",$direccion)){
                     $alerta=[
                         "Alerta"=>"simple",
-                        "Titulo"=>"Ocurrio un error inesperado",
-                        "Texto"=>"La DIRECCION no coincide con el formato solicitado",
-                        "Tipo"=>"error"
+                        "Tipo"=>"validation",
+                        "Input"=>"usuario_direccion",
                     ];
                     echo json_encode($alerta);
                     exit();
                 }
             }
 
-            if($tipo_usuario!="Administrador" && $tipo_usuario!="Director"){
+            if($tipo_usuario=="" || $tipo_usuario==null){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"El tipo de usuario no corresponde a un valor valido",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"usuario_tipo",
                 ];
                 echo json_encode($alerta);
                 exit();
             }
 
-            if(main_model::verificar_datos("[a-zA-Z0-9$@.-]{7,100}",$clave1) || main_model::verificar_datos("[a-zA-Z0-9$@.-]{7,100}",$clave2)){
+            if($tipo_usuario!="Administrador" && $tipo_usuario!="Director"){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"Las CLAVES no coinciden con el formato solicitado",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"usuario_tipo",
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if($clave1=="" || $clave1==null){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Tipo"=>"validation",
+                    "Input"=>"usuario_clave_1",
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if(main_model::verificar_datos("[a-zA-Z0-9@#$%&.-]{7,20}",$clave1)){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Tipo"=>"validation",
+                    "Input"=>"usuario_clave_1",
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if($clave2=="" || $clave2==null){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Tipo"=>"validation",
+                    "Input"=>"usuario_clave_2",
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if(main_model::verificar_datos("[a-zA-Z0-9@#$%&.-]{7,20}",$clave2)){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Tipo"=>"validation",
+                    "Input"=>"usuario_clave_2",
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if($email=="" || $email==null){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Tipo"=>"validation",
+                    "Input"=>"usuario_email",
                 ];
                 echo json_encode($alerta);
                 exit();
@@ -130,9 +192,8 @@
             }else{
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"Ha ingresado un correo no valido",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"usuario_email",
                 ];
                 echo json_encode($alerta);
                 exit();
@@ -142,9 +203,8 @@
             if($clave1!=$clave2){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"Las claves que acaba de ingresar no coinciden",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"usuario_clave_2",
                 ];
                 echo json_encode($alerta);
                 exit();
@@ -412,13 +472,11 @@
             $tipo_cuenta=main_model::limpiar_cadena($_POST['tipo_cuenta']);
 
             /* comprobar campos vacios */
-            if($nombre=="" || $apellidoP=="" || $apellidoM=="" 
-            || $tipo_usuario=="" || $email=="" || $admin_email=="" || $admin_clave==""){
+            if($nombre=="" || $nombre==null){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"No has llenado todos los campos obligatorios",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"usuario_nombre",
                 ];
                 echo json_encode($alerta);
                 exit();
@@ -428,43 +486,59 @@
             if(main_model::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,30}",$nombre)){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"El NOMBRE no coincide con el formato solicitado",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"usuario_nombre",
                 ];
                 echo json_encode($alerta);
                 exit();
             }
 
-            if(main_model::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,35}",$apellidoP)){
+            if($apellidoP=="" || $apellidoP==null){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"El APELLIDO PATERNO no coincide con el formato solicitado",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"usuario_apellidoP",
+                ];
+                echo json_encode($alerta);
+                exit();
+            } 
+
+            if(main_model::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,50}",$apellidoP)){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Tipo"=>"validation",
+                    "Input"=>"usuario_apellidoP",
                 ];
                 echo json_encode($alerta);
                 exit();
             }
 
-            if(main_model::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,35}",$apellidoM)){
+            if($apellidoM=="" || $apellidoM==null){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"El APELLIDO MATERNO no coincide con el formato solicitado",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"usuario_apellidoM",
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if(main_model::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,50}",$apellidoM)){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Tipo"=>"validation",
+                    "Input"=>"usuario_apellidoM",
                 ];
                 echo json_encode($alerta);
                 exit();
             }
 
             if($telefono!=""){
-                if(main_model::verificar_datos("[0-9()+]{7,20}",$telefono)){
+                if(main_model::verificar_datos("[0-9()+]{7,15}",$telefono)){
                     $alerta=[
                         "Alerta"=>"simple",
-                        "Titulo"=>"Ocurrio un error inesperado",
-                        "Texto"=>"El TELEFONO no coincide con el formato solicitado",
-                        "Tipo"=>"error"
+                        "Tipo"=>"validation",
+                        "Input"=>"usuario_telefono",
                     ];
                     echo json_encode($alerta);
                     exit();
@@ -472,16 +546,25 @@
             }
 
             if($direccion!=""){
-                if(main_model::verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{1,190}",$direccion)){
+                if(main_model::verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{1,255}",$direccion)){
                     $alerta=[
                         "Alerta"=>"simple",
-                        "Titulo"=>"Ocurrio un error inesperado",
-                        "Texto"=>"La DIRECCION no coincide con el formato solicitado",
-                        "Tipo"=>"error"
+                        "Tipo"=>"validation",
+                        "Input"=>"usuario_direccion",
                     ];
                     echo json_encode($alerta);
                     exit();
                 }
+            }
+
+            if($email=="" || $email==null){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Tipo"=>"validation",
+                    "Input"=>"usuario_email",
+                ];
+                echo json_encode($alerta);
+                exit();
             }
 
             /* Comprobando correo */
@@ -501,33 +584,49 @@
                 }else{
                     $alerta=[
                         "Alerta"=>"simple",
-                        "Titulo"=>"Ocurrio un error inesperado",
-                        "Texto"=>"Ha ingresado un correo no valido",
-                        "Tipo"=>"error"
+                        "Tipo"=>"validation",
+                        "Input"=>"usuario_email",
                     ];
                     echo json_encode($alerta);
                     exit();
                 }
             }
             
-
-            if(!filter_var($admin_email,FILTER_VALIDATE_EMAIL)){
+            if($admin_email=="" || $admin_email==null){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"Tu CORREO no coincide con el formaro  solicitado",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"email_admin",
                 ];
                 echo json_encode($alerta);
                 exit();
             }
 
-            if(main_model::verificar_datos("[a-zA-Z0-9$@.-]{7,100}",$admin_clave)){
+            if(!filter_var($admin_email,FILTER_VALIDATE_EMAIL)){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"Tu CLAVE no coincide con el formato solicitado",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"email_admin",
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if($admin_clave=="" || $admin_clave==null){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Tipo"=>"validation",
+                    "Input"=>"clave_admin",
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if(main_model::verificar_datos("[a-zA-Z0-9@#$%&.-]{7,20}",$admin_clave)){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Tipo"=>"validation",
+                    "Input"=>"clave_admin",
                 ];
                 echo json_encode($alerta);
                 exit();
@@ -557,12 +656,21 @@
                 exit();
             }
 
+            if($tipo_usuario=="" || $tipo_usuario==null){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Tipo"=>"validation",
+                    "Input"=>"usuario_tipo",
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
             if($tipo_usuario!="Administrador" && $tipo_usuario!="Director"){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"El tipo de usuario no corresponde a un valor valido",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"usuario_tipo",
                 ];
                 echo json_encode($alerta);
                 exit();
@@ -573,19 +681,26 @@
                 if($_POST['usuario_clave_nueva_1']!=$_POST['usuario_clave_nueva_2']){
                     $alerta=[
                         "Alerta"=>"simple",
-                        "Titulo"=>"Ocurrio un error inesperado",
-                        "Texto"=>"Las nuevas Claves ingresadas no coinciden",
-                        "Tipo"=>"error"
+                        "Tipo"=>"validation",
+                        "Input"=>"usuario_clave_nueva_2",
                     ];
                     echo json_encode($alerta);
                     exit();
                 }else{
-                    if(main_model::verificar_datos("[a-zA-Z0-9$@.-]{7,100}",$_POST['usuario_clave_nueva_1']) || main_model::verificar_datos("[a-zA-Z0-9$@.-]{7,100}",$_POST['usuario_clave_nueva_2'])){
+                    if(main_model::verificar_datos("[a-zA-Z0-9@#$%&.-]{7,20}",$_POST['usuario_clave_nueva_1'])){
                         $alerta=[
                             "Alerta"=>"simple",
-                            "Titulo"=>"Ocurrio un error inesperado",
-                            "Texto"=>"Las nuevas Claves no coinciden con el formato solicitado",
-                            "Tipo"=>"error"
+                            "Tipo"=>"validation",
+                            "Input"=>"usuario_clave_nueva_1",
+                        ];
+                        echo json_encode($alerta);
+                        exit();
+                    }
+                    if(main_model::verificar_datos("[a-zA-Z0-9@#$%&.-]{7,20}",$_POST['usuario_clave_nueva_2'])){
+                        $alerta=[
+                            "Alerta"=>"simple",
+                            "Tipo"=>"validation",
+                            "Input"=>"usuario_clave_nueva_2",
                         ];
                         echo json_encode($alerta);
                         exit();

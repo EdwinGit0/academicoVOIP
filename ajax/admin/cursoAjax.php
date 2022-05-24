@@ -2,14 +2,14 @@
     $peticionAjax=true;
     require_once "../../config/APP.php";
 
-    if(isset($_POST['curso_grado_reg']) || isset($_POST['curso_id_up']) || isset($_POST['curso_id_del'])){
+    if(isset($_POST['curso_capacidad_reg']) || isset($_POST['curso_id_up']) || isset($_POST['curso_id_del'])){
 
         /* Instancia al controlador */
         require_once "../../controlador/admin/controlador_curso.php";
         $ins_curso = new controlador_curso();
 
         /* agregar curso */
-        if(isset($_POST['curso_grado_reg'])){
+        if(isset($_POST['curso_capacidad_reg'])){
             echo $ins_curso->agregar_curso_controlador();
         }
 

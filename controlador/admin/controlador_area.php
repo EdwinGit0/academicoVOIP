@@ -13,16 +13,16 @@
 
             $nombre=main_model::limpiar_cadena($_POST['area_nombre_reg']);
             $info=main_model::limpiar_cadena($_POST['area_info_reg']);
+            $campo=main_model::limpiar_cadena($_POST['area_campo_reg']);
             $creado=main_model::limpiar_cadena($_POST['area_creado_reg']);
     
 
             /* comprobar campos vacios */
-            if($nombre=="" || $creado==""){
+            if($nombre=="" || $nombre==null){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"No has llenado todos los campos obligatorios",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"area_nombre",
                 ];
                 echo json_encode($alerta);
                 exit();
@@ -32,9 +32,8 @@
             if(main_model::verificar_datos("[a-zA-záéíóúÁÉÍÓÚñÑ0-9 ]{1,50}",$nombre)){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"El Nombre no coincide con el formato solicitado",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"area_nombre",
                 ];
                 echo json_encode($alerta);
                 exit();
@@ -52,13 +51,22 @@
                 }
             }
 
+            if($campo=="" || $campo==null){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Tipo"=>"validation",
+                    "Input"=>"area_campo",
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
             if($info!=""){
                 if(main_model::verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{3,255}",$info)){
                     $alerta=[
                         "Alerta"=>"simple",
-                        "Titulo"=>"Ocurrio un error inesperado",
-                        "Texto"=>"La Información no coincide con el formato solicitado",
-                        "Tipo"=>"error"
+                        "Tipo"=>"validation",
+                        "Input"=>"area_info",
                     ];
                     echo json_encode($alerta);
                     exit();
@@ -67,6 +75,7 @@
 
             $datos_area_reg=[
                 "Nombre"=>$nombre,
+                "Campo"=>$campo,
                 "Info"=>$info,
                 "Creado"=>$creado
             ];
@@ -221,15 +230,15 @@
             }
 
             $nombre=main_model::limpiar_cadena($_POST['area_nombre_up']);
+            $campo=main_model::limpiar_cadena($_POST['area_campo_up']);
             $info=main_model::limpiar_cadena($_POST['area_info_up']);
 
             /* comprobar campos vacios */
-            if($nombre==""){
+            if($nombre=="" || $nombre==null){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"No has llenado todos los campos obligatorios",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"area_nombre",
                 ];
                 echo json_encode($alerta);
                 exit();
@@ -240,9 +249,8 @@
                 if(main_model::verificar_datos("[a-zA-záéíóúÁÉÍÓÚñÑ0-9 ]{1,50}",$nombre)){
                     $alerta=[
                         "Alerta"=>"simple",
-                        "Titulo"=>"Ocurrio un error inesperado",
-                        "Texto"=>"El Nombre no coincide con el formato solicitado",
-                        "Tipo"=>"error"
+                        "Tipo"=>"validation",
+                        "Input"=>"area_nombre",
                     ];
                     echo json_encode($alerta);
                     exit();
@@ -258,6 +266,28 @@
                         echo json_encode($alerta);
                         exit();
                     }
+                }
+            }
+
+            if($campo=="" || $campo==null){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Tipo"=>"validation",
+                    "Input"=>"area_campo",
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if($info!=""){
+                if(main_model::verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{3,255}",$info)){
+                    $alerta=[
+                        "Alerta"=>"simple",
+                        "Tipo"=>"validation",
+                        "Input"=>"area_info",
+                    ];
+                    echo json_encode($alerta);
+                    exit();
                 }
             }
 
@@ -278,6 +308,7 @@
             /** Preparando datos para enviarlos al modelo */
             $datos_area_up=[
                 "ID"=>$area_id,
+                "Campo"=>$campo,
                 "Nombre"=>$nombre,
                 "Info"=>$info,
             ];

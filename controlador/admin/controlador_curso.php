@@ -19,12 +19,11 @@
     
 
             /* comprobar campos vacios */
-            if($turno=="" || $grado=="" || $seccion=="" || $capacidad==""){
+            if($turno=="" || $turno==null){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"No has llenado todos los campos obligatorios",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"curso_turno",
                 ];
                 echo json_encode($alerta);
                 exit();
@@ -33,34 +32,61 @@
             if($turno!="Mañana" && $turno!="Tarde" && $turno!="Noche"){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"El TURNO no coincide con el formato solicitado",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"curso_turno",
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if($grado=="" || $grado==null){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Tipo"=>"validation",
+                    "Input"=>"curso_grado",
                 ];
                 echo json_encode($alerta);
                 exit();
             }
 
             if($grado!="Primero" && $grado!="Segundo" && $grado!="Tercero" 
-            && $grado!="Cuarto" && $grado!="Quinto" && $grado="Sexto"){
+            && $grado!="Cuarto" && $grado!="Quinto" && $grado!="Sexto"){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"El GRADO no coincide con el formato solicitado",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"curso_grado",
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if($seccion=="" || $seccion==null){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Tipo"=>"validation",
+                    "Input"=>"curso_seccion",
                 ];
                 echo json_encode($alerta);
                 exit();
             }
 
             if($seccion!="A" && $seccion!="B" && $seccion!="C" && $seccion!="D" && $seccion!="E"
-            && $seccion!="F" && $seccion!="J" && $seccion="H" && $seccion!="I" && $seccion!="J" 
-            && $seccion="K" && $seccion!="L" && $seccion!="M"){
+            && $seccion!="F" && $seccion!="G" && $seccion!="H" && $seccion!="I" && $seccion!="J" 
+            && $seccion!="K" && $seccion!="L" && $seccion!="M"){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"La SECCIÓN no coincide con el formato solicitado",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"curso_seccion",
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if($capacidad=="" || $capacidad==null){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Tipo"=>"validation",
+                    "Input"=>"curso_capacidad",
                 ];
                 echo json_encode($alerta);
                 exit();
@@ -69,9 +95,8 @@
             if(main_model::verificar_datos("[0-9]{1,2}",$capacidad)){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"La CAPACIDAD no coincide con el formato solicitado",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"curso_capacidad",
                 ];
                 echo json_encode($alerta);
                 exit();
@@ -207,7 +232,7 @@
                     <a href="'.$url.'" class="btn btn-raised btn-primary btn-sm">Haga clic aca para recargar el listado</a>
                     </td></tr>';
                 }else{
-                    $tabla.='<tr class="text-center"><td colspan="5">No hay registros en el sistema</td></tr>';
+                    $tabla.='<tr class="text-center"><td colspan="8">No hay registros en el sistema</td></tr>';
                 }
             }
             $tabla.='</tbody></table></div>';
@@ -256,12 +281,11 @@
             $capacidad=main_model::limpiar_cadena($_POST['curso_capacidad_up']);
 
             /* comprobar campos vacios */
-            if($turno=="" || $grado=="" || $seccion=="" || $capacidad==""){
+            if($turno=="" || $turno==null){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"No has llenado todos los campos obligatorios",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"curso_turno",
                 ];
                 echo json_encode($alerta);
                 exit();
@@ -270,34 +294,61 @@
             if($turno!="Mañana" && $turno!="Tarde" && $turno!="Noche"){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"El TURNO no coincide con el formato solicitado",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"curso_turno",
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if($grado=="" || $grado==null){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Tipo"=>"validation",
+                    "Input"=>"curso_grado",
                 ];
                 echo json_encode($alerta);
                 exit();
             }
 
             if($grado!="Primero" && $grado!="Segundo" && $grado!="Tercero" 
-            && $grado!="Cuarto" && $grado!="Quinto" && $grado="Sexto"){
+            && $grado!="Cuarto" && $grado!="Quinto" && $grado!="Sexto"){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"El GRADO no coincide con el formato solicitado",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"curso_grado",
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if($seccion=="" || $seccion==null){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Tipo"=>"validation",
+                    "Input"=>"curso_seccion",
                 ];
                 echo json_encode($alerta);
                 exit();
             }
 
             if($seccion!="A" && $seccion!="B" && $seccion!="C" && $seccion!="D" && $seccion!="E"
-            && $seccion!="F" && $seccion!="J" && $seccion="H" && $seccion!="I" && $seccion!="J" 
-            && $seccion="K" && $seccion!="L" && $seccion!="M"){
+            && $seccion!="F" && $seccion!="G" && $seccion!="H" && $seccion!="I" && $seccion!="J" 
+            && $seccion!="K" && $seccion!="L" && $seccion!="M"){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"La SECCIÓN no coincide con el formato solicitado",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"curso_seccion",
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if($capacidad=="" || $capacidad==null){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Tipo"=>"validation",
+                    "Input"=>"curso_capacidad",
                 ];
                 echo json_encode($alerta);
                 exit();
@@ -306,9 +357,8 @@
             if(main_model::verificar_datos("[0-9]{1,2}",$capacidad)){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"La CAPACIDAD no coincide con el formato solicitado",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"curso_capacidad",
                 ];
                 echo json_encode($alerta);
                 exit();

@@ -32,11 +32,11 @@
                     tabla_padre.innerHTML=respuesta;
                 });
             }else{
-                Swal.fire({
+                swal({
                     title: 'Ocurrio un error',
                     text: 'El curso que selecciono no existe',
-                    type: 'error',
-                    confirmButtonText:'Aceptar'
+                    icon: 'error',
+                    button: "Aceptar",
                 });
             }
         }
@@ -61,11 +61,11 @@
                 tabla_alumno.innerHTML=respuesta;
             });
         }else{
-            Swal.fire({
+            swal({
                 title: 'Ocurrio un error',
                 text: 'Debes introducir el CI, Nombre, Apellido',
-                type: 'error',
-                confirmButtonText:'Aceptar'
+                icon: 'error',
+                button: "Aceptar",
             });
         }
     }
@@ -74,17 +74,15 @@
     function agregar_alumno(id_alumno){
         $('#ModalAlumno').modal('hide');
 
-        Swal.fire({
-        title: "¿Quieres agregar el alumno?",
-        text: 'Se asignará el alumno para el tutor',
-        type: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText:'Si, agregar',
-        cancelButtonText:'No, cancelar'
-        }).then((result) => {
-            if (result.value){
+        swal({
+            title: "¿Quieres agregar el alumno?",
+            text: 'Se asignará el alumno a este curso',
+            icon: "warning",
+            buttons: ['No, cancelar', 'Si, agregar'],
+            closeOnClickOutside: false,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
                 fila.find('input[type=hidden]').each(function() {
                     id_curso = this.value;
                 });
@@ -122,17 +120,15 @@
     /** buscar alumno */
     function eliminar_alumno_curso(id_alumno){
 
-        Swal.fire({
-        title: "¿Quieres eliminar el alumno?",
-        text: 'Se eliminara el alumno del curso',
-        type: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText:'Si, agregar',
-        cancelButtonText:'No, cancelar'
-        }).then((result) => {
-            if (result.value){
+        swal({
+            title: "¿Quieres eliminar el alumno?",
+            text: 'Se eliminara el alumno del curso',
+            icon: "warning",
+            buttons: ['No, cancelar', 'Si, aceptar'],
+            closeOnClickOutside: false,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
                 fila.find('input[type=hidden]').each(function() {
                     id_curso = this.value;
                 });
@@ -176,11 +172,11 @@
                 tabla_docente.innerHTML=respuesta;
             });
         }else{
-            Swal.fire({
+            swal({
                 title: 'Ocurrio un error',
                 text: 'Debes introducir el CI, Nombre, Apellido, Área',
-                type: 'error',
-                confirmButtonText:'Aceptar'
+                icon: 'error',
+                button: "Aceptar",
             });
         }
     }
@@ -189,17 +185,15 @@
     function agregar_docente(id_docente){
         $('#ModalDocente').modal('hide');
 
-        Swal.fire({
-        title: "¿Quieres agregar el docente?",
-        text: 'Se asignará el docente para el tutor',
-        type: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText:'Si, agregar',
-        cancelButtonText:'No, cancelar'
-        }).then((result) => {
-            if (result.value){
+        swal({
+            title: "¿Quieres agregar el docente?",
+            text: 'Se asignará el docente a este curso',
+            icon: "warning",
+            buttons: ['No, cancelar', 'Si, agregar'],
+            closeOnClickOutside: false,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
                 fila.find('input[type=hidden]').each(function() {
                     id_curso = this.value;
                 });
@@ -243,17 +237,15 @@
     /** buscar docente */
     function eliminar_docente_curso(id_docente){
 
-        Swal.fire({
-        title: "¿Quieres eliminar el docente?",
-        text: 'Se eliminara el docente del curso',
-        type: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText:'Si, agregar',
-        cancelButtonText:'No, cancelar'
-        }).then((result) => {
-            if (result.value){
+        swal({
+            title: "¿Quieres eliminar el docente?",
+            text: 'Se eliminara el docente del curso',
+            icon: "warning",
+            buttons: ['No, cancelar', 'Si, aceptar'],
+            closeOnClickOutside: false,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
                 fila.find('input[type=hidden]').each(function() {
                     id_curso = this.value;
                 });

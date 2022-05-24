@@ -22,7 +22,7 @@
 
 <div class="container-fluid">
 
-	<form class="form-neon FormularioAjax" action="<?php echo SERVERURL; ?>ajax/admin/areaAjax.php" method="POST" data-form="save" autocomplete="off">
+	<form class="FormularioAjax" action="<?php echo SERVERURL; ?>ajax/admin/areaAjax.php" method="POST" data-form="save" autocomplete="off" novalidate onsubmit="return area_new_validata()">
 		<fieldset>
 			<legend><i class="far fa-plus-square"></i> &nbsp; Información del área</legend>
 			<div class="container-fluid">
@@ -30,13 +30,31 @@
 					<div class="col-12 col-md-6">
 						<div class="form-group">
 							<label for="area_nombre" class="bmd-label-floating">Nombre</label>
-							<input type="text" pattern="[a-zA-záéíóúÁÉÍÓÚñÑ0-9 ]{1,50}" class="form-control" name="area_nombre_reg" id="area_nombre" maxlength="50" required="">
+							<input type="text" pattern="[a-zA-záéíóúÁÉÍÓÚñÑ0-9 ]{1,50}" class="form-control" name="area_nombre_reg" 
+							id="area_nombre" maxlength="50" required="" onchange="deleteErrorMessage('area_nombre_error')">
+							<div class='message-error' id="area_nombre_error"></div>
 						</div>
 					</div>
-                    <div class="col-12 col-md-6">
+					<div class="col-12 col-md-6">
+						<div class="form-group">
+							<label for="area_campo" class="bmd-label-floating">Campo</label>
+							<select class="form-control" name="area_campo_reg" 
+							id="area_campo" required="" onchange="deleteErrorMessage('area_campo_error')">
+								<option value="" selected="" disabled="">Seleccione una opción</option>
+								<option value="Ciencia, Tecnología y Producción">Ciencia, Tecnología y Producción</option>
+								<option value="Comunidad y Sociedad">Comunidad y Sociedad</option>
+								<option value="Tierra Territorio">Tierra Territorio</option>
+								<option value="Cosmos y Pensamiento">Cosmos y Pensamiento</option>
+							</select>
+							<div class='message-error' id="area_campo_error"></div>
+						</div>
+					</div>
+                    <div class="col-12 col-md-12">
 						<div class="form-group">
 							<label for="area_info" class="bmd-label-floating">Información</label>
-							<input type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{3,255}" class="form-control" name="area_info_reg" id="area_info" maxlength="255">
+							<input type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{3,255}" class="form-control" name="area_info_reg" 
+							id="area_info" maxlength="255" onchange="deleteErrorMessage('area_info_error')">
+							<div class='message-error' id="area_info_error"></div>
 						</div>
 					</div>
                     <input type="hidden" name="area_creado_reg" id="area_creado" value="<?php echo date("Y-m-d");?>">

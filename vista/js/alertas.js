@@ -33,23 +33,21 @@ function enviar_formulario_ajax(e){
     }else{
         texto_alerta="Quieres realizar la operacion sololicitada";
     }
-    Swal.fire({
+    swal({
         title: "¿Estas seguro?",
         text: texto_alerta,
-        type: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText:'Aceptar',
-        cancelButtonText:'Cancelar'
-    }).then((result) => {
-        if (result.value){
+        icon: "warning",
+        buttons: ["Cancelar", "Aceptar"],
+        closeOnClickOutside: false,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
             fetch(action,config)
             .then(respuesta => respuesta.json())
             .then(respuesta => {
                 return alertas_ajax(respuesta);
             });
-        }
+        } 
     });
 }
 
@@ -59,33 +57,41 @@ formulario_ajax.forEach(formularios => {
 
 function alertas_ajax(alerta){
     if(alerta.Alerta==="simple"){
-        Swal.fire({
-            title: alerta.Titulo,
-            text: alerta.Texto,
-            type: alerta.Tipo,
-            confirmButtonText:'Aceptar'
-          });
-    }else if(alerta.Alerta==="recargar"){
-        Swal.fire({
-            title: alerta.Titulo,
-            text: alerta.Texto,
-            type: alerta.Tipo,
-            confirmButtonText:'Aceptar'
-        }).then((result) => {
-        if (result.value) {
-           location.reload();
+        if(alerta.Tipo==="validation"){
+            getIDInput(alerta.Input).focus();
+        }else{
+            swal({
+                title: alerta.Titulo,
+                text: alerta.Texto,
+                icon: alerta.Tipo,
+                button: "Aceptar",
+            });
         }
+    }else if(alerta.Alerta==="recargar"){
+        swal({
+            title: alerta.Titulo,
+            text: alerta.Texto,
+            icon: alerta.Tipo,
+            button: "Aceptar",
+            closeOnClickOutside: false,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                location.reload();
+            } 
         });
     }else if(alerta.Alerta==="limpiar"){
-        Swal.fire({
+        swal({
             title: alerta.Titulo,
             text: alerta.Texto,
-            type: alerta.Tipo,
-            confirmButtonText:'Aceptar'
-        }).then((result) => {
-        if (result.value) {
-           document.querySelector(".FormularioAjax").reset();
-        }
+            icon: alerta.Tipo,
+            button: "Aceptar",
+            closeOnClickOutside: false,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                document.querySelector(".FormularioAjax").reset();
+            } 
         });
     }else if(alerta.Alerta==="redireccionar"){
         window.location.href=alerta.URL;

@@ -33,7 +33,7 @@
 			$campos = $datos_padre->fetch();
 	?>
 
-	<form class="form-neon FormularioAjax" action="<?php echo SERVERURL; ?>ajax/admin/padreAjax.php" method="POST" data-form="update" autocomplete="off">
+	<form class="form-neon FormularioAjax" action="<?php echo SERVERURL; ?>ajax/admin/padreAjax.php" method="POST" data-form="update" autocomplete="off" novalidate onsubmit="return parent_update_validata()">
 		<input type="hidden" name="padre_id_up" value="<?php echo $pagina[2]; ?>">
 		<fieldset>
 			<legend><i class="fas fa-user"></i> &nbsp; Información básica</legend>
@@ -42,53 +42,69 @@
 					<div class="col-12 col-md-3">
 						<div class="form-group">
 							<label for="padre_ci" class="bmd-label-floating">CI</label>
-							<input type="text" pattern="[0-9-]{5,15}" class="form-control" name="padre_ci_up" id="padre_ci" maxlength="15" value="<?php echo $campos['CI_FA']; ?>" required="">
+							<input type="text" pattern="[0-9-]{5,15}" class="form-control" name="padre_ci_up" 
+							id="padre_ci" maxlength="15" value="<?php echo $campos['CI_FA']; ?>" required="" onchange="deleteErrorMessage('padre_ci_error')">
+							<div class='message-error' id="padre_ci_error"></div>
 						</div>
 					</div>
 					<div class="col-12 col-md-3">
 						<div class="form-group">
 							<label for="padre_nombre" class="bmd-label-floating">Nombre</label>
-							<input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,30}" class="form-control" name="padre_nombre_up" id="padre_nombre" maxlength="30" value="<?php echo $campos['NOMBRE_FA']; ?>" required="">
+							<input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,30}" class="form-control" name="padre_nombre_up" 
+							id="padre_nombre" maxlength="30" value="<?php echo $campos['NOMBRE_FA']; ?>" required="" onchange="deleteErrorMessage('padre_nombre_error')">
+							<div class='message-error' id="padre_nombre_error"></div>
 						</div>
 					</div>
 					<div class="col-12 col-md-3">
 						<div class="form-group">
 							<label for="padre_apellido" class="bmd-label-floating">Apellido Paterno</label>
-							<input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,50}" class="form-control" name="padre_apellidoP_up" id="padre_apellidoP" maxlength="50" value="<?php echo $campos['APELLIDOP_FA']; ?>" required="">
+							<input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,50}" class="form-control" name="padre_apellidoP_up" 
+							id="padre_apellidoP" maxlength="50" value="<?php echo $campos['APELLIDOP_FA']; ?>" required="" onchange="deleteErrorMessage('padre_apellidoP_error')">
+							<div class='message-error' id="padre_apellidoP_error"></div>
 						</div>
 					</div>
 					<div class="col-12 col-md-3">
 						<div class="form-group">
 							<label for="padre_apellido" class="bmd-label-floating">Apellido Materno</label>
-							<input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,50}" class="form-control" name="padre_apellidoM_up" id="padre_apellidoM" maxlength="50" value="<?php echo $campos['APELLIDOM_FA']; ?>" required="">
+							<input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,50}" class="form-control" name="padre_apellidoM_up" 	
+							id="padre_apellidoM" maxlength="50" value="<?php echo $campos['APELLIDOM_FA']; ?>" required="" onchange="deleteErrorMessage('padre_apellidoM_error')">
+							<div class='message-error' id="padre_apellidoM_error"></div>
 						</div>
 					</div>
 					<div class="col-12 col-md-6">
 						<div class="form-group">
 							<label for="padre_fechaNac">Fecha de Nacimiento</label>
-							<input type="date" class="form-control" name="padre_fechaNac_up" id="padre_fecha_nac" value="<?php echo $campos['FECHANAC_FA']; ?>" required="">
+							<input type="date" class="form-control" name="padre_fechaNac_up" 
+							id="padre_fecha_nac" value="<?php echo $campos['FECHANAC_FA']; ?>" required="" onchange="deleteErrorMessage('padre_fechaNac_error')">
+							<div class='message-error' id="padre_fechaNac_error"></div>
 						</div>
 					</div>
 					<div class="col-12 col-md-6">
                             <div class="form-group">
                                 <label for="padre_sexo" class="bmd-label-floating">Sexo</label>
-                                <select class="form-control" name="padre_sexo_up" id="padre_sexo" required="">
+                                <select class="form-control" name="padre_sexo_up" 
+								id="padre_sexo" required="" onchange="deleteErrorMessage('padre_sexo_error')">
                                     <option value="Masculino"  <?php if($campos['SEXO_FA'] == "Masculino"){ echo 'selected=""'; } ?>>Masculino</option>
                                     <option value="Femenino"  <?php if($campos['SEXO_FA'] == "Femenino"){ echo 'selected=""'; } ?>>Femenino</option>
                                 </select>
-                            </div>
+                            	<div class='message-error' id="padre_sexo_error"></div>
+							</div>
                         </div>
 	
 					<div class="col-12 col-md-6">
 						<div class="form-group">
 							<label for="padre_email" class="bmd-label-floating">Correo</label>
-							<input type="email" class="form-control" name="padre_email_up" id="padre_email" maxlength="70" value="<?php echo $campos['CORREO_FA']; ?>">
+							<input type="email" class="form-control" name="padre_email_up" 
+							id="padre_email" maxlength="70" value="<?php echo $campos['CORREO_FA']; ?>" onchange="deleteErrorMessage('padre_email_error')">
+							<div class='message-error' id="padre_email_error"></div>
 						</div>
 					</div>
 					<div class="col-12 col-md-6">
 						<div class="form-group">
 							<label for="padre_rol" class="bmd-label-floating">Rol</label>
-							<input type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{3,50}" class="form-control" name="padre_rol_up" id="padre_rol" maxlength="50" value="<?php echo $campos['ROL_FA']; ?>" required="">
+							<input type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{3,50}" class="form-control" name="padre_rol_up" 
+							id="padre_rol" maxlength="50" value="<?php echo $campos['ROL_FA']; ?>" required="" onchange="deleteErrorMessage('padre_rol_error')">
+							<div class='message-error' id="padre_rol_error"></div>
 						</div>
 					</div>
 				</div>
@@ -102,7 +118,9 @@
 					<div class="col-12 col-md-12">
 						<div class="form-group">
 							<label for="padre_telefono" class="bmd-label-floating">Teléfono</label>
-							<input type="text" pattern="[0-9()+]{7,15}" class="form-control" name="padre_telefono_up" id="padre_telefono" maxlength="15" value="<?php echo $campos['TELEFONO_FA']; ?>" required="">
+							<input type="text" pattern="[0-9()+]{7,15}" class="form-control" name="padre_telefono_up" 
+							id="padre_telefono" maxlength="15" value="<?php echo $campos['TELEFONO_FA']; ?>" required="" onchange="deleteErrorMessage('padre_telefono_error')">
+							<div class='message-error' id="padre_telefono_error"></div>
 						</div>
 					</div>
 					<div class="col-12 col-md-12">
@@ -150,13 +168,17 @@
 					<div class="col-12 col-md-6">
 						<div class="form-group">
 							<label for="padre_clave_nueva_1" class="bmd-label-floating">Contraseña</label>
-							<input type="password" class="form-control" name="padre_clave_nueva_1" id="padre_clave_nueva_1" pattern="[a-zA-Z0-9$@.-]{7,50}" maxlength="50" >
+							<input type="password" class="form-control" name="padre_clave_nueva_1" 
+							id="padre_clave_nueva_1" pattern="[a-zA-Z0-9@#$%&.-]{7,20}" maxlength="20" onchange="deleteErrorMessage('padre_clave_nueva_1_error')" >
+							<div class='message-error' id="padre_clave_nueva_1_error"></div>
 						</div>
 					</div>
 					<div class="col-12 col-md-6">
 						<div class="form-group">
 							<label for="padre_clave_nueva_2" class="bmd-label-floating">Repetir contraseña</label>
-							<input type="password" class="form-control" name="padre_clave_nueva_2" id="padre_clave_nueva_2" pattern="[a-zA-Z0-9$@.-]{7,50}" maxlength="50" >
+							<input type="password" class="form-control" name="padre_clave_nueva_2" 
+							id="padre_clave_nueva_2" pattern="[a-zA-Z0-9@#$%&.-]{7,20}" maxlength="20" onchange="deleteErrorMessage('padre_clave_nueva_2_error')" >
+							<div class='message-error' id="padre_clave_nueva_2_error"></div>
 						</div>
 					</div>
 				</div>
@@ -194,8 +216,10 @@
                 <div class="container-fluid">
                     <div class="form-group">
                         <label for="input_alumno" class="bmd-label-floating">CI, Nombre, Apellido</label>
-                        <input type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]{1,30}" class="form-control" name="input_alumno" id="input_alumno" maxlength="30">
-                    </div>
+                        <input type="text" class="form-control" name="input_alumno" 
+						id="input_alumno" required="" onchange="deleteErrorMessage('input_alumno_error')">
+						<div class='message-error' id="input_alumno_error"></div>
+					</div>
                 </div>
                 <br>
 

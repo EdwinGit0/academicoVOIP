@@ -103,24 +103,81 @@ function ver_Datos() {
 $(document.body).on('click', '.btnVerDatos', ver_Datos);
 
 /** calcular promedio parciales */
-$(document).on('blur', '.campo_par', function () {
+$(document).on('keyup', '.campo_par', function () {
 	var input = $(this);
 	var columns = input.closest("tr").children();
 	promedio_val(columns,'campo_par','prom_par');
 });
 
+$(document).on('keydown paste', '.campo_par', function (e) {
+	var input = $(this);
+	console.log(input.text())
+
+	if(input.text().length > 3 && e.keyCode != 8 && e.keyCode != 37 
+	&& e.keyCode != 38 && e.keyCode != 39 && e.keyCode != 40 && e.keyCode != 116) {
+		e.preventDefault();
+	}
+	if(e.keyCode === 13 && e.keyCode != 8 && e.keyCode != 37 
+	&& e.keyCode != 38 && e.keyCode != 39 && e.keyCode != 40 && e.keyCode != 116) {
+		e.preventDefault();
+	}
+
+	if(!isFinite(Number(input.text())) && e.keyCode != 8 && e.keyCode != 37 
+	&& e.keyCode != 38 && e.keyCode != 39 && e.keyCode != 40 && e.keyCode != 116){
+		e.preventDefault();
+	}
+});
+
 /** calcular promedio actividades*/
-$(document).on('blur', '.campo_act', function () {
+$(document).on('keyup', '.campo_act', function () {
 	var input = $(this);
 	var columns = input.closest("tr").children();
 	promedio_val(columns,'campo_act','prom_act');
 });
 
+$(document).on('keydown paste', '.campo_act', function (e) {
+	var input = $(this);
+	console.log(input.text())
+
+	if(input.text().length > 3 && e.keyCode != 8 && e.keyCode != 37 
+	&& e.keyCode != 38 && e.keyCode != 39 && e.keyCode != 40 && e.keyCode != 116) {
+		e.preventDefault();
+	}
+	if(e.keyCode === 13 && e.keyCode != 8 && e.keyCode != 37 
+	&& e.keyCode != 38 && e.keyCode != 39 && e.keyCode != 40 && e.keyCode != 116) {
+		e.preventDefault();
+	}
+
+	if(!isFinite(Number(input.text())) && e.keyCode != 8 && e.keyCode != 37 
+	&& e.keyCode != 38 && e.keyCode != 39 && e.keyCode != 40 && e.keyCode != 116){
+		e.preventDefault();
+	}
+});
+
 /** calcular promedio S-D*/
-$(document).on('blur', '.campo_sd', function () {
+$(document).on('keyup', '.campo_sd', function () {
 	var input = $(this);
 	var columns = input.closest("tr").children();
 	promedio_valSD(columns,'campo_sd','prom_SD');
+});
+
+$(document).on('keydown paste', '.campo_sd', function (e) {
+	var input = $(this);
+	console.log(input.text())
+
+	if(input.text().length > 2 && e.keyCode != 8 && e.keyCode != 37 
+	&& e.keyCode != 38 && e.keyCode != 39 && e.keyCode != 40 && e.keyCode != 116) {
+		e.preventDefault();
+	}
+	if(e.keyCode === 13 && e.keyCode != 8 && e.keyCode != 37 
+	&& e.keyCode != 38 && e.keyCode != 39 && e.keyCode != 40 && e.keyCode != 116) {
+		e.preventDefault();
+	}
+
+	if(!isFinite(Number(input.text())) && e.keyCode != 8 && e.keyCode != 37 
+	&& e.keyCode != 38 && e.keyCode != 39 && e.keyCode != 40 && e.keyCode != 116){
+		e.preventDefault();
+	}
 });
 
 /** guardar cuaderno pedagogico */

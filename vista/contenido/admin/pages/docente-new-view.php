@@ -22,7 +22,7 @@
 
 	<!-- formulario -->
 
-	<form class="form-neon FormularioAjax" action="<?php echo SERVERURL; ?>ajax/admin/docenteAjax.php" method="POST" data-form="save" autocomplete="off">
+	<form class="form-neon FormularioAjax" action="<?php echo SERVERURL; ?>ajax/admin/docenteAjax.php" method="POST" data-form="save" autocomplete="off" novalidate onsubmit="return teacher_new_validata()">
 		<fieldset>
 			<legend><i class="fas fa-user"></i> &nbsp; Información básica</legend>
 			<div class="container-fluid">
@@ -30,59 +30,77 @@
 					<div class="col-12 col-md-3">
 						<div class="form-group">
 							<label for="docente_ci" class="bmd-label-floating">CI</label>
-							<input type="text" pattern="[0-9-]{5,15}" class="form-control" name="docente_ci_reg" id="docente_ci" maxlength="15" required="">
+							<input type="text" pattern="[0-9-]{5,15}" class="form-control" name="docente_ci_reg" 
+							id="docente_ci" maxlength="15" required="" onchange="deleteErrorMessage('docente_ci_error')">
+							<div class='message-error' id="docente_ci_error"></div>
 						</div>
 					</div>
 					<div class="col-12 col-md-3">
 						<div class="form-group">
 							<label for="docente_nombre" class="bmd-label-floating">Nombre</label>
-							<input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,30}" class="form-control" name="docente_nombre_reg" id="docente_nombre" maxlength="30" required="">
+							<input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,30}" class="form-control" name="docente_nombre_reg" 
+							id="docente_nombre" maxlength="30" required="" onchange="deleteErrorMessage('docente_nombre_error')">
+							<div class='message-error' id="docente_nombre_error"></div>
 						</div>
 					</div>
 					<div class="col-12 col-md-3">
 						<div class="form-group">
 							<label for="docente_apellidoP" class="bmd-label-floating">Apellido Paterno</label>
-							<input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,50}" class="form-control" name="docente_apellidoP_reg" id="docente_apellidoP" maxlength="50" required="">
+							<input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,50}" class="form-control" name="docente_apellidoP_reg" 
+							id="docente_apellidoP" maxlength="50" required="" onchange="deleteErrorMessage('docente_apellidoP_error')">
+							<div class='message-error' id="docente_apellidoP_error"></div>
 						</div>
 					</div>
 					<div class="col-12 col-md-3">
 						<div class="form-group">
 							<label for="docente_apellidoM" class="bmd-label-floating">Apellido Materno</label>
-							<input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,50}" class="form-control" name="docente_apellidoM_reg" id="docente_apellidoM" maxlength="50" required="">
+							<input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,50}" class="form-control" name="docente_apellidoM_reg" 
+							id="docente_apellidoM" maxlength="50" required="" onchange="deleteErrorMessage('docente_apellidoM_error')">
+							<div class='message-error' id="docente_apellidoM_error"></div>
 						</div>
 					</div>
 					<div class="col-12 col-md-4">
 						<div class="form-group">
 							<label for="docente_fechaNac">Fecha de Nacimiento</label>
-							<input type="date" class="form-control" name="docente_fechaNac_reg" id="docente_fechaNac" required="">
+							<input type="date" class="form-control" name="docente_fechaNac_reg" 
+							id="docente_fechaNac" required="" onchange="deleteErrorMessage('docente_fechaNac_error')">
+							<div class='message-error' id="docente_fechaNac_error"></div>
 						</div>
 					</div>
 					<div class="col-12 col-md-4">
                             <div class="form-group">
                                 <label for="docente_sexo" class="bmd-label-floating">Sexo</label>
-                                <select class="form-control" name="docente_sexo_reg" id="docente_sexo" required="">
+                                <select class="form-control" name="docente_sexo_reg" 
+								id="docente_sexo" required="" onchange="deleteErrorMessage('docente_sexo_error')">
                                     <option value="" selected="" disabled="">Seleccione una opción</option>
                                     <option value="Masculino">Masculino</option>
                                     <option value="Femenino">Femenino</option>
                                 </select>
+								<div class='message-error' id="docente_sexo_error"></div>
                             </div>
                         </div>
 					<div class="col-12 col-md-4">
 						<div class="form-group">
 							<label for="docente_fechaIng">Fecha de Ingreso</label>
-							<input type="date" class="form-control" name="docente_fechaIng_reg" id="docente_fechaIng" required="">
+							<input type="date" class="form-control" name="docente_fechaIng_reg" 
+							id="docente_fechaIng" required="" onchange="deleteErrorMessage('docente_fechaIng_error')">
+							<div class='message-error' id="docente_fechaIng_error"></div>
 						</div>
 					</div>
 					<div class="col-12 col-md-6">
 						<div class="form-group">
 							<label for="docente_telefono" class="bmd-label-floating">Teléfono</label>
-							<input type="text" pattern="[0-9()+]{7,15}" class="form-control" name="docente_telefono_reg" id="docente_telefono" maxlength="15" required="">
+							<input type="text" pattern="[0-9()+]{7,15}" class="form-control" name="docente_telefono_reg" 
+							id="docente_telefono" maxlength="15" required="" onchange="deleteErrorMessage('docente_telefono_error')">
+							<div class='message-error' id="docente_telefono_error"></div>
 						</div>
 					</div>
 					<div class="col-12 col-md-6">
 						<div class="form-group">
 							<label for="docente_direccion" class="bmd-label-floating">Dirección</label>
-							<input type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{3,150}" class="form-control" name="docente_direccion_reg" id="docente_direccion" maxlength="150">
+							<input type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{3,150}" class="form-control" name="docente_direccion_reg" 
+							id="docente_direccion" maxlength="150" onchange="deleteErrorMessage('docente_direccion_error')">
+							<div class='message-error' id="docente_direccion_error"></div>
 						</div>
 					</div>
 				</div>
@@ -96,20 +114,26 @@
 					<div class="col-12 col-md-6">
 						<div class="form-group">
 							<label for="docente_email" class="bmd-label-floating">Correo</label>
-							<input type="email" class="form-control" name="docente_email_reg" id="docente_email" maxlength="70" required="">
+							<input type="email" class="form-control" name="docente_email_reg" 
+							id="docente_email" maxlength="70" required="" onchange="deleteErrorMessage('docente_email_error')">
+							<div class='message-error' id="docente_email_error"></div>
 						</div>
 					</div>
 					<div class="col">
 						<div class="col-12 col-md-12">
 							<div class="form-group">
 								<label for="docente_clave_1" class="bmd-label-floating">Contraseña</label>
-								<input type="password" class="form-control" name="docente_clave_1_reg" id="docente_clave_1" pattern="[a-zA-Z0-9$@.-]{7,50}" maxlength="50" required="">
+								<input type="password" class="form-control" name="docente_clave_1_reg" 
+								id="docente_clave_1" pattern="[a-zA-Z0-9@#$%&.-]{7,20}" maxlength="20" required="" onchange="deleteErrorMessage('docente_clave_1_error')">
+								<div class='message-error' id="docente_clave_1_error"></div>
 							</div>
 						</div>
 						<div class="col-12 col-md-12">
 							<div class="form-group">
 								<label for="docente_clave_2" class="bmd-label-floating">Repetir contraseña</label>
-								<input type="password" class="form-control" name="docente_clave_2_reg" id="docente_clave_2" pattern="[a-zA-Z0-9$@.-]{7,50}" maxlength="50" required="">
+								<input type="password" class="form-control" name="docente_clave_2_reg" 
+								id="docente_clave_2" pattern="[a-zA-Z0-9@#$%&.-]{7,20}" maxlength="20" required="" onchange="deleteErrorMessage('docente_clave_2_error')">
+								<div class='message-error' id="docente_clave_2_error"></div>
 							</div>
 						</div>
 					</div>
@@ -122,11 +146,12 @@
 			<div class="container-fluid">
 				<label for="docente_area" class="">Área</label>
 				<div class="input-group">
-					<input type="text" class="form-control form-block" name="docente_name_area_reg" id="docente_name_area" placeholder="Sin designar" disabled>
+					<input type="text" class="form-control form-block" name="docente_name_area_reg" id="docente_name_area" placeholder="Sin designar" disabled onchange="deleteErrorMessage('docente_id_area')">
 					<input type="hidden" name="docente_id_area_reg" id="docente_id_area" required="">
 					<div class="input-group-addon"></div>
 					<button type="button" class="area-update btn btn-raised btn-info" onclick="buscar_area('')"><i class="fas fa-search-plus"></i></button>
 				</div>
+				<div class='message-error' id="docente_id_area_error"></div>
 			</div>
 		</fieldset>
 		<br><br><br>
