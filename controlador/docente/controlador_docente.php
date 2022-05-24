@@ -38,14 +38,72 @@
             $direccion=main_model::limpiar_cadena($_POST['docente_direccion_up']);
             $telefono=main_model::limpiar_cadena($_POST['docente_telefono_up']);
 
-            /* comprobar campos vacios */
-            if($ci=="" || $nombre=="" || $apellidoP=="" || $apellidoM=="" || $fechaNac=="" 
-            || $telefono=="" || $email=="" ){
+            if($nombre=="" || $nombre==null){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"No has llenado todos los campos obligatorios",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"docente_nombre",
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+   
+            if(main_model::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,30}",$nombre)){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Tipo"=>"validation",
+                    "Input"=>"docente_nombre",
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if($apellidoP=="" || $apellidoP==null){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Tipo"=>"validation",
+                    "Input"=>"docente_apellidoP",
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if(main_model::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,50}",$apellidoP)){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Tipo"=>"validation",
+                    "Input"=>"docente_apellidoP",
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if($apellidoM=="" || $apellidoM==null){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Tipo"=>"validation",
+                    "Input"=>"docente_apellidoM",
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if(main_model::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,50}",$apellidoM)){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Tipo"=>"validation",
+                    "Input"=>"docente_apellidoM",
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            /* comprobar campos vacios */
+            if($ci=="" || $ci==null){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Tipo"=>"validation",
+                    "Input"=>"docente_ci",
                 ];
                 echo json_encode($alerta);
                 exit();
@@ -56,9 +114,8 @@
                 if(main_model::verificar_datos("[0-9-]{5,15}",$ci)){
                     $alerta=[
                         "Alerta"=>"simple",
-                        "Titulo"=>"Ocurrio un error inesperado",
-                        "Texto"=>"El CI no coincide con el formato solicitado",
-                        "Tipo"=>"error"
+                        "Tipo"=>"validation",
+                        "Input"=>"docente_ci",
                     ];
                     echo json_encode($alerta);
                     exit();
@@ -76,41 +133,62 @@
                     }
                 }
             }
-   
-            if(main_model::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,30}",$nombre)){
+
+            if($fechaNac=="" || $fechaNac==null){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"El NOMBRE no coincide con el formato solicitado",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"docente_fecha_nac",
                 ];
                 echo json_encode($alerta);
                 exit();
             }
 
-            if(main_model::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,50}",$apellidoP)){
+            if($telefono=="" || $telefono==null){
                 $alerta=[
                     "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"El APELLIDO PATERNO no coincide con el formato solicitado",
-                    "Tipo"=>"error"
+                    "Tipo"=>"validation",
+                    "Input"=>"docente_telefono",
                 ];
                 echo json_encode($alerta);
                 exit();
             }
 
-            if(main_model::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,50}",$apellidoM)){
-                $alerta=[
-                    "Alerta"=>"simple",
-                    "Titulo"=>"Ocurrio un error inesperado",
-                    "Texto"=>"El APELLIDO MATERNO no coincide con el formato solicitado",
-                    "Tipo"=>"error"
-                ];
-                echo json_encode($alerta);
-                exit();
+            if($telefono!=$campos['TELEFONO_P'] && $telefono!=""){
+                if(main_model::verificar_datos("[0-9()+]{7,15}",$telefono)){
+                    $alerta=[
+                        "Alerta"=>"simple",
+                        "Tipo"=>"validation",
+                        "Input"=>"docente_telefono",
+                    ];
+                    echo json_encode($alerta);
+                    exit();
+                }else{
+                    $check_telefono=main_model::ejecutar_consulta_simple("SELECT TELEFONO_P FROM profesor WHERE TELEFONO_P='$telefono'");
+                    if($check_telefono->rowCount()>0){
+                        $alerta=[
+                            "Alerta"=>"simple",
+                            "Titulo"=>"Ocurrio un error inesperado",
+                            "Texto"=>"El TELEFONO ingresado ya se encuentra registrado en el sistema",
+                            "Tipo"=>"error"
+                        ];
+                        echo json_encode($alerta);
+                        exit();
+                    }
+                }
             }
 
             /*------------ Falta las fechas --------------- */
+
+            if($email=="" || $email==null){
+                $alerta=[
+                    "Alerta"=>"simple",
+                    "Tipo"=>"validation",
+                    "Input"=>"docente_email",
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
 
             /* Comprobando correo */
             if($email!=$campos['CORREO_P'] && $email!=""){
@@ -129,9 +207,8 @@
                 }else{
                     $alerta=[
                         "Alerta"=>"simple",
-                        "Titulo"=>"Ocurrio un error inesperado",
-                        "Texto"=>"Ha ingresado un correo no valido",
-                        "Tipo"=>"error"
+                        "Tipo"=>"validation",
+                        "Input"=>"docente_email",
                     ];
                     echo json_encode($alerta);
                     exit();
@@ -142,37 +219,11 @@
                 if(main_model::verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{3,150}",$direccion)){
                     $alerta=[
                         "Alerta"=>"simple",
-                        "Titulo"=>"Ocurrio un error inesperado",
-                        "Texto"=>"La DIRECCION no coincide con el formato solicitado",
-                        "Tipo"=>"error"
+                        "Tipo"=>"validation",
+                        "Input"=>"docente_direccion",
                     ];
                     echo json_encode($alerta);
                     exit();
-                }
-            }
-
-            if($telefono!=$campos['TELEFONO_P'] && $telefono!=""){
-                if(main_model::verificar_datos("[0-9()+]{7,15}",$telefono)){
-                    $alerta=[
-                        "Alerta"=>"simple",
-                        "Titulo"=>"Ocurrio un error inesperado",
-                        "Texto"=>"El TELEFONO no coincide con el formato solicitado",
-                        "Tipo"=>"error"
-                    ];
-                    echo json_encode($alerta);
-                    exit();
-                }else{
-                    $check_telefono=main_model::ejecutar_consulta_simple("SELECT TELEFONO_P FROM profesor WHERE TELEFONO_P='$telefono'");
-                    if($check_telefono->rowCount()>0){
-                        $alerta=[
-                            "Alerta"=>"simple",
-                            "Titulo"=>"Ocurrio un error inesperado",
-                            "Texto"=>"El TELEFONO ingresado ya se encuentra registrado en el sistema",
-                            "Tipo"=>"error"
-                        ];
-                        echo json_encode($alerta);
-                        exit();
-                    }
                 }
             }
             
@@ -181,19 +232,27 @@
                 if($_POST['docente_clave_nueva_1']!=$_POST['docente_clave_nueva_2']){
                     $alerta=[
                         "Alerta"=>"simple",
-                        "Titulo"=>"Ocurrio un error inesperado",
-                        "Texto"=>"Las nuevas Claves ingresadas no coinciden",
-                        "Tipo"=>"error"
+                        "Tipo"=>"validation",
+                        "Input"=>"docente_clave_nueva_2",
                     ];
                     echo json_encode($alerta);
                     exit();
                 }else{
-                    if(main_model::verificar_datos("[a-zA-Z0-9$@.-]{7,100}",$_POST['docente_clave_nueva_1']) || main_model::verificar_datos("[a-zA-Z0-9$@.-]{7,100}",$_POST['docente_clave_nueva_2'])){
+                    if(main_model::verificar_datos("[a-zA-Z0-9@#$%&.-]{7,20}",$_POST['docente_clave_nueva_1'])){
                         $alerta=[
                             "Alerta"=>"simple",
-                            "Titulo"=>"Ocurrio un error inesperado",
-                            "Texto"=>"Las nuevas Claves no coinciden con el formato solicitado",
-                            "Tipo"=>"error"
+                            "Tipo"=>"validation",
+                            "Input"=>"docente_clave_nueva_1",
+                        ];
+                        echo json_encode($alerta);
+                        exit();
+                    }
+
+                    if(main_model::verificar_datos("[a-zA-Z0-9@#$%&.-]{7,20}",$_POST['docente_clave_nueva_2'])){
+                        $alerta=[
+                            "Alerta"=>"simple",
+                            "Tipo"=>"validation",
+                            "Input"=>"docente_clave_nueva_2",
                         ];
                         echo json_encode($alerta);
                         exit();
