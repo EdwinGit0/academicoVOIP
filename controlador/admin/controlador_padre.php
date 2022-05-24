@@ -184,7 +184,7 @@
                 exit();
             }
 
-            if(main_model::verificar_datos("[a-zA-Z0-9@#$%&.-]{7,50}",$clave1)){
+            if(main_model::verificar_datos("[a-zA-Z0-9@#$%&.-]{7,20}",$clave1)){
                 $alerta=[
                     "Alerta"=>"simple",
                     "Tipo"=>"validation",
@@ -204,7 +204,7 @@
                 exit();
             }
 
-            if(main_model::verificar_datos("[a-zA-Z0-9@#$%&.-]{7,50}",$clave2)){
+            if(main_model::verificar_datos("[a-zA-Z0-9@#$%&.-]{7,20}",$clave2)){
                 $alerta=[
                     "Alerta"=>"simple",
                     "Tipo"=>"validation",
@@ -744,7 +744,7 @@
                     echo json_encode($alerta);
                     exit();
                 }else{
-                    if(main_model::verificar_datos("[a-zA-Z0-9$@.-]{7,50}",$_POST['padre_clave_nueva_1'])){
+                    if(main_model::verificar_datos("[a-zA-Z0-9@#$%&.-]{7,20}",$_POST['padre_clave_nueva_1'])){
                         $alerta=[
                             "Alerta"=>"simple",
                             "Tipo"=>"validation",
@@ -753,7 +753,7 @@
                         echo json_encode($alerta);
                         exit();
                     }
-                    if(main_model::verificar_datos("[a-zA-Z0-9$@.-]{7,50}",$_POST['padre_clave_nueva_2'])){
+                    if(main_model::verificar_datos("[a-zA-Z0-9@#$%&.-]{7,20}",$_POST['padre_clave_nueva_2'])){
                         $alerta=[
                             "Alerta"=>"simple",
                             "Tipo"=>"validation",

@@ -1572,3 +1572,138 @@ function isNumberQ(number){
     else
         return false
 }
+
+function teacher_update_2_validata() {
+    let ci = getIDInput('docente_ci');
+    let nombre = getIDInput('docente_nombre');
+    let apellidoP = getIDInput('docente_apellidoP');
+    let apellidoM = getIDInput('docente_apellidoM');
+    let fechaNac = getIDInput('docente_fecha_nac');
+    let telefono = getIDInput('docente_telefono');
+    let direccion = getIDInput('docente_direccion');
+    let email = getIDInput('docente_email');
+    let clave1 = getIDInput('docente_clave_nueva_1');
+    let clave2 = getIDInput('docente_clave_nueva_2');
+
+    let message_ci = ''
+    let message_nombre = ''
+    let message_apellidoP = ''
+    let message_apellidoM = ''
+    let message_fechaNac = ''
+    let message_telefono = ''
+    let message_direccion = ''
+    let message_email = ''
+    let message_clave1 = ''
+    let message_clave2 = ''
+
+    let enviar = true;
+
+    if(ci.value === null || ci.value === ''){
+        message_ci = 'Este campo es requerido'
+        enviar = false;
+    }else if(!ci.value.match(/^[0-9-]/)){
+        message_ci = 'El CI no coincide con el formato solicitado'
+        enviar = false;
+    }else if (ci.value.length < 5 || ci.value.length > 15) {
+        message_ci = 'El CI debe ser mayor a 5 digitos'
+        enviar = false; 
+    }
+
+    if(nombre.value === null || nombre.value === ''){
+        message_nombre = 'Este campo es requerido'
+        enviar = false;
+    }else if(!nombre.value.match(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]/)){
+        message_nombre = 'El NOMBRE no coincide con el formato solicitado'
+        enviar = false;
+    }else if (nombre.value.length < 3 || nombre.value.length > 30) {
+        message_nombre = 'El NOMBRE debe ser mayor a 3 caracteres'
+        enviar = false; 
+    }
+
+    if(apellidoP.value === null || apellidoP.value === ''){
+        message_apellidoP = 'Este campo es requerido'
+        enviar = false;
+    }else if(!apellidoP.value.match(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]/)){
+        message_apellidoP = 'El APELLIDO PATERNO no coincide con el formato solicitado'
+        enviar = false;
+    }else if (apellidoP.value.length < 3 || apellidoP.value.length > 50) {
+        message_apellidoP = 'El APELLIDO PATERNO debe ser mayor a 3 caracteres'
+        enviar = false; 
+    }
+
+    if(apellidoM.value === null || apellidoM.value === ''){
+        message_apellidoM = 'Este campo es requerido'
+        enviar = false;
+    }else if(!apellidoM.value.match(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]/)){
+        message_apellidoM = 'El APELLIDO MATERNO no coincide con el formato solicitado'
+        enviar = false;
+    }else if (apellidoM.value.length < 3 || apellidoM.value.length > 50) {
+        message_apellidoM = 'El APELLIDO MATERNO debe ser mayor a 3 caracteres'
+        enviar = false; 
+    }
+
+    if(fechaNac.value === null || fechaNac.value === ''){
+        message_fechaNac = 'Este campo es requerido'
+        enviar = false;
+    }
+
+    if(telefono.value === null || telefono.value === ''){
+        message_telefono = 'Este campo es requerido'
+        enviar = false;
+    }else if(!telefono.value.match(/^[0-9()+]/)){
+        message_telefono = 'El TELEFONO no coincide con el formato solicitado'
+        enviar = false;
+    }else if (telefono.value.length < 7 || telefono.value.length > 15) {
+        message_telefono = 'El TELEFONO debe ser mayor a 7 digitos'
+        enviar = false; 
+    }
+
+    if(direccion.value !== '' && !direccion.value.match(/^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]/)){
+        message_direccion = 'La DIRECCION no coincide con el formato solicitado'
+        enviar = false;
+    }else if (direccion.value !== '' &&  direccion.value.length < 3 || direccion.value.length > 150) {
+        message_direccion = 'La DIRECCION debe ser mayor a 3 caracteres'
+        enviar = false; 
+    }
+
+    if(email.value === null || email.value === ''){
+        message_email = 'Este campo es requerido'
+        enviar = false;
+    }else if(!validateEmail(email.value)){
+        message_email = 'Ha ingresado un CORREO no valido'
+        enviar = false;
+    } 
+
+    if(clave1.value !== '' && !clave1.value.match(/^[a-zA-Z0-9@#$%&.-]/)){
+        message_clave1 = 'La CONTRASEÑA no coincide con el formato solicitado'
+        enviar = false;
+    }else if (clave1.value !== '' && clave1.value.length < 7 || clave1.value.length > 20) {
+        message_clave1 = 'La CONTRASEÑA debe ser mayor a 7 digitos'
+        enviar = false; 
+    }
+
+    if(clave2.value !== '' &&  !clave2.value.match(/^[a-zA-Z0-9@#$%&.-]/)){
+        message_clave2 = 'El CONTRASEÑA no coincide con el formato solicitado'
+        enviar = false;
+    }else if (clave2.value !== '' &&  clave2.value.length < 7 || clave2.value.length > 20) {
+        message_clave2 = 'El CONTRASEÑA debe ser mayor a 7 digitos'
+        enviar = false; 
+    }
+
+    if(clave1.value !== '' && clave2.value !== '' && clave1.value !== clave2.value){
+        message_clave2 = 'La CONTRASEÑA que acaba de ingresar no coinciden'
+    }
+
+    getIDInput("docente_ci_error").innerHTML = message_ci;  
+    getIDInput("docente_nombre_error").innerHTML = message_nombre;
+    getIDInput("docente_apellidoP_error").innerHTML = message_apellidoP;  
+    getIDInput("docente_apellidoM_error").innerHTML = message_apellidoM;
+    getIDInput("docente_fecha_nac_error").innerHTML = message_fechaNac;  
+    getIDInput("docente_telefono_error").innerHTML = message_telefono;
+    getIDInput("docente_direccion_error").innerHTML = message_direccion;
+    getIDInput("docente_email_error").innerHTML = message_email;    
+    getIDInput("docente_clave_nueva_1_error").innerHTML = message_clave1;  
+    getIDInput("docente_clave_nueva_2_error").innerHTML = message_clave2;
+
+    return enviar;
+}
