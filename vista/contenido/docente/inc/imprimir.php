@@ -16,7 +16,7 @@
                 jsPDF: {
                     unit: "in",
                     format: "a3",
-                    orientation: 'portrait' // landscape o portrait
+                    orientation: 'landscape' // landscape o portrait
                 }
             })
             .from($documentoPdf)
