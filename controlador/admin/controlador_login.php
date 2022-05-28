@@ -1,6 +1,7 @@
 <?php
     if($peticionAjax){
         require_once "../../modelo/admin/modelo_login.php";
+        include_once "../respuestas.class.php";
     }else{
         require_once "./modelo/admin/modelo_login.php";
     }
@@ -109,6 +110,28 @@
                             button: "Aceptar",
                         });
                     </script>';
+                }
+            }
+        }
+
+        /* controlador para iniciar sesion estudiante o tutor*/
+        public function iniciar_sesion_student_controlador($datos){
+            $_respuesta = new respuestas;
+            if(!isset($datos['phone']) || !isset($datos['clave'])){
+                return $_respuesta->error_400();
+            }else{
+                $phone = $datos['phone'];
+                $clave = $datos['clave'];
+                $clave = main_model::encryption($clave);
+                $datos_alumno=[
+                    "phone"=>$phone,
+                    "clave"=>$clave,
+                ];
+                $datos_cuenta=modelo_login::iniciar_sesion_alumno_modelo($datos_alumno);
+                if($datos_cuenta->rowCount()==1){
+                    return $datos_cuenta->fetch(PDO::FETCH_ASSOC);
+                }else{
+                    return $_respuesta->error_200("El usuario $phone no existe");
                 }
             }
         }

@@ -1114,4 +1114,28 @@
             ];
             echo json_encode($datos_educativo_up);
         }
+
+        public function getStudentList(){
+            $result=main_model::ejecutar_consulta_simple("SELECT * FROM alumno");
+            if($result->rowCount()==0){
+                $campos=[
+                    "mensaje"=>"No hay elementos registrados",
+                ];
+            }else{
+                $campos=$result->fetchAll(PDO::FETCH_ASSOC);
+            }
+            echo json_encode($campos);
+        }
+
+        public function getStudent($tipo,$id,$ue){
+            $result=modelo_alumno::datos_alumno_modelo($tipo,$id,$ue);
+            if($result->rowCount()==0){
+                $campos=[
+                    "mensaje"=>"No hay elementos registrados",
+                ];
+            }else{
+                $campos=$result->fetchAll(PDO::FETCH_ASSOC);
+            }
+            echo json_encode($campos);
+        }
     }

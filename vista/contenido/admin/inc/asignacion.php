@@ -206,6 +206,8 @@
                 var docente_responsable;
                 if(document.querySelector('#docente_responsable').checked){
                     docente_responsable = 1;
+                }else{
+                    docente_responsable = 0;
                 }
                 
                 let datos = new FormData();

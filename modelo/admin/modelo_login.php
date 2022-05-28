@@ -19,4 +19,22 @@
             $sql->execute();
             return $sql;
         }
+
+        /* Modelo iniciar sesion para alumno */
+        protected static function iniciar_sesion_alumno_modelo($datos){
+            $sql=main_model::conectar()->prepare("SELECT * FROM alumno WHERE TELEFONO_A=:phone AND CONTRA_A=:clave AND ESTADO_A=1");
+            $sql->bindParam(":phone",$datos['phone']);
+            $sql->bindParam(":clave",$datos['clave']);
+            $sql->execute();
+            return $sql;
+        }
+
+        /* Modelo iniciar sesion para tutor */
+        protected static function iniciar_sesion_tutor_modelo($datos){
+            $sql=main_model::conectar()->prepare("SELECT * FROM familiar WHERE TELEFONO_FA=:phone AND CONTRA_FA=:clave AND ESTADO_FA=1");
+            $sql->bindParam(":phone",$datos['phone']);
+            $sql->bindParam(":clave",$datos['clave']);
+            $sql->execute();
+            return $sql;
+        }
     }
