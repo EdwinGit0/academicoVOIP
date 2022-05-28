@@ -129,7 +129,40 @@
                 ];
                 $datos_cuenta=modelo_login::iniciar_sesion_alumno_modelo($datos_alumno);
                 if($datos_cuenta->rowCount()==1){
-                    return $datos_cuenta->fetch(PDO::FETCH_ASSOC);
+                    $datos_cuenta = $datos_cuenta->fetch();
+                    $token = md5(uniqid(mt_rand(),true));
+                    $ins_usuario=[
+                        "Id" => $datos_cuenta['ALUMNO_ID'],
+                        "Fecha" => date("Y-m-d H:i:s"),
+                        "Estado" => 1,
+                        "Token" => $token
+                    ];
+                    $ins_token=modelo_login::insertar_token_modelo($ins_usuario,"ALUMNO_ID");
+                    if($ins_token->rowCount()==1){
+                        $datos_usuario=[
+                            "ALUMNO_ID" => $datos_cuenta['ALUMNO_ID'],
+                            "UA_ID" => $datos_cuenta['UA_ID'],
+                            "RUDE_A" => $datos_cuenta['RUDE_A'],
+                            "CI_A" => $datos_cuenta['CI_A'],
+                            "NOMBRE_A" => $datos_cuenta['NOMBRE_A'],
+                            "APELLIDOP_A" => $datos_cuenta['APELLIDOP_A'],
+                            "APELLIDOM_A" => $datos_cuenta['APELLIDOM_A'],
+                            "FECHANAC_A" => $datos_cuenta['FECHANAC_A'],
+                            "SEXO_A" => $datos_cuenta['SEXO_A'],
+                            "LUGARNAC_A" => $datos_cuenta['LUGARNAC_A'],
+                            "CORREO_A" => $datos_cuenta['CORREO_A'],
+                            "TELEFONO_A" => $datos_cuenta['TELEFONO_A'],
+                            "DIRECCION_A" => $datos_cuenta['DIRECCION_A'],
+                            "ESTADO_A" => $datos_cuenta['ESTADO_A'],
+                            "TOKEN_A" =>  $token,
+                        ];
+
+                        $result = $_respuesta->$response;
+                        $result["result"]=$datos_usuario;
+                        return $result;
+                    }else{
+                        return $_respuesta->error_500("Error interno, no hemos podido guardar");
+                    }
                 }else{
                     return $_respuesta->error_200("El usuario $phone no existe");
                 }

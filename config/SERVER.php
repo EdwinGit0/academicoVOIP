@@ -1,14 +1,14 @@
 <?php
 
-   const server="bgxyy6sqdpkwpegiuhsh-mysql.services.clever-cloud.com";
+   /* const server="bgxyy6sqdpkwpegiuhsh-mysql.services.clever-cloud.com";
    const db="bgxyy6sqdpkwpegiuhsh";
    const user="ugumlb9hyc7p5g84";
-   const pass="Ht4RVilQFtx94Vll1axI";
+   const pass="Ht4RVilQFtx94Vll1axI"; */
 
-   /* const server="localhost";
+   const server="localhost";
    const db="sistemaacademico";
    const user="root";
-   const pass=""; */
+   const pass="";
 
     const SGBD="mysql:host=".server.";dbname=".db;
 

@@ -37,4 +37,17 @@
             $sql->execute();
             return $sql;
         }
+
+        /* Modelo iniciar sesion para tutor */
+        protected static function insertar_token_modelo($datos,$user){
+            $sql=main_model::conectar()->prepare("INSERT INTO token(TOKEN,$user,FECHA_T,ESTADO_T)
+            VALUES (:Token,:Id,:Fecha,:Estado)");
+            $sql->bindParam(":Token",$datos['Token']);
+            $sql->bindParam(":Id",$datos['Id']);
+            $sql->bindParam(":Fecha",$datos['Fecha']);
+            $sql->bindParam(":Estado",$datos['Estado']);
+            
+            $sql->execute();
+            return $sql;
+        }
     }
