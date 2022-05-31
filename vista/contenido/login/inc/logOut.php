@@ -13,7 +13,7 @@
         .then((willDelete) => {
             if (willDelete) {
             	let url='<?php echo SERVERURL; ?>ajax/admin/loginAjax.php';
-                let token='<?php echo $cl->encryption($_SESSION['token_sa']);?>';
+                let token = JSON.parse(localStorage.getItem('token'));
                 let email='<?php echo $cl->encryption($_SESSION['correo_sa']);?>';
                 
                 let datos = new FormData();
@@ -26,9 +26,45 @@
                 })
                 .then(respuesta => respuesta.json())
                 .then(respuesta => {
+                    if(respuesta.Alerta==="redireccionar"){
+                        localStorage.removeItem("token");
+                    }
                     return alertas_ajax(respuesta);
                 });
             } 
         });
     });
+
+    function token(){
+		let token = JSON.parse(localStorage.getItem('token'));
+
+			let url='<?php echo SERVERURL; ?>ajax/admin/loginAjax.php';
+			let datos = new FormData();
+			datos.append('token_login',token);
+	
+			fetch(url,{
+				method: 'POST',
+				body: datos
+			})
+			.then(respuesta => respuesta.json())
+			.then(respuesta => {
+				if(respuesta.Alerta==='redireccionar'){
+					localStorage.setItem('token', JSON.stringify(respuesta.token));
+			
+				}else if(respuesta.Alerta==='simple'){
+					swal({
+						title: respuesta.Titulo,
+						text: respuesta.Texto,
+						icon: respuesta.Tipo,
+						button: 'Aceptar',
+					}).then((willDelete) => {
+						if (willDelete) {
+							localStorage.removeItem('token');
+							location.reload();
+						} 
+					});
+					
+				}
+			});
+	}
 </script>

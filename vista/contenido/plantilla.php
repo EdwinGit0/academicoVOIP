@@ -15,7 +15,7 @@
 
 		$vistas = $IV->obtener_vista_controlador();
 
-		if($vistas=="login" || $vistas=="404"){
+		if($vistas=="login" || $vistas=="404" ){
 			require_once "./vista/contenido/login/".$vistas."-view.php";
 		}else{
 			session_start(['name'=>'SA']);
@@ -55,8 +55,13 @@
 		</main>
 		<?php 
 			include "./vista/contenido/login/inc/logOut.php"; 
-		}
-		include "./vista/inc/Script.php"; 
-	?>
+		?>
+		<script type='text/javascript'>
+			token();
+		</script>
+		<?php }
+			include "./vista/inc/Script.php"; 
+		?>
 </body>
+
 </html>

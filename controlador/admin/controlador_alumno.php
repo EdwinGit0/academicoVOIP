@@ -1,6 +1,7 @@
 <?php
     if($peticionAjax){
         require_once "../../modelo/admin/modelo_alumno.php";
+        include_once "../respuestas.class.php";
     }else{
         require_once "./modelo/admin/modelo_alumno.php";
     }
@@ -1135,6 +1136,38 @@
                 ];
             }else{
                 $campos=$result->fetchAll(PDO::FETCH_ASSOC);
+            }
+            echo json_encode($campos);
+        }
+
+        public function getQualification($body){
+            $_respuesta = new respuestas;
+            if(!isset($body['token'])){
+                return $_respuesta->error_401();
+            }else{
+                try {
+                    $decoded = main_model::validate_token_jwt($body['token']);
+                } catch (\Exception $e) {
+                    return $_respuesta->error_401("Token invalido o expirado");
+                }
+                $token_decoded=json_decode($decoded,true);
+
+                if(!isset($body['periodo']) || !isset($body['gestion'])){
+                    return $_respuesta->error_400();
+                }else{
+                    $anio=$body['gestion'];
+                    $periodo=$body['periodo'];
+                    $alumno=$token_decoded['id'];
+                    $result_acali=modelo_alumno::ejecutar_consulta_simple("SELECT A.COD_AREA, A.NOMBRE_AREA, A.CAMPO_AREA, PP.NOTA FROM area as A
+                    LEFT OUTER JOIN 
+                    (SELECT P.COD_AREA, C.NOTA 
+                    FROM profesor AS P, calificacion AS C, anio_academico AS AA 
+                    WHERE P.PROFESOR_ID=C.PROFESOR_ID AND AA.COD_ANIO=C.COD_ANIO 
+                    AND C.ALUMNO_ID='$alumno' AND C.COD_PER='$periodo' AND AA.NOMBRE_ANIO='$anio' AND C.VAL_ID=11) as PP on A.COD_AREA = PP.COD_AREA");
+                
+                    return  $result_acali->fetchAll(PDO::FETCH_ASSOC);
+                }
+               
             }
             echo json_encode($campos);
         }

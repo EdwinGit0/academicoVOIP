@@ -185,7 +185,7 @@
             GROUP BY A.ALUMNO_ID ORDER BY A.ALUMNO_ID ASC LIMIT $inicio,$registros";
 
             $val_tutor=main_model::ejecutar_consulta_simple("SELECT F.FAMILAR_ID, F.NOMBRE_FA, F.APELLIDOP_FA, F.APELLIDOM_FA, A.ALUMNO_ID, F.ROL_FA FROM cur_alum AS CA, familiar AS F, fa_alumno AS FA, alumno AS A WHERE  
-            CA.ALUMNO_ID=A.ALUMNO_ID AND A.UA_ID='$ue' AND A.ALUMNO_ID=FA.ALUMNO_ID AND CA.COD_CUR='$id_curso' AND F.FAMILAR_ID=FA.FAMILAR_ID");
+            CA.ALUMNO_ID=A.ALUMNO_ID AND A.UA_ID='$ue' AND A.ALUMNO_ID=FA.ALUMNO_ID AND CA.COD_CUR='$id_curso' AND YEAR(FECHA_INI_CA)='$anio_academico' AND F.FAMILAR_ID=FA.FAMILAR_ID");
             $dato_tutor=$val_tutor->fetchAll();
 
             $conexion = main_model::conectar();
@@ -538,11 +538,11 @@
                 $reg_final=$contador-1;
             }else{
                 if($total>=1){
-                    $tabla.='<tr class="text-center"><td colspan="11">
+                    $tabla.='<tr class="text-center"><td colspan="18">
                     <a href="'.$url.'" class="btn btn-raised btn-primary btn-sm">Haga clic aca para recargar el listado</a>
                     </td></tr>';
                 }else{
-                    $tabla.='<tr class="text-center"><td colspan="11">No hay registros en el sistema</td></tr>';
+                    $tabla.='<tr class="text-center"><td colspan="18">No hay registros en el sistema</td></tr>';
                 }
             }
             $tabla.='</tbody></table></div>
@@ -778,11 +778,11 @@
                 $reg_final=$contador-1;
             }else{
                 if($total>=1){
-                    $tabla.='<tr class="text-center"><td colspan="11">
+                    $tabla.='<tr class="text-center"><td colspan="18">
                     <a href="'.$url.'" class="btn btn-raised btn-primary btn-sm">Haga clic aca para recargar el listado</a>
                     </td></tr>';
                 }else{
-                    $tabla.='<tr class="text-center"><td colspan="11">No hay registros en el sistema</td></tr>';
+                    $tabla.='<tr class="text-center"><td colspan="18">No hay registros en el sistema</td></tr>';
                 }
             }
             $tabla.='</tbody></table></div>

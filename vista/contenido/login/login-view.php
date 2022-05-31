@@ -1,3 +1,36 @@
+<script type='text/javascript'>
+    let token = JSON.parse(localStorage.getItem("token"));
+    if(token){
+        let url='<?php echo SERVERURL; ?>ajax/admin/loginAjax.php';
+        let datos = new FormData();
+        datos.append("token_login",token);
+
+        fetch(url,{
+            method: 'POST',
+            body: datos
+        })
+        .then(respuesta => respuesta.json())
+        .then(respuesta => {
+            if(respuesta.Alerta==="redireccionar"){
+                localStorage.setItem("token", JSON.stringify(respuesta.token));
+                window.location.href=respuesta.URL;
+            }else if(respuesta.Alerta==="simple"){
+                swal({
+                    title: respuesta.Titulo,
+                    text: respuesta.Texto,
+                    icon: respuesta.Tipo,
+                    button: "Aceptar",
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        localStorage.removeItem("token");
+                        location.reload();
+                    } 
+                });
+                
+            }
+        });
+    }
+</script>
 <div class="login-container">
     <div class="position">
         <div class="login-content">
@@ -8,7 +41,7 @@
                 <h4 class="text-center fw-bold mb-2"><strong>Inicia sesión con tu cuenta</strong></h4>
             </p>
 
-            <form action="" method="POST" autocomplete="off" novalidate onsubmit="return login_validata()" >
+            <form action="" method="POST" autocomplete="off" novalidate >
                 <div class="form-group">
                     <label for="UserName" class="bmd-label-floating"><i class="fas fa-user-secret"></i> &nbsp; Correo</label>
                     <input type="email" class="form-control" id="usuario_email" name="usuario_correo_lo" maxlength="50" required onchange="deleteErrorMessage('usuario_email_error')">
@@ -25,14 +58,4 @@
         </div>
     </div>
 </div>
-
-<?php
-    if(isset($_POST['usuario_correo_lo']) && isset($_POST['usuario_clave_lo'])){
-        require_once "./controlador/admin/controlador_login.php";
-
-        $ins_login= new controlador_login();
-
-        echo $ins_login->iniciar_sesion_controlador();
-    }
-
-?>
+<?php include_once "./vista/contenido/login/inc/login.php"?>

@@ -4,8 +4,11 @@
 
     require_once "./controlador_alumno.php";
     require_once "./controlador_login.php";
+    include_once "../respuestas.class.php";
+
     $ins_alumno = new controlador_alumno();
     $ins_login = new controlador_login();
+    $_respuesta = new respuestas;
 
     $body = json_decode(file_get_contents("php://input"),true);
 
@@ -22,4 +25,15 @@
             $data=$ins_login->iniciar_sesion_student_controlador($body);
             echo json_encode($data);
         break;
+        case "get-qualification":
+            $data=$ins_alumno->getQualification($body);
+            echo json_encode($data);
+            break;
+        case "token-validate":
+            $data=$ins_login->validate_token_jwt($body['token']);
+            echo json_encode($data);
+            break;
+        default:
+            echo json_encode($_respuesta->error_405());
+            break;
     }

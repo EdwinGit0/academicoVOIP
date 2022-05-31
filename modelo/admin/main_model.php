@@ -1,10 +1,14 @@
 <?php
     if($peticionAjax){
         require_once "../../config/SERVER.php";
+        include_once "../../vendor/autoload.php";
     }else{
         require_once "./config/SERVER.php";
     }
 
+    use Firebase\JWT\JWT;
+    use Firebase\JWT\Key;
+    
     class main_model{
         /* funcion para conetar a la BD*/
         protected static function conectar(){
@@ -150,5 +154,26 @@
             $codigo = $fecha.$acortar;
 			return $codigo;
 		}
+        
+        public function token_jwt($id_user,$rol){
+            $key = 'academico_voip_umss';
+            $time = time();
+            $token = [
+                'id' => $id_user,
+                "iat" => $time,
+                "exp" => $time + (60*30),
+                "rol" => $rol,
+            ];
+
+            $jwt = JWT::encode($token, $key, 'HS256');
+            
+            return  $jwt;
+        }
+
+        public function validate_token_jwt($token){
+            $key = 'academico_voip_umss';
+            $decoded = JWT::decode($token, new Key($key, 'HS256'));
+            return json_encode($decoded);
+        }
 
     }

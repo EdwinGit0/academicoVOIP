@@ -9,5 +9,8 @@
             "adminModel\\": "modelo/admin/"
             
         }
+    },
+    "require": {
+        "firebase/php-jwt": "^6.2"
     }
 }
