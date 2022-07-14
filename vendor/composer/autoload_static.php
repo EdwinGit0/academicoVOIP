@@ -7,28 +7,8 @@ namespace Composer\Autoload;
 class ComposerStaticInit16ee05828aa36647c7e7be67a02162ee
 {
     public static $files = array (
-        'ad155f8f1cf0d418fe49e248db8c661b' => __DIR__ . '/..' . '/react/promise/src/functions_include.php',
-        '972fda704d680a3a53c68e34e193cb22' => __DIR__ . '/..' . '/react/promise-timer/src/functions_include.php',
-        '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
-        'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
-        'fad373d645dd668e85d44ccf3c38fbd6' => __DIR__ . '/..' . '/guzzlehttp/streams/src/functions.php',
-        '154e0d165f5fe76e8e9695179d0a7345' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions.php',
+        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
-        '2c6da23fe52a0f3086a902a594e0aee0' => __DIR__ . '/..' . '/greenfieldtech-nirs/phpari/phpari.php',
-        '7525a36fd9254cfd3cb9bb7e222857ad' => __DIR__ . '/..' . '/greenfieldtech-nirs/phpari/phpari_config.php',
-        'b835d2b63007c79e45fe8b0534b1861b' => __DIR__ . '/..' . '/greenfieldtech-nirs/phpari/src/interfaces/asterisk.php',
-        '9805b55e0ceb71474a9c7b00c2923258' => __DIR__ . '/..' . '/greenfieldtech-nirs/phpari/src/interfaces/channels.php',
-        'cfda8041a1c5a4d566de4c88070a3b60' => __DIR__ . '/..' . '/greenfieldtech-nirs/phpari/src/interfaces/bridges.php',
-        '1f69d111489517ea7560a23a2d0e3aea' => __DIR__ . '/..' . '/greenfieldtech-nirs/phpari/src/interfaces/endpoints.php',
-        'b4cc0b1a22853af28663603bef613336' => __DIR__ . '/..' . '/greenfieldtech-nirs/phpari/src/interfaces/recordings.php',
-        'c0b0bba9b9fce0435a9dbb27357bf0f1' => __DIR__ . '/..' . '/greenfieldtech-nirs/phpari/src/interfaces/applications.php',
-        'ae292bfab0e2b749997f90da9cce7df4' => __DIR__ . '/..' . '/greenfieldtech-nirs/phpari/src/interfaces/devicestates.php',
-        '19b84a76c3e6bb7de83ec3052d825740' => __DIR__ . '/..' . '/greenfieldtech-nirs/phpari/src/interfaces/events.php',
-        'd4ab5f9d1e298944b5172f4ffea63cd4' => __DIR__ . '/..' . '/greenfieldtech-nirs/phpari/src/interfaces/mailboxes.php',
-        'b95aad392d21dcf4b463856b5915f6a8' => __DIR__ . '/..' . '/greenfieldtech-nirs/phpari/src/interfaces/sounds.php',
-        '4e4f27113c2afa0a1dddbb94d1a3b19f' => __DIR__ . '/..' . '/greenfieldtech-nirs/phpari/src/interfaces/playbacks.php',
-        'af9b31b04311546f31f3c8268326b657' => __DIR__ . '/..' . '/greenfieldtech-nirs/phpari/src/helpers/parsing_helper.php',
-        'e68c5a329e157b94a3f2ea29e5ed98fb' => __DIR__ . '/..' . '/greenfieldtech-nirs/phpari/src/helpers/config_helper.php',
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
     );
 
@@ -42,52 +22,18 @@ class ComposerStaticInit16ee05828aa36647c7e7be67a02162ee
             'admin\\' => 6,
             'adminModel\\' => 11,
         ),
-        'Z' => 
-        array (
-            'Zend\\Validator\\' => 15,
-            'Zend\\Uri\\' => 9,
-            'Zend\\Stdlib\\' => 12,
-            'Zend\\ServiceManager\\' => 20,
-            'Zend\\Log\\' => 9,
-            'Zend\\Loader\\' => 12,
-            'Zend\\Http\\' => 10,
-            'Zend\\Escaper\\' => 13,
-        ),
         'W' => 
         array (
-            'WyriHaximus\\React\\Guzzle\\HttpClient\\' => 36,
-            'WyriHaximus\\React\\Guzzle\\' => 25,
             'Webmozart\\Assert\\' => 17,
         ),
-        'R' => 
+        'S' => 
         array (
-            'React\\Stream\\' => 13,
-            'React\\Socket\\' => 13,
-            'React\\SocketClient\\' => 19,
-            'React\\Promise\\Timer\\' => 20,
-            'React\\Promise\\' => 14,
-            'React\\HttpClient\\' => 17,
-            'React\\EventLoop\\' => 16,
-            'React\\Dns\\' => 10,
-            'React\\Cache\\' => 12,
+            'Symfony\\Polyfill\\Ctype\\' => 23,
         ),
         'P' => 
         array (
-            'Psr\\Log\\' => 8,
-            'Psr\\Http\\Message\\' => 17,
-            'Psr\\Container\\' => 14,
             'Prophecy\\' => 9,
             'PhpParser\\' => 10,
-        ),
-        'I' => 
-        array (
-            'Interop\\Container\\' => 18,
-        ),
-        'G' => 
-        array (
-            'GuzzleHttp\\Stream\\' => 18,
-            'GuzzleHttp\\Psr7\\' => 16,
-            'GuzzleHttp\\' => 11,
         ),
         'F' => 
         array (
@@ -119,97 +65,13 @@ class ComposerStaticInit16ee05828aa36647c7e7be67a02162ee
         array (
             0 => __DIR__ . '/../..' . '/modelo/admin',
         ),
-        'Zend\\Validator\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/zendframework/zend-validator/src',
-        ),
-        'Zend\\Uri\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/zendframework/zend-uri/src',
-        ),
-        'Zend\\Stdlib\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/zendframework/zend-stdlib/src',
-        ),
-        'Zend\\ServiceManager\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/zendframework/zend-servicemanager/src',
-        ),
-        'Zend\\Log\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/zendframework/zend-log/src',
-        ),
-        'Zend\\Loader\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/zendframework/zend-loader/src',
-        ),
-        'Zend\\Http\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/zendframework/zend-http/src',
-        ),
-        'Zend\\Escaper\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/zendframework/zend-escaper/src',
-        ),
-        'WyriHaximus\\React\\Guzzle\\HttpClient\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/wyrihaximus/react-guzzle-http-client/src',
-        ),
-        'WyriHaximus\\React\\Guzzle\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/wyrihaximus/react-guzzle/src',
-        ),
         'Webmozart\\Assert\\' => 
         array (
             0 => __DIR__ . '/..' . '/webmozart/assert/src',
         ),
-        'React\\Stream\\' => 
+        'Symfony\\Polyfill\\Ctype\\' => 
         array (
-            0 => __DIR__ . '/..' . '/react/stream/src',
-        ),
-        'React\\Socket\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/react/socket/src',
-        ),
-        'React\\SocketClient\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/react/socket-client/src',
-        ),
-        'React\\Promise\\Timer\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/react/promise-timer/src',
-        ),
-        'React\\Promise\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/react/promise/src',
-        ),
-        'React\\HttpClient\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/react/http-client/src',
-        ),
-        'React\\EventLoop\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/react/event-loop/src',
-        ),
-        'React\\Dns\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/react/dns/src',
-        ),
-        'React\\Cache\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/react/cache/src',
-        ),
-        'Psr\\Log\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
-        ),
-        'Psr\\Http\\Message\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-        ),
-        'Psr\\Container\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/container/src',
+            0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
         ),
         'Prophecy\\' => 
         array (
@@ -218,22 +80,6 @@ class ComposerStaticInit16ee05828aa36647c7e7be67a02162ee
         'PhpParser\\' => 
         array (
             0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
-        ),
-        'Interop\\Container\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/container-interop/container-interop/src/Interop/Container',
-        ),
-        'GuzzleHttp\\Stream\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/guzzlehttp/streams/src',
-        ),
-        'GuzzleHttp\\Psr7\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
-        ),
-        'GuzzleHttp\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
         ),
         'Firebase\\JWT\\' => 
         array (
@@ -250,23 +96,6 @@ class ComposerStaticInit16ee05828aa36647c7e7be67a02162ee
         'App\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app',
-        ),
-    );
-
-    public static $prefixesPsr0 = array (
-        'E' => 
-        array (
-            'Evenement' => 
-            array (
-                0 => __DIR__ . '/..' . '/evenement/evenement/src',
-            ),
-        ),
-        'D' => 
-        array (
-            'Devristo\\Phpws\\' => 
-            array (
-                0 => __DIR__ . '/..' . '/devristo/phpws/src',
-            ),
         ),
     );
 
@@ -592,7 +421,6 @@ class ComposerStaticInit16ee05828aa36647c7e7be67a02162ee
         'PHPUnit\\Util\\PHP\\DefaultPhpProcess' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/PHP/DefaultPhpProcess.php',
         'PHPUnit\\Util\\PHP\\WindowsPhpProcess' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/PHP/WindowsPhpProcess.php',
         'PHPUnit\\Util\\Printer' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/Printer.php',
-        'PHPUnit\\Util\\Reflection' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/Reflection.php',
         'PHPUnit\\Util\\RegularExpression' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/RegularExpression.php',
         'PHPUnit\\Util\\Test' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/Test.php',
         'PHPUnit\\Util\\TestDox\\CliTestDoxPrinter' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/TestDox/CliTestDoxPrinter.php',
@@ -618,27 +446,6 @@ class ComposerStaticInit16ee05828aa36647c7e7be67a02162ee
         'PHPUnit\\Util\\Xml\\SuccessfulSchemaDetectionResult' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/Xml/SuccessfulSchemaDetectionResult.php',
         'PHPUnit\\Util\\Xml\\ValidationResult' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/Xml/ValidationResult.php',
         'PHPUnit\\Util\\Xml\\Validator' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/Xml/Validator.php',
-        'Pest' => __DIR__ . '/..' . '/educoder/pest/Pest.php',
-        'PestJSON' => __DIR__ . '/..' . '/educoder/pest/PestJSON.php',
-        'PestXML' => __DIR__ . '/..' . '/educoder/pest/PestXML.php',
-        'PestXML_Exception' => __DIR__ . '/..' . '/educoder/pest/PestXML.php',
-        'Pest_BadRequest' => __DIR__ . '/..' . '/educoder/pest/Pest.php',
-        'Pest_ClientError' => __DIR__ . '/..' . '/educoder/pest/Pest.php',
-        'Pest_Conflict' => __DIR__ . '/..' . '/educoder/pest/Pest.php',
-        'Pest_Curl_Exec' => __DIR__ . '/..' . '/educoder/pest/Pest.php',
-        'Pest_Curl_Init' => __DIR__ . '/..' . '/educoder/pest/Pest.php',
-        'Pest_Curl_Meta' => __DIR__ . '/..' . '/educoder/pest/Pest.php',
-        'Pest_Exception' => __DIR__ . '/..' . '/educoder/pest/Pest.php',
-        'Pest_Forbidden' => __DIR__ . '/..' . '/educoder/pest/Pest.php',
-        'Pest_Gone' => __DIR__ . '/..' . '/educoder/pest/Pest.php',
-        'Pest_InvalidRecord' => __DIR__ . '/..' . '/educoder/pest/Pest.php',
-        'Pest_Json_Decode' => __DIR__ . '/..' . '/educoder/pest/PestJSON.php',
-        'Pest_Json_Encode' => __DIR__ . '/..' . '/educoder/pest/PestJSON.php',
-        'Pest_MethodNotAllowed' => __DIR__ . '/..' . '/educoder/pest/Pest.php',
-        'Pest_NotFound' => __DIR__ . '/..' . '/educoder/pest/Pest.php',
-        'Pest_ServerError' => __DIR__ . '/..' . '/educoder/pest/Pest.php',
-        'Pest_Unauthorized' => __DIR__ . '/..' . '/educoder/pest/Pest.php',
-        'Pest_UnknownResponse' => __DIR__ . '/..' . '/educoder/pest/Pest.php',
         'PharIo\\Manifest\\Application' => __DIR__ . '/..' . '/phar-io/manifest/src/values/Application.php',
         'PharIo\\Manifest\\ApplicationName' => __DIR__ . '/..' . '/phar-io/manifest/src/values/ApplicationName.php',
         'PharIo\\Manifest\\Author' => __DIR__ . '/..' . '/phar-io/manifest/src/values/Author.php',
@@ -923,7 +730,6 @@ class ComposerStaticInit16ee05828aa36647c7e7be67a02162ee
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit16ee05828aa36647c7e7be67a02162ee::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit16ee05828aa36647c7e7be67a02162ee::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit16ee05828aa36647c7e7be67a02162ee::$prefixesPsr0;
             $loader->classMap = ComposerStaticInit16ee05828aa36647c7e7be67a02162ee::$classMap;
 
         }, null, ClassLoader::class);
