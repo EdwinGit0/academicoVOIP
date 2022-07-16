@@ -181,7 +181,7 @@
 			return $sala;
 		}
 
-        private function send_mail($para,$titulo,$mensaje,$cabecera){
+        private function send_mail(){
             $para      = 'edwin.roquecd@gmail.com';
             $titulo    = 'El título';
             $mensaje   = 'Hola';
