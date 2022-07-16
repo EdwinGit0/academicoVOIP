@@ -8,6 +8,9 @@
 
     use Firebase\JWT\JWT;
     use Firebase\JWT\Key;
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\SMTP;
+    use PHPMailer\PHPMailer\Exception;
     
     class main_model{
         /* funcion para conetar a la BD*/
@@ -154,7 +157,8 @@
             $codigo = $fecha.$acortar;
 			return $codigo;
 		}
-        
+
+        /* generar token */
         public function token_jwt($id_user,$rol){
             $key = 'academico_voip_umss';
             $time = time();
@@ -170,10 +174,53 @@
             return  $jwt;
         }
 
+        /* validar token */
         public function validate_token_jwt($token){
             $key = 'academico_voip_umss';
             $decoded = JWT::decode($token, new Key($key, 'HS256'));
             return json_encode($decoded);
+        }
+
+        /* enviar mail */
+        public function  send_mail($datos,$mails){
+            include_once "../../vendor/autoload.php";
+            $mail = new PHPMailer(true);
+            try {
+                $mail->isSMTP();
+                $mail->Host       = 'smtp.gmail.com';
+                $mail->SMTPAuth   = true;  
+                $mail->Username   = 'academico.voip@gmail.com';
+                $mail->Password   = 'egkrojiccdxeixbl'; 
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+                $mail->Port       = 465;     
+            
+                $mail->setFrom('academico.voip@gmail.com', 'Sistema academico VOIP');
+                foreach($mails as $destino) {
+                    $mail->addAddress($destino['CORREO_A']);
+                }
+
+                $mail->isHTML(true);
+                if($datos['event'] == 'update') $mail->Subject = 'Conferencia Reprogramada - '.$datos['title'];
+                else $mail->Subject = $datos['title'];
+                $mail->Body    = '<div class="container">
+                <p><h4><b>Descripción</b></h4></p>'
+                .'<p>'.$datos['description'].'</p>'
+                .'<p><h4><b>Información de la conferencia</b></h4></p>'
+                .'<p><b>Fecha de inicio: </b>'.$datos['start'].'</p>'
+                .'<p><b>Fecha fin: </b>'.$datos['end'].'</p>'
+                .'<p><b>Número de sala: </b>'.$datos['sala'].'</p>'
+                .'<p><h4><b>Información adicional</b></h4></p>'
+                .'<p><b>Unidad Académica: </b>'.$datos['ua'].'</p>'
+                .'<p><b>Docente: </b>'.$datos['docente'].'</p>'
+                .'<p><b>Turno: </b>'.$datos['turno'].'</p>'
+                .'<p><b>Grado: </b>'.$datos['grado'].'</p>'
+                .'<p><b>Sección: </b>'.$datos['seccion'].'</p>';
+            
+                $mail->send();
+                return true;
+            } catch (Exception $e) {
+                return "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            }
         }
 
     }

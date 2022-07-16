@@ -10,6 +10,7 @@
             let end=document.querySelector('#agenda_end').value;
             let color=document.querySelector('#agenda_color').value;
             let max=document.querySelector('#agenda_max').value;
+            let sala=document.querySelector('#agenda_sala').value;
             let agenda_id=document.querySelector('#agenda_id_up').value;
             title=title.trim();
             description=description.trim();
@@ -28,6 +29,7 @@
             datos.append("agenda_end_reg",end);
             datos.append("agenda_color_reg",color);
             datos.append("agenda_max_reg",max);
+            datos.append("agenda_sala_reg",sala);
             if(agenda_id)
                 datos.append("agenda_id_reg",agenda_id);
 
