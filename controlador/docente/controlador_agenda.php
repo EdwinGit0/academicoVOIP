@@ -81,12 +81,49 @@
             $agregar_agenda=modelo_agenda::register_agenda_modelo($datos_agenda_reg);
 
             if($agregar_agenda->rowCount()==1){
+
+                $nombre_d = main_model::limpiar_cadena($_SESSION['nombre_sa']);
+                $apellidoP_d = main_model::limpiar_cadena($_SESSION['apellidoP_sa']);
+                $apellidoM_d = main_model::limpiar_cadena($_SESSION['apellidoM_sa']);
+                
+                $val_curso=main_model::ejecutar_consulta_simple("SELECT TURNO_CUR, GRADO_CUR, SECCION_CUR FROM curso WHERE COD_CUR='$curso'");
+                $dato_curso = $val_curso->fetch(); unset($val_curso);
+
+                $val_ua=main_model::ejecutar_consulta_simple("SELECT NOMBRE_UA FROM unidad_academico WHERE UA_ID='$ua'");
+                $dato_ua = $val_ua->fetch(); unset($val_ua);
+
+                $datos_agenda_reg=[
+                    "event"=>'register',
+                    "title"=>$title,
+                    "description"=>$description,
+                    "start"=>$start,
+                    "end"=>$end,
+                    "sala"=>$sala,
+                    "turno"=>$dato_curso['TURNO_CUR'],
+                    "grado"=>$dato_curso['GRADO_CUR'],
+                    "seccion"=>$dato_curso['SECCION_CUR'],
+                    "ua"=>$dato_ua['NOMBRE_UA'],
+                    "docente"=>$nombre_d.' '.$apellidoP_d.' '.$apellidoM_d, 
+                ];
+
+                $dato_mail=main_model::ejecutar_consulta_simple("SELECT A.CORREO_A FROM cur_alum AS CA, alumno AS A WHERE 
+                A.UA_ID='$ua' AND CA.ALUMNO_ID=A.ALUMNO_ID AND CA.COD_CUR='$curso' AND YEAR(FECHA_INI_CA)='$anio_academico'");
+                $dato_mail = $dato_mail->fetchAll();
+
                 $alerta=[
                     "Alerta"=>"simple",
                     "Titulo"=>"Evento Guardado",
                     "Texto"=>"Los datos del Evento han sido registrados con exito",
                     "Tipo"=>"success"
                 ];   
+                
+                $send_mail = main_model::send_mail($datos_agenda_reg,$dato_mail);
+
+                if($send_mail!=true){
+                    echo $send_mail;
+                    exit();
+                }
+  
             }else{
                 $alerta=[
                     "Alerta"=>"simple",
@@ -108,10 +145,12 @@
             $color=main_model::limpiar_cadena($_POST['agenda_color_reg']);
             $max=main_model::limpiar_cadena($_POST['agenda_max_reg']);
             $agenda_id=main_model::limpiar_cadena($_POST['agenda_id_reg']);
+            $sala=main_model::limpiar_cadena($_POST['agenda_sala_reg']);
 
             session_start(['name'=>'SA']);
             $anio_academico = main_model::limpiar_cadena($_SESSION['anio_academico']);
             $id_docente = main_model::limpiar_cadena($_SESSION['id_sa']);
+            $ua = main_model::limpiar_cadena($_SESSION['ua_id']);
 
             $val_anio=main_model::ejecutar_consulta_simple("SELECT COD_ANIO FROM anio_academico WHERE NOMBRE_ANIO='$anio_academico'");
             $id_anio = $val_anio->fetch(); unset($val_anio);
@@ -130,6 +169,53 @@
                 "AnioId"=>$id_anio_a,
             ];
 
+            $val_agenda=main_model::ejecutar_consulta_simple("SELECT * FROM agenda WHERE AGENDA_ID='$agenda_id'");
+            $datos_agenda = $val_agenda->fetch(); unset($val_agenda);
+
+            $start = $this->converterDateTime($start);
+            $start_db = date($datos_agenda['START_AG']);  
+
+            $end = $this->converterDateTime($end);
+            $end_db = date($datos_agenda['END_AG']);  
+
+            if($title !== $datos_agenda['TITULO_AG'] || $description !== $datos_agenda['DESCRIPCION_AG'] || intval($curso) !== $datos_agenda['COD_CUR']
+            || $start != $start_db || $end != $end_db ){
+                $nombre_d = main_model::limpiar_cadena($_SESSION['nombre_sa']);
+                $apellidoP_d = main_model::limpiar_cadena($_SESSION['apellidoP_sa']);
+                $apellidoM_d = main_model::limpiar_cadena($_SESSION['apellidoM_sa']);
+                
+                $val_curso=main_model::ejecutar_consulta_simple("SELECT TURNO_CUR, GRADO_CUR, SECCION_CUR FROM curso WHERE COD_CUR='$curso'");
+                $dato_curso = $val_curso->fetch(); unset($val_curso);
+
+                $val_ua=main_model::ejecutar_consulta_simple("SELECT NOMBRE_UA FROM unidad_academico WHERE UA_ID='$ua'");
+                $dato_ua = $val_ua->fetch(); unset($val_ua);
+
+                $datos_agenda_reg=[
+                    "event"=>'update',
+                    "title"=>$title,
+                    "description"=>$description,
+                    "start"=>$start,
+                    "end"=>$end,
+                    "sala"=>$sala,
+                    "turno"=>$dato_curso['TURNO_CUR'],
+                    "grado"=>$dato_curso['GRADO_CUR'],
+                    "seccion"=>$dato_curso['SECCION_CUR'],
+                    "ua"=>$dato_ua['NOMBRE_UA'],
+                    "docente"=>$nombre_d.' '.$apellidoP_d.' '.$apellidoM_d, 
+                ];
+  
+                $dato_mail=main_model::ejecutar_consulta_simple("SELECT A.CORREO_A FROM cur_alum AS CA, alumno AS A WHERE 
+                A.UA_ID='$ua' AND CA.ALUMNO_ID=A.ALUMNO_ID AND CA.COD_CUR='$curso' AND YEAR(FECHA_INI_CA)='$anio_academico' GROUP BY A.CORREO_A");
+
+                $dato_mail = $dato_mail->fetchAll();
+
+                $send_mail = main_model::send_mail($datos_agenda_reg,$dato_mail);
+                if($send_mail!=true){
+                    echo $send_mail;
+                    exit();
+                }
+            }
+
             $agregar_agenda=modelo_agenda::update_agenda_modelo($datos_agenda_up);
 
             if($agregar_agenda->rowCount()==1){
@@ -139,7 +225,7 @@
                     "Texto"=>"Los datos del Evento han sido actualizados con exito",
                     "Tipo"=>"success"
                 ];
-                $this->send_mail();
+
             }else{
                 $alerta=[
                     "Alerta"=>"simple",
@@ -181,13 +267,8 @@
 			return $sala;
 		}
 
-        private function send_mail(){
-            $para      = 'edwin.roquecd@gmail.com';
-            $titulo    = 'El título';
-            $mensaje   = 'Hola';
-            $cabeceras = 'From: webmaster@example.com' . "\r\n" .
-                'Reply-To: webmaster@example.com' . "\r\n" .
-                'X-Mailer: PHP/';
-            mail($para, $titulo, $mensaje, $cabeceras);
+        private function converterDateTime($date){
+            $valores=explode('T', $date);
+            return $valores[0].' '.$valores[1].':00';
         }
     }
