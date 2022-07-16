@@ -147,5 +147,4 @@
             $codigo = $fecha.$acortar;
 			return $codigo;
 		}
-
     }

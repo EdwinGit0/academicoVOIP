@@ -27,3 +27,7 @@
 <script src="<?php echo SERVERURL;?>vista/js/validata.js"></script>
 
 <script src="<?php echo SERVERURL;?>vista/js/html2pdf.bundle.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
+<script src="<?php echo SERVERURL;?>vista/js/calendar/main.js"></script>
