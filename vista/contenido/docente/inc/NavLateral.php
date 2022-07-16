@@ -51,6 +51,10 @@
                             </li>
                         </ul>
                     </li>
+
+                    <li>
+                        <a href="<?php echo SERVERURL; ?>docente/calendar/"><i class="fas fa-calendar"></i> &nbsp; Agenda de conferencias</a>
+                    </li>
                 </ul>
             </nav>
         </div>

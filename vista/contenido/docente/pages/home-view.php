@@ -76,6 +76,14 @@
             <p><?php echo $total_cuadernoP;?> Cursos Asignadas</p>
         </div>
     </a>
+
+    <a href="<?php echo SERVERURL; ?>docente/calendar/" class="tile">
+        <div class="tile-tittle">Agenda de conferencias </div>
+        <div class="tile-icon">
+            <i class="fas fa-calendar"></i>
+            <p><?php echo $total_cuadernoP;?> Conferencias</p>
+        </div>
+    </a>
  
 </div>
 
