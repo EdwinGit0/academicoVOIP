@@ -188,10 +188,35 @@
       calendar.refetchEvents()
     });
 
-    $('#btn-delete').click(function(){
-      delete_agenda()
-      calendar.refetchEvents()
+    $('.fc-next-button').click(function(){
+      $('.fc-prev-button').prop( "disabled", false );
+      let date = document.getElementById("fc-dom-1");
+      let datePart = date.innerHTML.split(' ');
+      let yearNow = new Date().getFullYear();
+      if(datePart[0] === 'diciembre' && parseInt(datePart[2]) === parseInt(yearNow)){
+        $('.fc-next-button').prop( "disabled", true );
+      }
     });
+
+    $('.fc-prev-button').click(function(){
+      $('.fc-next-button').prop( "disabled", false );
+      let date = document.getElementById("fc-dom-1");
+      let datePart = date.innerHTML.split(' ');
+      let yearNow = new Date().getFullYear();
+      if(datePart[0] === 'enero' && parseInt(datePart[2]) === parseInt(yearNow)){
+        $('.fc-prev-button').prop( "disabled", true );
+      }
+    });
+
+    //bloquear botton next y prev
+    let date = document.getElementById("fc-dom-1");
+    let datePart = date.innerHTML.split(' ');
+    if(datePart[0] === 'enero'){
+      $('.fc-prev-button').prop( "disabled", true );
+    }
+    if(datePart[0] === 'diciembre'){
+      $('.fc-next-button').prop( "disabled", true );
+    }
 
   });
 
