@@ -39,14 +39,19 @@
             })
             .then(respuesta => respuesta.json())
             .then(respuesta => {
-                swal({
+                if(respuesta.Tipo==="validation"){
+                    getIDInput(respuesta.Input).focus();
+                    getIDInput(respuesta.InputError).innerHTML = 'Solo puede registrar agendas dentro de la gestion actual, "Verifique la sección GESTION ACADEMICA"';
+                }else{
+                    swal({
                         title: respuesta.Titulo,
                         text: respuesta.Texto,
                         icon: respuesta.Tipo,
                         button: "Aceptar",
-                });
-                if(respuesta.Tipo==="success") {
-                    $('#ModalAgenda').modal('hide');
+                    });
+                    if(respuesta.Tipo==="success") {
+                        $('#ModalAgenda').modal('hide');
+                    }
                 }
             });
         }
@@ -94,53 +99,67 @@
         let message_color = ''
         let message_max = ''
 
+        let focus_title= false
+        let focus_course = false
+        let focus_start = false
+        let focus_end = false
+        let focus_color = false
+        let focus_max = false
+
         let enviar = true;
 
         if(title.value === null || title.value === ''){
             message_title = 'Este campo es requerido'
-            title.focus();
+            focus_title=true;
             enviar = false;
         }
         if(!title.value.match(/^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]/)) {
             message_title = 'El TITULO no coincide con el formato solicitado'
-            title.focus();
+            focus_title=true;
             enviar = false; 
         }
         if(title.value.length < 3 || title.value.length > 255) {
             message_title = 'El TITULO debe ser mayor a 7 y menor a 255 caracteres'
-            title.focus();
+            focus_title=true;
             enviar = false; 
         }
         
         if(course.value === null || course.value === ''){
             message_course = 'Este campo es requerido'
-            course.focus();
+            focus_course = true;
             enviar = false;
         }
 
         if(start.value === null || start.value === ''){
             message_start = 'Este campo es requerido'
-            start.focus();
+            focus_start = true;
             enviar = false;
         }
 
         if(!checkDate(start.value, end.value)){
             message_end = 'La FECHA FIN debe ser mayor a la FECHA INICIO'
-            end.focus();
+            focus_end = true;
             enviar = false;
         }
 
         if(color.value === null || color.value === ''){
             message_color = 'Este campo es requerido'
-            start.focus();
+            focus_color = true;
             enviar = false;
         }
 
         if(max.value === null || max.value === ''){
             message_max = 'Este campo es requerido'
-            max.focus();
+            focus_max= true;
             enviar = false;
         }
+
+        if(focus_title) title.focus();
+        else if(focus_course) course.focus();
+        else if(focus_start) start.focus();
+        else if(focus_end) end.focus();
+        else if(focus_color) color.focus();
+        else if(focus_max) max.focus();
 
         getIDInput("agenda_titulo_error").innerHTML = message_title;  
         getIDInput("agenda_curso_error").innerHTML = message_course;

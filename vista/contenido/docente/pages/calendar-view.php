@@ -10,6 +10,7 @@
     <div class="col"></div>
     <div class='col-10'>
       <div id='calendar'></div>
+      <div id='error'></div>
     </div>
     <div class="col"></div>
   </dvi>
@@ -55,14 +56,14 @@
                       <div class="col-12 col-md-6">
                         <div class="form-group">
                           <label for="agenda_start">Fecha inicio</label>
-                          <input type="datetime-local" class="form-control" name="agenda_start_reg" id="agenda_start" min="2022-01-01" max="2022-12-31" required="" onchange="deleteErrorMessage('agenda_start_error')">
+                          <input type="datetime-local" class="form-control" name="agenda_start_reg" id="agenda_start" required="" onchange="deleteErrorMessage('agenda_start_error')">
                           <div class='message-error' id="agenda_start_error"></div>
                         </div>
                       </div>
                       <div class="col-12 col-md-6">
                         <div class="form-group">
                           <label for="agenda_end">Fecha fin</label>
-                          <input type="datetime-local" class="form-control" name="agenda_end_reg" id="agenda_end" min="2022-01-01" max="2022-12-31" onchange="deleteErrorMessage('agenda_end_error')">
+                          <input type="datetime-local" class="form-control" name="agenda_end_reg" id="agenda_end" onchange="deleteErrorMessage('agenda_end_error')">
                           <div class='message-error' id="agenda_end_error"></div>
                         </div>
                       </div>
@@ -74,14 +75,14 @@
                         <div class="form-group">
                           <label for="agenda_color">Color</label>
                           <input type="color" class="form-control" list="rainbow" name="agenda_color_reg" id="agenda_color" required="" value="#007bff" onchange="deleteErrorMessage('agenda_color_error')">
-                          <datalist id="rainbow">
-                            <option value="#007bff">azul</option>
-                            <option value="#6c757d">gris</option>
-                            <option value="#28a745">verde</option>
-                            <option value="#dc3545">rojo</option>
-                            <option value="#ffc107">amarillo</option>
-                            <option value="#17a2b8">celeste</option>
-                          </datalist>
+                            <datalist id="rainbow">
+                              <option value="#007bff">azul</option>
+                              <option value="#6c757d">gris</option>
+                              <option value="#28a745">verde</option>
+                              <option value="#dc3545">rojo</option>
+                              <option value="#ffc107">amarillo</option>
+                              <option value="#17a2b8">celeste</option>
+                            </datalist>
                             <div class='message-error' id="agenda_color_error"></div>
                         </div>
                       </div>
@@ -187,6 +188,36 @@
       calendar.refetchEvents()
     });
 
+    $('.fc-next-button').click(function(){
+      $('.fc-prev-button').prop( "disabled", false );
+      let date = document.getElementById("fc-dom-1");
+      let datePart = date.innerHTML.split(' ');
+      let yearNow = new Date().getFullYear();
+      if(datePart[0] === 'diciembre' && parseInt(datePart[2]) === parseInt(yearNow)){
+        $('.fc-next-button').prop( "disabled", true );
+      }
+    });
+
+    $('.fc-prev-button').click(function(){
+      $('.fc-next-button').prop( "disabled", false );
+      let date = document.getElementById("fc-dom-1");
+      let datePart = date.innerHTML.split(' ');
+      let yearNow = new Date().getFullYear();
+      if(datePart[0] === 'enero' && parseInt(datePart[2]) === parseInt(yearNow)){
+        $('.fc-prev-button').prop( "disabled", true );
+      }
+    });
+
+    //bloquear botton next y prev
+    let date = document.getElementById("fc-dom-1");
+    let datePart = date.innerHTML.split(' ');
+    if(datePart[0] === 'enero'){
+      $('.fc-prev-button').prop( "disabled", true );
+    }
+    if(datePart[0] === 'diciembre'){
+      $('.fc-next-button').prop( "disabled", true );
+    }
+
   });
 
   const select = document.getElementById("agenda_curso")
@@ -206,14 +237,24 @@
   })
   .then(respuesta => respuesta.json())
   .then(respuesta => {
-      if(respuesta.length>0){
+      if(respuesta.length===0){
+        $('#calendar').hide();
+        let calendar=document.querySelector('#error');
+        calendar.innerHTML='<div class="alert alert-warning" role="alert">'+
+                            '<p class="text-center mb-0">'+
+                                '<i class="fas fa-exclamation-triangle fa-2x"></i><br>'+
+                                'No tiene permisos de acceso'+
+                            '</p></div>';
+
+      }else{
         respuesta.forEach(obj => {
           const option = document.createElement("option")
           option.value = obj.COD_CUR
           option.innerHTML = obj.nombre
           select.appendChild(option)
         })
-      }
+        
+      } 
   });
 
 </script>
