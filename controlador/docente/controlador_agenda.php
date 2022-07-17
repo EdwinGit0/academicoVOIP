@@ -59,6 +59,28 @@
             $id_docente = main_model::limpiar_cadena($_SESSION['id_sa']);
             $ua = main_model::limpiar_cadena($_SESSION['ua_id']);
 
+            if($this->getDateTimeYear($start) !== $anio_academico){
+                $alerta=[
+                    "Tipo"=>"validation",
+                    "Input"=>"agenda_start",
+                    "InputError"=>"agenda_start_error",
+                ];
+
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if($this->getDateTimeYear($end) !== $anio_academico){
+                $alerta=[
+                    "Tipo"=>"validation",
+                    "Input"=>"agenda_end",
+                    "InputError"=>"agenda_end_error",
+                ];
+
+                echo json_encode($alerta);
+                exit();
+            }
+
             $val_anio=main_model::ejecutar_consulta_simple("SELECT COD_ANIO FROM anio_academico WHERE NOMBRE_ANIO='$anio_academico'");
             $id_anio = $val_anio->fetch(); unset($val_anio);
             $id_anio_a=$id_anio['COD_ANIO'];
@@ -151,6 +173,28 @@
             $anio_academico = main_model::limpiar_cadena($_SESSION['anio_academico']);
             $id_docente = main_model::limpiar_cadena($_SESSION['id_sa']);
             $ua = main_model::limpiar_cadena($_SESSION['ua_id']);
+
+            if($this->getDateTimeYear($start) !== $anio_academico){
+                $alerta=[
+                    "Tipo"=>"validation",
+                    "Input"=>"agenda_start",
+                    "InputError"=>"agenda_start_error",
+                ];
+
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if($this->getDateTimeYear($end) !== $anio_academico){
+                $alerta=[
+                    "Tipo"=>"validation",
+                    "Input"=>"agenda_end",
+                    "InputError"=>"agenda_end_error",
+                ];
+
+                echo json_encode($alerta);
+                exit();
+            }
 
             $val_anio=main_model::ejecutar_consulta_simple("SELECT COD_ANIO FROM anio_academico WHERE NOMBRE_ANIO='$anio_academico'");
             $id_anio = $val_anio->fetch(); unset($val_anio);
@@ -270,5 +314,11 @@
         private function converterDateTime($date){
             $valores=explode('T', $date);
             return $valores[0].' '.$valores[1].':00';
+        }
+
+        private function getDateTimeYear($date){
+            $valores=explode('T', $date);
+            $part=explode('-', $valores[0]);
+            return $part[0];
         }
     }
