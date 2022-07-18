@@ -1165,11 +1165,16 @@
                     AND C.ALUMNO_ID='$alumno' AND C.COD_PER='$periodo' AND AA.NOMBRE_ANIO='$anio' AND C.VAL_ID=11) as PP on A.COD_AREA = PP.COD_AREA";
 
                     if($token_decoded['rol']=="familiar"){
-                        $alumno=$body['ci_alumno'];
-                        $consulta="SELECT A.COD_AREA, A.NOMBRE_AREA, A.CAMPO_AREA, PP.NOTA FROM area as A LEFT OUTER JOIN 
-                        (SELECT P.COD_AREA, C.NOTA FROM profesor AS P, calificacion AS C, anio_academico AS AA, alumno AS AL
-                        WHERE P.PROFESOR_ID=C.PROFESOR_ID AND AA.COD_ANIO=C.COD_ANIO AND AL.ALUMNO_ID=C.ALUMNO_ID
-                        AND AL.CI_A='$alumno' AND C.COD_PER='$periodo' AND AA.NOMBRE_ANIO='$anio' AND C.VAL_ID=11) as PP on A.COD_AREA = PP.COD_AREA";
+                        $ci_alumno=$body['ci_alumno'];
+                        $datos_estudiante=main_model::ejecutar_consulta_simple("SELECT A.ALUMNO_ID FROM fa_alumno AS FA, alumno AS A WHERE 
+                        FA.ALUMNO_ID=A.ALUMNO_ID AND FA.FAMILAR_ID='$alumno' AND A.CI_A=$ci_alumno GROUP BY A.ALUMNO_ID");
+
+                        if($datos->rowCount()==1){
+                            $consulta="SELECT A.COD_AREA, A.NOMBRE_AREA, A.CAMPO_AREA, PP.NOTA FROM area as A LEFT OUTER JOIN 
+                            (SELECT P.COD_AREA, C.NOTA FROM profesor AS P, calificacion AS C, anio_academico AS AA, alumno AS AL
+                            WHERE P.PROFESOR_ID=C.PROFESOR_ID AND AA.COD_ANIO=C.COD_ANIO AND AL.ALUMNO_ID=C.ALUMNO_ID
+                            AND AL.CI_A='$ci_alumno' AND C.COD_PER='$periodo' AND AA.NOMBRE_ANIO='$anio' AND C.VAL_ID=11) as PP on A.COD_AREA = PP.COD_AREA";
+                        }else return $_respuesta->error_400();
                     }
  
                     $result_acali=modelo_alumno::ejecutar_consulta_simple($consulta);
@@ -1220,9 +1225,7 @@
                 if($datos->rowCount()==1){
                     $datos = $datos->fetch(PDO::FETCH_ASSOC);
                     $datos_estudiante=main_model::ejecutar_consulta_simple("SELECT A.ALUMNO_ID, A.NOMBRE_A, A.APELLIDOP_A
-                    FROM familiar AS F, fa_alumno AS FA, alumno AS A WHERE 
-                    F.FAMILAR_ID = FA.FAMILAR_ID AND FA.ALUMNO_ID=A.ALUMNO_ID AND F.FAMILAR_ID='$id_padre'
-                    GROUP BY A.ALUMNO_ID");
+                    FROM fa_alumno AS FA, alumno AS A WHERE FA.ALUMNO_ID=A.ALUMNO_ID AND FA.FAMILAR_ID='$user_id' GROUP BY A.ALUMNO_ID");
                     $datos_estudiante = $datos_estudiante->fetch(PDO::FETCH_ASSOC);
                     $result["result"]= array(
                         "info" => $datos,
