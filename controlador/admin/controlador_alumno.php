@@ -1140,6 +1140,7 @@
             echo json_encode($campos);
         }
 
+        /* Obtner calificaciones del estudiante */
         public function getQualification($body){
             $_respuesta = new respuestas;
             if(!isset($body['token'])){
@@ -1170,5 +1171,51 @@
                
             }
             echo json_encode($campos);
+        }
+
+        public function obtener_info_controlador($body){
+            $_respuesta = new respuestas;
+            if(!isset($body['token']))
+                return $_respuesta->error_401();
+            
+            try {
+                $decoded = main_model::validate_token_jwt($body['token']);
+            } catch (\Exception $e) {
+                return $_respuesta->error_401("Token invalido o expirado");
+            }
+            $token_decoded=json_decode($decoded,true);
+            $user_id=$token_decoded['id'];
+
+            $year = $this->fecha_hora("Y");
+            $datos=main_model::ejecutar_consulta_simple("SELECT A.NOMBRE_A, A.APELLIDOP_A, A.APELLIDOM_A, UA.NOMBRE_UA, C.TURNO_CUR, CONCAT(C.GRADO_CUR, ' ', C.SECCION_CUR) AS CURSO_NAME
+                        FROM alumno AS A, unidad_academico AS UA, cur_alum AS CA, curso AS C WHERE 
+                        A.ALUMNO_ID = CA.ALUMNO_ID AND UA.UA_ID=A.UA_ID AND CA.COD_CUR = C.COD_CUR AND  A.ALUMNO_ID='$user_id' AND
+                        YEAR(CA.FECHA_INI_CA)='$year'
+                        GROUP BY A.ALUMNO_ID");
+            if($datos->rowCount()==1){
+                $datos = $datos->fetch(PDO::FETCH_ASSOC);
+                $result["result"]= array(
+                    "info" => $datos,
+                );
+                return $result;
+            }
+
+            $datos=main_model::ejecutar_consulta_simple("SELECT NOMBRE_FA, APELLIDOP_FA, APELLIDOM_FA, CI_FA
+                    FROM familiar WHERE FAMILAR_ID='$user_id' GROUP BY FAMILAR_ID");
+            if($datos->rowCount()==1){
+                $datos = $datos->fetch(PDO::FETCH_ASSOC);
+                $result["result"]= array(
+                    "info" => $datos,
+                );
+                return $result;
+            }
+
+            return $_respuesta->error_200("El usuario $phone no existe");
+        }
+
+        public function fecha_hora($date){
+            $fechaActual=new DateTime();
+            $fechaActual->setTimeZone(new DateTimeZone('America/La_Paz'));
+            return $fechaActual->format($date);
         }
     }
