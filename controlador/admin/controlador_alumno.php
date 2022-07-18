@@ -1167,9 +1167,9 @@
                     if($token_decoded['rol']=="familiar"){
                         $ci_alumno=$body['ci_alumno'];
                         $datos_estudiante=main_model::ejecutar_consulta_simple("SELECT A.ALUMNO_ID FROM fa_alumno AS FA, alumno AS A WHERE 
-                        FA.ALUMNO_ID=A.ALUMNO_ID AND FA.FAMILAR_ID='$alumno' AND A.CI_A=$ci_alumno GROUP BY A.ALUMNO_ID");
+                        FA.ALUMNO_ID=A.ALUMNO_ID AND FA.FAMILAR_ID='$alumno' AND A.CI_A='$ci_alumno' GROUP BY A.ALUMNO_ID");
 
-                        if($datos->rowCount()==1){
+                        if($datos_estudiante->rowCount()==1){
                             $consulta="SELECT A.COD_AREA, A.NOMBRE_AREA, A.CAMPO_AREA, PP.NOTA FROM area as A LEFT OUTER JOIN 
                             (SELECT P.COD_AREA, C.NOTA FROM profesor AS P, calificacion AS C, anio_academico AS AA, alumno AS AL
                             WHERE P.PROFESOR_ID=C.PROFESOR_ID AND AA.COD_ANIO=C.COD_ANIO AND AL.ALUMNO_ID=C.ALUMNO_ID
