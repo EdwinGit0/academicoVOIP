@@ -1,6 +1,7 @@
 <?php
     if($peticionAjax){
         require_once "../../modelo/docente/modelo_agenda.php";
+        include_once "../respuestas.class.php";
     }else{
         require_once "./modelo/docente/modelo_agenda.php";
     }
@@ -304,6 +305,46 @@
             echo json_encode($alerta);
         }
 
+        /* controlador obtener agenda estudiante*/
+        public function datos_conference_controlador($datos){
+            $_respuesta = new respuestas;
+            if(!isset($datos['sala'])){
+                return $_respuesta->error_400();
+            }else{
+                $sala = $datos['sala'];
+                $datos_conference=modelo_agenda::obtener_conferencia_modelo($sala);
+                if($datos_conference->rowCount()==1){
+                    $datos_conference = $datos_conference->fetch(PDO::FETCH_ASSOC);
+                    $nowDate = $this->fecha_hora();
+                    if($datos_conference['END_AG'] < $nowDate){
+                        $result = $_respuesta->$response;
+                        $result["status"] = "ok";
+                        $result["result"]= array(
+                            "tipo"=>"timeout",
+                            "result" => "La sala ha caducado",
+                        );
+                        return $result;
+                    }
+
+                    $result = $_respuesta->$response;
+                    $result["status"] = "ok";
+                    $result["result"]= array(
+                        "tipo"=>"ok",
+                        "result" => $datos_conference,
+                    );
+                    return $result;
+                }else{
+                    $result = $_respuesta->$response;
+                    $result["status"] = "ok";
+                    $result["result"]= array(
+                        "tipo"=>"error",
+                        "result" => "La sala solicitada no existe",
+                    );
+                    return $result;
+                }
+            }
+        }
+
         private function sala_agenda($id_docente,$id_curso,$anio,$ua){
             $random = rand(0, 9999);
             $acortar = substr($random, 0, 6); 
@@ -320,5 +361,11 @@
             $valores=explode('T', $date);
             $part=explode('-', $valores[0]);
             return $part[0];
+        }
+
+        public function fecha_hora(){
+            $fechaActual=new DateTime();
+            $fechaActual->setTimeZone(new DateTimeZone('America/La_Paz'));
+            return $fechaActual->format('Y-m-d H:i');
         }
     }

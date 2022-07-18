@@ -67,4 +67,13 @@
             return $sql;
         }
 
+        /* modelo obtener conference */
+        protected static function obtener_conferencia_modelo($sala){
+            $sql=main_model::conectar()->prepare("SELECT * FROM agenda WHERE SALA_AG=:sala");
+            $sql->bindParam(":sala",$sala);
+            $sql->execute();
+
+            return $sql;
+        }
+
     }

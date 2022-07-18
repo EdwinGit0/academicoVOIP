@@ -43,6 +43,14 @@
             $data=$ins_agenda->datos_cursos_controlador();
             echo json_encode($data);
             break;
+        case "conference-s":
+            $data=$ins_agenda->datos_conference_controlador($body);
+            echo json_encode($data);
+            break;
+        case "get-infouser":
+            $data=$ins_alumno->obtener_info_controlador($body);
+            echo json_encode($data);
+            break;
         default:
             echo json_encode($_respuesta->error_405());
             break;
