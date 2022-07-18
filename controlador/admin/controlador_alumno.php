@@ -1159,6 +1159,9 @@
                     $anio=$body['gestion'];
                     $periodo=$body['periodo'];
                     $alumno=$token_decoded['id'];
+                    if($token_decoded['rol']=="familiar")
+                        $alumno=$body['id_alumno'];
+ 
                     $result_acali=modelo_alumno::ejecutar_consulta_simple("SELECT A.COD_AREA, A.NOMBRE_AREA, A.CAMPO_AREA, PP.NOTA FROM area as A
                     LEFT OUTER JOIN 
                     (SELECT P.COD_AREA, C.NOTA 
@@ -1185,16 +1188,16 @@
             }
             $token_decoded=json_decode($decoded,true);
             $user_id=$token_decoded['id'];
-            $user=$body['user'];
+            $user=$token_decoded['rol'];
 
-            if($user=="student"){
+            if($user=="alumno"){
                 $year = $this->fecha_hora("Y");
                 $datos=main_model::ejecutar_consulta_simple("SELECT A.NOMBRE_A, A.APELLIDOP_A, A.APELLIDOM_A, UA.NOMBRE_UA, C.TURNO_CUR, CONCAT(C.GRADO_CUR, ' ', C.SECCION_CUR) AS CURSO_NAME 
                 FROM unidad_academico AS UA, alumno AS A 
                 LEFT JOIN cur_alum AS CA ON CA.ALUMNO_ID = A.ALUMNO_ID AND YEAR(CA.FECHA_INI_CA)='$year' 
                 LEFT JOIN curso AS C ON C.COD_CUR = CA.COD_CUR 
                 WHERE UA.UA_ID=A.UA_ID AND A.ALUMNO_ID='$user_id'
-                GROUP BY A.NOMBRE_A, A.APELLIDOP_A, A.APELLIDOM_A, UA.NOMBRE_UA, C.TURNO_CUR, CURSO_NAME");
+                GROUP BY A.NOMBRE_A");
 
                 if($datos->rowCount()==1){
                     $datos = $datos->fetch(PDO::FETCH_ASSOC);
@@ -1206,7 +1209,7 @@
                 return $_respuesta->error_200("El usuario no existe");
             }
 
-            if($user=="family"){
+            if($user=="familiar"){
                 $datos=main_model::ejecutar_consulta_simple("SELECT NOMBRE_FA, APELLIDOP_FA, APELLIDOM_FA, CI_FA
                     FROM familiar WHERE FAMILAR_ID='$user_id' GROUP BY FAMILAR_ID");
                 if($datos->rowCount()==1){

@@ -255,7 +255,6 @@
                     $result = $_respuesta->$response;
                     $result["status"] = "ok";
                     $result["result"]= array(
-                        "user" => "student",
                         "token" => $token,
                     );
                     return $result;
@@ -274,7 +273,6 @@
                         $result = $_respuesta->$response;
                         $result["status"] = "ok";
                         $result["result"]= array(
-                            "user" => "family",
                             "student" => $datos_estudiante,
                             "token" => $token,
                         );
