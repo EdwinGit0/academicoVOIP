@@ -1159,15 +1159,20 @@
                     $anio=$body['gestion'];
                     $periodo=$body['periodo'];
                     $alumno=$token_decoded['id'];
-                    if($token_decoded['rol']=="familiar")
-                        $alumno=$body['id_alumno'];
- 
-                    $result_acali=modelo_alumno::ejecutar_consulta_simple("SELECT A.COD_AREA, A.NOMBRE_AREA, A.CAMPO_AREA, PP.NOTA FROM area as A
-                    LEFT OUTER JOIN 
-                    (SELECT P.COD_AREA, C.NOTA 
-                    FROM profesor AS P, calificacion AS C, anio_academico AS AA 
+                    $consulta="SELECT A.COD_AREA, A.NOMBRE_AREA, A.CAMPO_AREA, PP.NOTA FROM area as A LEFT OUTER JOIN 
+                    (SELECT P.COD_AREA, C.NOTA FROM profesor AS P, calificacion AS C, anio_academico AS AA 
                     WHERE P.PROFESOR_ID=C.PROFESOR_ID AND AA.COD_ANIO=C.COD_ANIO 
-                    AND C.ALUMNO_ID='$alumno' AND C.COD_PER='$periodo' AND AA.NOMBRE_ANIO='$anio' AND C.VAL_ID=11) as PP on A.COD_AREA = PP.COD_AREA");
+                    AND C.ALUMNO_ID='$alumno' AND C.COD_PER='$periodo' AND AA.NOMBRE_ANIO='$anio' AND C.VAL_ID=11) as PP on A.COD_AREA = PP.COD_AREA";
+
+                    if($token_decoded['rol']=="familiar"){
+                        $alumno=$body['ci_alumno'];
+                        $consulta="SELECT A.COD_AREA, A.NOMBRE_AREA, A.CAMPO_AREA, PP.NOTA FROM area as A LEFT OUTER JOIN 
+                        (SELECT P.COD_AREA, C.NOTA FROM profesor AS P, calificacion AS C, anio_academico AS AA, alumno AS AL
+                        WHERE P.PROFESOR_ID=C.PROFESOR_ID AND AA.COD_ANIO=C.COD_ANIO AND AL.ALUMNO_ID=C.ALUMNO_ID
+                        AND AL.CI_A='$alumno' AND C.COD_PER='$periodo' AND AA.NOMBRE_ANIO='$anio' AND C.VAL_ID=11) as PP on A.COD_AREA = PP.COD_AREA";
+                    }
+ 
+                    $result_acali=modelo_alumno::ejecutar_consulta_simple($consulta);
                 
                     return  $result_acali->fetchAll(PDO::FETCH_ASSOC);
                 }
@@ -1214,8 +1219,14 @@
                     FROM familiar WHERE FAMILAR_ID='$user_id' GROUP BY FAMILAR_ID");
                 if($datos->rowCount()==1){
                     $datos = $datos->fetch(PDO::FETCH_ASSOC);
+                    $datos_estudiante=main_model::ejecutar_consulta_simple("SELECT A.ALUMNO_ID, A.NOMBRE_A, A.APELLIDOP_A
+                    FROM familiar AS F, fa_alumno AS FA, alumno AS A WHERE 
+                    F.FAMILAR_ID = FA.FAMILAR_ID AND FA.ALUMNO_ID=A.ALUMNO_ID AND F.FAMILAR_ID='$id_padre'
+                    GROUP BY A.ALUMNO_ID");
+                    $datos_estudiante = $datos_estudiante->fetch(PDO::FETCH_ASSOC);
                     $result["result"]= array(
                         "info" => $datos,
+                        "student" => $datos_estudiante
                     );
                     return $result;
                 }

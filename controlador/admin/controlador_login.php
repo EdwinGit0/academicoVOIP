@@ -255,6 +255,7 @@
                     $result = $_respuesta->$response;
                     $result["status"] = "ok";
                     $result["result"]= array(
+                        "user" => "student",
                         "token" => $token,
                     );
                     return $result;
@@ -262,18 +263,11 @@
                     $datos_cuenta=modelo_login::iniciar_sesion_tutor_modelo($datos_alumno);
                     if($datos_cuenta->rowCount()==1){
                         $datos_cuenta = $datos_cuenta->fetch();
-                        $id_padre = $datos_cuenta['FAMILAR_ID'];
-                        $token = main_model::token_jwt($id_padre,"familiar");
-                        $datos_estudiante=main_model::ejecutar_consulta_simple("SELECT A.ALUMNO_ID, A.NOMBRE_A, A.APELLIDOP_A
-                        FROM familiar AS F, fa_alumno AS FA, alumno AS A WHERE 
-                        F.FAMILAR_ID = FA.FAMILAR_ID AND FA.ALUMNO_ID=A.ALUMNO_ID AND F.FAMILAR_ID='$id_padre'
-                        GROUP BY A.ALUMNO_ID");
-                        $datos_estudiante = $datos_estudiante->fetchAll(PDO::FETCH_ASSOC);
-                        
+                        $token = main_model::token_jwt($datos_cuenta['FAMILAR_ID'],"familiar");
                         $result = $_respuesta->$response;
                         $result["status"] = "ok";
                         $result["result"]= array(
-                            "student" => $datos_estudiante,
+                            "user" => "family",
                             "token" => $token,
                         );
                         return $result;
