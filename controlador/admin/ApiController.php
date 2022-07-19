@@ -18,7 +18,7 @@
         case "get-student-list":
             $data=$ins_alumno->getStudentList();
             echo $data;
-        break;
+            break;
         case "get-student":
             $data=$ins_alumno->getStudent("Unico",$body["student_id"],"");
             echo $data;
@@ -26,7 +26,7 @@
         case "login":
             $data=$ins_login->iniciar_sesion_student_controlador($body);
             echo json_encode($data);
-        break;
+            break;
         case "get-qualification":
             $data=$ins_alumno->getQualification($body);
             echo json_encode($data);
@@ -49,6 +49,10 @@
             break;
         case "get-infouser":
             $data=$ins_alumno->obtener_info_controlador($body);
+            echo json_encode($data);
+            break;
+        case "conference-month":
+            $data=$ins_alumno->datos_conference_month_controlador($body);
             echo json_encode($data);
             break;
         default:

@@ -1220,14 +1220,14 @@
             }
 
             if($user=="familiar"){
-                $datos=main_model::ejecutar_consulta_simple("SELECT NOMBRE_FA, APELLIDOP_FA, APELLIDOM_FA, CI_FA
+                $datos=main_model::ejecutar_consulta_simple("SELECT NOMBRE_FA, APELLIDOP_FA, APELLIDOM_FA
                     FROM familiar WHERE FAMILAR_ID='$user_id' GROUP BY FAMILAR_ID");
                 if($datos->rowCount()==1){
                     $datos = $datos->fetch(PDO::FETCH_ASSOC);
                     $datos_estudiante=main_model::ejecutar_consulta_simple("SELECT A.ALUMNO_ID, A.NOMBRE_A, A.APELLIDOP_A
                     FROM fa_alumno AS FA, alumno AS A WHERE FA.ALUMNO_ID=A.ALUMNO_ID AND FA.FAMILAR_ID='$user_id' GROUP BY A.ALUMNO_ID");
-                    $datos_estudiante = $datos_estudiante->fetch(PDO::FETCH_ASSOC);
-                    $result["result"]= array(
+                    $datos_estudiante = $datos_estudiante->fetchAll(PDO::FETCH_ASSOC);
+                    $result["result"] = array(
                         "info" => $datos,
                         "student" => $datos_estudiante
                     );
@@ -1235,6 +1235,57 @@
                 }
                 return $_respuesta->error_200("El usuario no existe");
             }
+        }
+
+        /* controlador obtener conferencias dentro del mes estudiante*/
+        public function datos_conference_month_controlador($body){
+            $_respuesta = new respuestas;
+            if(!isset($body['token']))
+                return $_respuesta->error_401();
+            
+            try {
+                $decoded = main_model::validate_token_jwt($body['token']);
+            } catch (\Exception $e) {
+                return $_respuesta->error_401("Token invalido o expirado");
+            }
+            $token_decoded=json_decode($decoded,true);
+            $user_id=$token_decoded['id'];
+            $user=$token_decoded['rol'];
+            $month = $this->fecha_hora("m");
+            $year = $this->fecha_hora("Y");
+
+            if($user=="alumno"){
+                $datos=main_model::ejecutar_consulta_simple("SELECT A.AGENDA_ID, A.TITULO_AG, A.START_AG, A.END_AG, A.SALA_AG 
+                FROM agenda AS A, curso AS C, cur_alum AS CA
+                WHERE A.COD_CUR = C.COD_CUR AND C.COD_CUR=CA.COD_CUR AND CA.ALUMNO_ID='$user_id' AND MONTH(A.START_AG)='$month' AND YEAR(CA.FECHA_INI_CA)='$year'
+                GROUP BY A.AGENDA_ID");
+
+                if($datos->rowCount()==1){
+                    $datos = $datos->fetchAll(PDO::FETCH_ASSOC);
+                    $result["result"]= array(
+                        "conference" => $datos,
+                    );
+                    return $result;
+                }
+                return $_respuesta->error_200("No tiene conferencias programadas para este mes");
+            }
+
+            if($user=="familiar"){
+                $datos=main_model::ejecutar_consulta_simple("SELECT A.AGENDA_ID, A.TITULO_AG, A.START_AG, A.END_AG, A.SALA_AG 
+                FROM agenda AS A, curso AS C, cur_alum AS CA, fa_alumno AS FA
+                WHERE A.COD_CUR = C.COD_CUR AND C.COD_CUR=CA.COD_CUR AND CA.ALUMNO_ID=FA.ALUMNO_ID AND FA.FAMILAR_ID='$user_id' AND MONTH(A.START_AG)='$month' AND YEAR(CA.FECHA_INI_CA)='$year'
+                GROUP BY A.AGENDA_ID");
+
+                if($datos->rowCount()==1){
+                    $datos = $datos->fetchAll(PDO::FETCH_ASSOC);
+                    $result["result"]= array(
+                        "conference" => $datos,
+                    );
+                    return $result;
+                }
+                return $_respuesta->error_200("No tiene conferencias programadas para este mes");
+            }
+           
         }
 
         public function fecha_hora($date){
