@@ -1260,14 +1260,11 @@
                 WHERE A.COD_CUR = C.COD_CUR AND C.COD_CUR=CA.COD_CUR AND CA.ALUMNO_ID='$user_id' AND MONTH(A.START_AG)='$month' AND YEAR(CA.FECHA_INI_CA)='$year'
                 GROUP BY A.AGENDA_ID");
 
-                if($datos->rowCount()==1){
-                    $datos = $datos->fetchAll(PDO::FETCH_ASSOC);
-                    $result["result"]= array(
-                        "conference" => $datos,
-                    );
-                    return $result;
-                }
-                return $_respuesta->error_200("No tiene conferencias programadas para este mes");
+                $datos = $datos->fetchAll(PDO::FETCH_ASSOC);
+                $result["result"]= array(
+                    "conference" => $datos,
+                );
+                return $result;
             }
 
             if($user=="familiar"){
@@ -1276,14 +1273,11 @@
                 WHERE A.COD_CUR = C.COD_CUR AND C.COD_CUR=CA.COD_CUR AND CA.ALUMNO_ID=FA.ALUMNO_ID AND FA.FAMILAR_ID='$user_id' AND MONTH(A.START_AG)='$month' AND YEAR(CA.FECHA_INI_CA)='$year'
                 GROUP BY A.AGENDA_ID");
 
-                if($datos->rowCount()==1){
-                    $datos = $datos->fetchAll(PDO::FETCH_ASSOC);
-                    $result["result"]= array(
-                        "conference" => $datos,
-                    );
-                    return $result;
-                }
-                return $_respuesta->error_200("No tiene conferencias programadas para este mes");
+                $datos = $datos->fetchAll(PDO::FETCH_ASSOC);
+                $result["result"]= array(
+                    "conference" => $datos,
+                );
+                return $result;
             }
            
         }
