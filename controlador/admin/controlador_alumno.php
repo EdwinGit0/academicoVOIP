@@ -1211,6 +1211,8 @@
 
                 if($datos->rowCount()==1){
                     $datos = $datos->fetch(PDO::FETCH_ASSOC);
+                    $result = $_respuesta->$response;
+                    $result["status"] = "ok";
                     $result["result"]= array(
                         "info" => $datos,
                     );
@@ -1227,6 +1229,8 @@
                     $datos_estudiante=main_model::ejecutar_consulta_simple("SELECT A.ALUMNO_ID, A.NOMBRE_A, A.APELLIDOP_A
                     FROM fa_alumno AS FA, alumno AS A WHERE FA.ALUMNO_ID=A.ALUMNO_ID AND FA.FAMILAR_ID='$user_id' GROUP BY A.ALUMNO_ID");
                     $datos_estudiante = $datos_estudiante->fetchAll(PDO::FETCH_ASSOC);
+                    $result = $_respuesta->$response;
+                    $result["status"] = "ok";
                     $result["result"] = array(
                         "info" => $datos,
                         "student" => $datos_estudiante
@@ -1261,6 +1265,8 @@
                 GROUP BY A.AGENDA_ID");
 
                 $datos = $datos->fetchAll(PDO::FETCH_ASSOC);
+                $result = $_respuesta->$response;
+                $result["status"] = "ok";
                 $result["result"]= array(
                     "conference" => $datos,
                 );
@@ -1274,6 +1280,8 @@
                 GROUP BY A.AGENDA_ID");
 
                 $datos = $datos->fetchAll(PDO::FETCH_ASSOC);
+                $result = $_respuesta->$response;
+                $result["status"] = "ok";
                 $result["result"]= array(
                     "conference" => $datos,
                 );
