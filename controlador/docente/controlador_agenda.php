@@ -130,7 +130,10 @@
                 ];
 
                 $dato_mail=main_model::ejecutar_consulta_simple("SELECT A.CORREO_A FROM cur_alum AS CA, alumno AS A WHERE 
-                A.UA_ID='$ua' AND CA.ALUMNO_ID=A.ALUMNO_ID AND CA.COD_CUR='$curso' AND YEAR(FECHA_INI_CA)='$anio_academico'");
+                A.UA_ID='$ua' AND CA.ALUMNO_ID=A.ALUMNO_ID AND CA.COD_CUR='$curso' AND YEAR(FECHA_INI_CA)='$anio_academico' GROUP BY A.CORREO_A
+                UNION
+                SELECT F.CORREO_FA AS CORREO_A FROM cur_alum AS CA, alumno AS A, fa_alumno AS FA, familiar AS F WHERE 
+                A.UA_ID='$ua' AND CA.ALUMNO_ID=A.ALUMNO_ID AND A.ALUMNO_ID=FA.ALUMNO_ID AND FA.FAMILAR_ID=F.FAMILAR_ID AND CA.COD_CUR='$curso' AND YEAR(CA.FECHA_INI_CA)='$anio_academico' GROUP BY F.CORREO_FA");
                 $dato_mail = $dato_mail->fetchAll();
 
                 $alerta=[
@@ -250,7 +253,10 @@
                 ];
   
                 $dato_mail=main_model::ejecutar_consulta_simple("SELECT A.CORREO_A FROM cur_alum AS CA, alumno AS A WHERE 
-                A.UA_ID='$ua' AND CA.ALUMNO_ID=A.ALUMNO_ID AND CA.COD_CUR='$curso' AND YEAR(FECHA_INI_CA)='$anio_academico' GROUP BY A.CORREO_A");
+                A.UA_ID='$ua' AND CA.ALUMNO_ID=A.ALUMNO_ID AND CA.COD_CUR='$curso' AND YEAR(FECHA_INI_CA)='$anio_academico' GROUP BY A.CORREO_A
+                UNION
+                SELECT F.CORREO_FA AS CORREO_A FROM cur_alum AS CA, alumno AS A, fa_alumno AS FA, familiar AS F WHERE 
+                A.UA_ID='$ua' AND CA.ALUMNO_ID=A.ALUMNO_ID AND A.ALUMNO_ID=FA.ALUMNO_ID AND FA.FAMILAR_ID=F.FAMILAR_ID AND CA.COD_CUR='$curso' AND YEAR(CA.FECHA_INI_CA)='$anio_academico' GROUP BY F.CORREO_FA");
 
                 $dato_mail = $dato_mail->fetchAll();
 
